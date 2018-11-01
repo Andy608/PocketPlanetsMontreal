@@ -5,6 +5,7 @@ using UnityEngine;
 //The different planet emotions
 public enum EnumPlanetType
 {
+    ANCHOR,     // Cool sunglasses
     NEUTRAL,    //  :|
     CURIOUS,    //  :o
     GRUMPY,     //  >:(
@@ -53,7 +54,7 @@ public class PlanetProperties : ScriptableObject
     
     public float DefaultMass { get { return defaultMass; } }
     public float MaxMass { get { return maxMass; } }
-    public bool IsUnlocked { get { return isUnlocked; } }
+    public bool IsUnlocked { get { return isUnlocked; } set { isUnlocked = value; } }
 
     private void Awake()
     {
@@ -68,6 +69,10 @@ public class PlanetProperties : ScriptableObject
     private void OnDisable()
     {
         //Unsubscribe to buy event.
+
+        //Reset before game ends.
+        isUnlocked = false;
+        buyCounter = 0;
     }
 
     public void BuyObject()

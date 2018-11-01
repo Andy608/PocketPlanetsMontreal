@@ -13,11 +13,16 @@ namespace Managers
         [SerializeField] private Vector2 nativeResolution = new Vector2(1125, 2436);
         [SerializeField] private Camera gameCamera;
 
+        public Color BackgroundColor { get { return gameCamera.backgroundColor; } }
+        public float CurrentCameraSize { get { return currentSize; } }
+        public float DefaultCameraSize { get { return defaultSize; } }
+
         private float zoomSpeed;
 
+        private float defaultSize;
         private float currentSize;
-        [SerializeField] private float minimumSize;
-        [SerializeField] private float maximumSize;
+        private float minimumSize;
+        private float maximumSize;
 
         private float zoomDist = 0;
         private float prevZoomDist = 0;
@@ -33,7 +38,7 @@ namespace Managers
             {
                 scale = Screen.height / nativeResolution.y;
                 pixelsToUnits *= scale;
-                gameCamera.orthographicSize = (Screen.height / 2.0f) / pixelsToUnits;
+                defaultSize = currentSize = gameCamera.orthographicSize = (Screen.height / 2.0f) / pixelsToUnits;
                 maximumSize = gameCamera.orthographicSize * 2.0f;
                 minimumSize = maximumSize / 8.0f;
             }

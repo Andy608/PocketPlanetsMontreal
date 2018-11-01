@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8684bc4b07a4fa408371efbad992833, type: 3}
-  m_Name: Curious
+  m_Name: Anchor
   m_EditorClassIdentifier: 
   isUnlocked: 0
-  planetType: 2
+  planetType: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  defaultColor: {r: 1, g: 0.8215685, b: 0.4481132, a: 1}
-  planetName: Curious Planet
-  description: A curious planet
-  moneyPerMass: 0.28
-  radiusScaleMultiplier: 150
-  defaultMass: 500
-  maxMass: 1000
-  upgradedPlanetType: 3
+  defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
+  planetName: Anchor
+  description: Ah! It's a blackhole.
+  moneyPerMass: 0
+  radiusScaleMultiplier: 3000
+  defaultMass: 10000
+  maxMass: 0
+  upgradedPlanetType: 0

@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8684bc4b07a4fa408371efbad992833, type: 3}
   m_Name: Neutral
   m_EditorClassIdentifier: 
-  isUnlocked: 1
-  planetType: 0
-  sprite: {fileID: 21300000, guid: 987ac4f1231446d41a1f9f2ca66ea299, type: 3}
-  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  isUnlocked: 0
+  planetType: 1
+  sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
+  defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
   planetName: Neutral Planet
   description: A neutral planet
   moneyPerMass: 0.16
-  radiusScaleMultiplier: 100
-  defaultMass: 100
+  radiusScaleMultiplier: 1000
+  defaultMass: 1000
   maxMass: 500
-  upgradedPlanetType: 1
+  upgradedPlanetType: 2

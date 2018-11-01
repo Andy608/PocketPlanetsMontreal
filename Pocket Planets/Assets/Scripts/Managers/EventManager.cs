@@ -38,5 +38,20 @@ namespace Managers
         public delegate void PlanetDestroyed(Planet destroyedPlanet);
         public static PlanetDestroyed OnPlanetDestroyed;
         //////////////////////////////////////////////////////////////
+
+        //  Special Game Events
+        //////////////////////////////////////////////////////////////
+        public delegate void PlanetAbsorbed(Planet absorber, Planet absorbed);
+        public static PlanetAbsorbed OnPlanetAbsorbed;
+
+        public delegate void OrbitOccurred(Planet parent, Planet orbital);
+        public static OrbitOccurred OnOrbitOccurred;
+
+        public delegate void PlanetEnteredGravitationalPull(Planet absorber, Planet absorbed);
+        public static PlanetEnteredGravitationalPull OnPlanetEnteredGravitationalPull;
+
+        public delegate void PlanetExitedGravitationalPull(Planet parent, Planet orbital);
+        public static PlanetExitedGravitationalPull OnPlanetExitedGravitationalPull;
+        //////////////////////////////////////////////////////////////
     }
 }

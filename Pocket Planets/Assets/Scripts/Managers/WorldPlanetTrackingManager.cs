@@ -6,21 +6,25 @@ namespace Managers
 {
     public class WorldPlanetTrackingManager : ManagerBase<WorldPlanetTrackingManager>
     {
-        private List<Planet> objectsInWorld = new List<Planet>();
+        //Holds all objects, even objects that are spawned but haven't been released yet.
+        private List<Planet> planetsInWorld = new List<Planet>();
 
-        public void RegisterObject(Planet planet)
+        public List<Planet> PlanetsInWorld { get { return planetsInWorld; } }
+
+        public void RegisterPlanet(Planet planet)
         {
-            if (objectsInWorld != null)
+            if (planetsInWorld != null)
             {
-                objectsInWorld.Add(planet);
+                Debug.Log("ADDED PLANET");
+                planetsInWorld.Add(planet);
             }
         }
 
-        public void UnregisterObject(Planet planet)
+        public void UnregisterPlanet(Planet planet)
         {
-            if (objectsInWorld != null)
+            if (planetsInWorld != null)
             {
-                objectsInWorld.Remove(planet);
+                planetsInWorld.Remove(planet);
             }
         }
     }

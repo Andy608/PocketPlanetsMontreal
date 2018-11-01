@@ -6,161 +6,170 @@ namespace Managers
 {
     public class InputManager : ManagerBase<InputManager>
     {
+        //The maximum pixels a tap can be dragged to count as a tap.
+        private float maxTapMovement = 50.0f;
+        private float sqrMaxTapMovement;
+
+        private Vector2 dragMovement;
+
+        private float dragMinTime = 0.1f;
+        private float pinchMinTime = 0.1f;
+        private float startTime;
+
+        //If movement is greated than maxTapMovement, the tap failed.
+        private bool tapFailed = false;
         private bool dragRecognized = false;
         private bool pinchRecognized = false;
-        private bool tapRecognized = false;
 
-        //Max time for one finger to be on the screen before a second one is.
-        //If there is only one finger on the screen afterthis time, or the touch is removed before this time, it is a tap.
-        //If there is two fingers on the screen after this time, it is a pinch.
-        private float minThresholdTime = 0.1f;
-        private float minThresholdCounter = 0.0f;
-        private bool startMinThresholdCount = false;
-
-        //If drag movement is greater than this, then drag event.
-        private float minDragMovement = 20.0f;
-        private Vector2 dragMovement;
+        private void Start()
+        {
+            sqrMaxTapMovement = maxTapMovement * maxTapMovement;
+        }
 
         private void Update()
         {
-            Touch firstTouch;
-            Touch secondTouch;
-
-            //Possible drag/pinch/tap
             if (Input.touchCount > 0)
             {
-                firstTouch = Input.touches[0];
-
-                if (firstTouch.phase == TouchPhase.Began)
+                if (Input.touchCount == 2)
                 {
-                    startMinThresholdCount = true;
-                    dragMovement = Vector2.zero;
+                    CheckForPinch();
                 }
 
-                if (startMinThresholdCount)
+                CheckForDrag();
+            }
+            else
+            {
+                dragRecognized = false;
+                pinchRecognized = false;
+                tapFailed = false;
+            }
+        }
+
+        //First Priority
+        private void CheckForPinch()
+        {
+            if (dragRecognized) return;
+
+            Touch firstTouch = Input.touches[0];
+            Touch secondTouch = Input.touches[1];
+
+            if (firstTouch.phase == TouchPhase.Began && secondTouch.phase == TouchPhase.Began)
+            {
+                dragMovement = Vector2.zero;
+                startTime = Time.time;
+            }
+            else if ((firstTouch.phase == TouchPhase.Moved || firstTouch.phase == TouchPhase.Stationary) && (secondTouch.phase == TouchPhase.Moved || secondTouch.phase == TouchPhase.Stationary))
+            {
+                if (!pinchRecognized && Time.time - startTime > pinchMinTime)
                 {
-                    //Increment timer for possible pinch began
-                    minThresholdCounter += Time.deltaTime;
-                }
+                    pinchRecognized = true;
+                    dragRecognized = false;
+                    tapFailed = true;
 
-                //Possible pinch begin/held
-                if (Input.touchCount > 1)
-                {
-                    secondTouch = Input.touches[1];
-
-                    startMinThresholdCount = false;
-
-                    //Debug.Log(minThresholdCounter + " | " + minThresholdTime);
-
-                    //Possible pinch began
-                    if (minThresholdCounter <= minThresholdTime)
+                    Debug.Log("PINCH BEGAN");
+                    if (EventManager.OnPinchBegan != null)
                     {
-                        //Pinch began
-                        if (secondTouch.phase == TouchPhase.Began)
-                        {
-                            //Reset the threshold count, and fire the began event.
-                            minThresholdCounter = 0.0f;
-                            if (EventManager.OnPinchBegan != null)
-                            {
-                                EventManager.OnPinchBegan(firstTouch, secondTouch);
-                            }
-
-                            Debug.Log("PINCH BEGAN");
-                            pinchRecognized = true;
-                        }
-                        //Pinch held
-                        else if (pinchRecognized && (firstTouch.phase == TouchPhase.Stationary || firstTouch.phase == TouchPhase.Moved) && 
-                                (secondTouch.phase == TouchPhase.Stationary || secondTouch.phase == TouchPhase.Moved))
-                        {
-                            if (EventManager.OnPinchHeld != null)
-                            {
-                                EventManager.OnPinchHeld(firstTouch, secondTouch);
-                            }
-
-                            Debug.Log("PINCH HELD");
-                        }
-                        //Pinch ended
-                        else
-                        {
-                            pinchRecognized = false;
-
-                            if (EventManager.OnPinchEnded != null)
-                            {
-                                EventManager.OnPinchEnded(firstTouch, secondTouch);
-                            }
-
-                            Debug.Log("PINCH ENDED");
-                        }
+                        EventManager.OnPinchBegan(firstTouch, secondTouch);
                     }
                 }
-                else if (!pinchRecognized)
+                else if (pinchRecognized)
                 {
-                    ////Possible drag began/held
-                    if (firstTouch.phase == TouchPhase.Moved || firstTouch.phase == TouchPhase.Stationary)
+                    Debug.Log("PINCH HELD");
+                    if (EventManager.OnPinchHeld != null)
                     {
-                        minThresholdCounter = 0.0f;
-                        dragMovement += firstTouch.deltaPosition;
-
-                        if (!dragRecognized && dragMovement.sqrMagnitude > minDragMovement * minDragMovement)
-                        {
-                            dragRecognized = true;
-
-                            if (EventManager.OnDragBegan != null)
-                            {
-                                EventManager.OnDragBegan(firstTouch);
-                            }
-                            Debug.Log("DRAG BEGAN");
-                        }
-                        else if (dragRecognized)
-                        {
-                            if (EventManager.OnDragHeld != null)
-                            {
-                                EventManager.OnDragHeld(firstTouch);
-                            }
-                            Debug.Log("DRAG HELD");
-                        }
+                        EventManager.OnPinchHeld(firstTouch, secondTouch);
                     }
-                    //Possible tap or drag ended
-                    else
-                    {
-                        minThresholdCounter = 0.0f;
-
-                        if (dragRecognized)
-                        {
-                            dragRecognized = false;
-
-                            if (EventManager.OnDragEnded != null)
-                            {
-                                EventManager.OnDragEnded(firstTouch);
-                            }
-                            Debug.Log("DRAG ENDED");
-                        }
-                        else if (!tapRecognized)
-                        {
-                            tapRecognized = true;
-
-                            if (EventManager.OnTapOccurred != null)
-                            {
-                                EventManager.OnTapOccurred(firstTouch);
-                            }
-
-                            Debug.Log("TAP OCCURRED");
-                        }
-                    }
+                }
+                else if (dragMovement.sqrMagnitude > sqrMaxTapMovement)
+                {
+                    tapFailed = true;
                 }
             }
             else
             {
-                minThresholdCounter = 0.0f;
-                ResetRecognizedValues();
+                if (pinchRecognized)
+                {
+                    Debug.Log("PINCH ENDED");
+                    if (EventManager.OnPinchEnded != null)
+                    {
+                        EventManager.OnPinchEnded(firstTouch, secondTouch);
+                    }
+                }
             }
         }
 
-        private void ResetRecognizedValues()
+        //Second Priority
+        private void CheckForDrag()
         {
-            dragRecognized = false;
-            pinchRecognized = false;
-            tapRecognized = false;
+            if (pinchRecognized) return;
+
+            Touch touch = Input.touches[0];
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                dragMovement = Vector2.zero;
+                startTime = Time.time;
+            }
+            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                dragMovement += touch.deltaPosition;
+
+                if (!dragRecognized && Time.time - startTime > dragMinTime)
+                {
+                    dragRecognized = true;
+                    pinchRecognized = false;
+                    tapFailed = true;
+
+                    Debug.Log("DRAG BEGAN");
+                    if (EventManager.OnDragBegan != null)
+                    {
+                        EventManager.OnDragBegan(touch);
+                    }
+                }
+                else if (dragRecognized)
+                {
+                    Debug.Log("DRAG HELD");
+                    if (EventManager.OnDragHeld != null)
+                    {
+                        EventManager.OnDragHeld(touch);
+                    }
+                }
+                else if (dragMovement.sqrMagnitude > sqrMaxTapMovement)
+                {
+                    tapFailed = true;
+                }
+            }
+            else
+            {
+                if (dragRecognized)
+                {
+                    Debug.Log("DRAG ENDED");
+                    if (EventManager.OnDragEnded != null)
+                    {
+                        EventManager.OnDragEnded(touch);
+                    }
+                }
+                else
+                {
+                    CheckForTap();
+                }
+            }
+        }
+
+        //Last Priority
+        private void CheckForTap()
+        {
+            if (dragRecognized) return;
+            if (pinchRecognized) return;
+
+            if (!tapFailed)
+            {
+                Debug.Log("TAP HAPPENED");
+                if (EventManager.OnTapOccurred != null)
+                {
+                    EventManager.OnTapOccurred(Input.touches[0]);
+                }
+            }
         }
 
         //Found on https://answers.unity.com/questions/1073979/android-touches-pass-through-ui-elements.html

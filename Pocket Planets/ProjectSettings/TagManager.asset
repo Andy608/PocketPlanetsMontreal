@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Anchor
   layers:
   - Default
   - TransparentFX
@@ -41,6 +42,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Trail
+    uniqueID: 1001019077
+    locked: 0
+  - name: Trajectory
+    uniqueID: 2635412767
+    locked: 0
   - name: Planet
     uniqueID: 3092046403
+    locked: 0
+  - name: PlanetAnimation
+    uniqueID: 4127156203
     locked: 0
