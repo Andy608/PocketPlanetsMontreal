@@ -18,7 +18,7 @@ public class PlanetAnimation : MonoBehaviour
         for (int i = 0; i < overlaps; ++i)
         {
             currentAnimation = animations[i];
-            currentAnimation = Instantiate(animationPrefab);
+            currentAnimation = Instantiate(animationPrefab, transform);
             currentAnimation.transform.SetParent(transform);
             currentAnimation.GetComponent<Animator>().SetFloat("CycleOffset", i * normalizedTimeDelta);
         }

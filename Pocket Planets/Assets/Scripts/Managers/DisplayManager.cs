@@ -6,7 +6,6 @@ namespace Managers
 {
     public class DisplayManager : ManagerBase<DisplayManager>
     {
-        private static float pixelsToUnits = 1.0f;
         private static float scale = 1.0f;
 
         //Designed for iPhone X resolution.
@@ -24,6 +23,9 @@ namespace Managers
         private float minimumSize;
         private float maximumSize;
 
+        [SerializeField] private float zoomScale = 1.0f;
+        [SerializeField] private bool touchToZoomEnabled = false;
+
         private float zoomDist = 0;
         private float prevZoomDist = 0;
         private float zoomOffset = 0;
@@ -34,30 +36,44 @@ namespace Managers
 
         private void Awake()
         {
-            if (gameCamera.orthographic)
-            {
-                scale = Screen.height / nativeResolution.y;
-                pixelsToUnits *= scale;
-                defaultSize = currentSize = gameCamera.orthographicSize = (Screen.height / 2.0f) / pixelsToUnits;
-                maximumSize = gameCamera.orthographicSize * 2.0f;
-                minimumSize = maximumSize / 8.0f;
-            }
-
-            zoomSpeed = Screen.dpi;
+            OnValidate();
         }
 
         private void OnEnable()
         {
-            EventManager.OnPinchBegan += ZoomBegan;
-            EventManager.OnPinchHeld += ZoomHeld;
-            EventManager.OnPinchEnded += ZoomEnded;
+            if (touchToZoomEnabled)
+            {
+                EventManager.OnPinchBegan += ZoomBegan;
+                EventManager.OnPinchHeld += ZoomHeld;
+                EventManager.OnPinchEnded += ZoomEnded;
+            }
         }
 
         private void OnDisable()
         {
-            EventManager.OnPinchBegan -= ZoomBegan;
-            EventManager.OnPinchHeld -= ZoomHeld;
-            EventManager.OnPinchEnded -= ZoomEnded;
+            if (touchToZoomEnabled)
+            {
+                EventManager.OnPinchBegan -= ZoomBegan;
+                EventManager.OnPinchHeld -= ZoomHeld;
+                EventManager.OnPinchEnded -= ZoomEnded;
+            }
+
+            //UpdateCameraSize(defaultSize);
+        }
+
+        private void OnValidate()
+        {
+            if (gameCamera.orthographic)
+            {
+                scale = Screen.height / nativeResolution.y;
+                defaultSize = currentSize = (zoomScale * (Screen.height / 2.0f) / scale);
+                maximumSize = defaultSize * 2.0f;
+                minimumSize = maximumSize / 8.0f;
+            }
+
+            zoomSpeed = Screen.dpi;
+
+            UpdateCameraSize(currentSize);
         }
 
         private void ZoomBegan(Touch first, Touch second)
@@ -87,7 +103,6 @@ namespace Managers
 
         private void Zoom()
         {
-            //Zoom offset in world units
             zoomOffset = prevZoomDist - zoomDist;
             UpdateCameraSize(currentSize + (zoomOffset * Time.deltaTime * zoomSpeed));
         }
