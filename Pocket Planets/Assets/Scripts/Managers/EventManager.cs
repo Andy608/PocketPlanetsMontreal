@@ -52,6 +52,9 @@ namespace Managers
 
         public delegate void PlanetExitedGravitationalPull(Planet parent, Planet orbital);
         public static PlanetExitedGravitationalPull OnPlanetExitedGravitationalPull;
+
+        public delegate void PlanetUpgraded(Planet planet);
+        public static PlanetUpgraded OnPlanetUpgraded;
         //////////////////////////////////////////////////////////////
     }
 }

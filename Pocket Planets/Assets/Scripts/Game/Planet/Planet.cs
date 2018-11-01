@@ -136,13 +136,6 @@ public class Planet : MonoBehaviour
         planetRigidbody.mass = currentMass;
         UpdatePlanetDimensions();
 
-        if (planetState != EnumPlanetState.ANCHOR)
-        {
-            //Add the impact force.
-            //We need to experiment with this. This is wrong.
-            planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
-        }
-
         if (Managers.EventManager.OnPlanetDestroyed != null)
         {
             Managers.EventManager.OnPlanetDestroyed(absorbed);
@@ -153,6 +146,23 @@ public class Planet : MonoBehaviour
             Managers.EventManager.OnPlanetAbsorbed(this, absorbed);
         }
 
+        if (planetState != EnumPlanetState.ANCHOR)
+        {
+            //Add the impact force.
+            //We need to experiment with this. This is wrong.
+            planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
+
+            if (currentMass >= planetProperties.MaxMass)
+            {
+                UpgradePlanet();
+            }
+        }
+
         Destroy(absorbed.gameObject);
+    }
+
+    private void UpgradePlanet()
+    {
+        Managers.PlanetSpawnManager.Instance.SpawnPlanetUpgrade(this);
     }
 }

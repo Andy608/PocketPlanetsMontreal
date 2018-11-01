@@ -87,10 +87,11 @@ namespace Managers
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
 
             GameObject spawnedPlanet = Instantiate(planetToSpawnPrefab.gameObject, spawnPosition, Quaternion.identity);
-            spawnedPlanet.transform.SetParent(worldParent);
 
             if (spawnedPlanet)
             {
+                spawnedPlanet.transform.SetParent(worldParent);
+
                 Planet newPlanet = spawnedPlanet.GetComponent<Planet>();
                 newPlanet.SetPlanetState(EnumPlanetState.SPAWNING);
 
@@ -103,6 +104,48 @@ namespace Managers
             }
 
             return null;
+        }
+
+        public void SpawnPlanetUpgrade(Planet planet)
+        {
+            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(planet.PlanetProperties.UpgradedPlanetType);
+
+            //The upgrade is not in the list.
+            if (!upgradedPrefab)
+            {
+                return;
+            }
+
+            GameObject upgradedPlanet = Instantiate(upgradedPrefab.gameObject, planet.transform);
+
+            if (upgradedPlanet)
+            {
+                upgradedPlanet.transform.SetParent(worldParent);
+
+                //Spawn in the new planet
+                Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
+                newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
+                newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
+
+                if (EventManager.OnPlanetSpawned != null && newPlanet)
+                {
+                    EventManager.OnPlanetSpawned(newPlanet);
+                }
+
+                if (EventManager.OnPlanetUpgraded != null)
+                {
+                    EventManager.OnPlanetUpgraded(newPlanet);
+                }
+
+                //Destroy the old planet
+                if (EventManager.OnPlanetDestroyed != null)
+                {
+                    EventManager.OnPlanetDestroyed(planet);
+                }
+
+                Destroy(planet.gameObject);
+            }
         }
 
         //Call this from the awake method in the PlanetStore with the default planet to spawn for now

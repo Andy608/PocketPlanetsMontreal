@@ -19,6 +19,6 @@ MonoBehaviour:
   description: A neutral planet
   moneyPerMass: 0.16
   radiusScaleMultiplier: 1000
-  defaultMass: 1000
+  defaultMass: 100
   maxMass: 500
   upgradedPlanetType: 2
