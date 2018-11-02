@@ -56,5 +56,17 @@ namespace Managers
         public delegate void PlanetUpgraded(Planet planet);
         public static PlanetUpgraded OnPlanetUpgraded;
         //////////////////////////////////////////////////////////////
+
+        //  Scene Events
+        //////////////////////////////////////////////////////////////
+        public delegate void SetTargetScene(EnumScene targetScene);
+        public static SetTargetScene OnSetTargetScene;
+
+        public delegate void RequestSceneChange();
+        public static RequestSceneChange OnRequestSceneChange;
+
+        public delegate void StartFadeOut();
+        public static StartFadeOut OnStartFadeOut;
+        //////////////////////////////////////////////////////////////
     }
 }
