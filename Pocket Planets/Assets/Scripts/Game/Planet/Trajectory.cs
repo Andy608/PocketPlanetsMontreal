@@ -84,7 +84,6 @@ public class Trajectory : MonoBehaviour
             //texture is 64 pix
             //scale should be 64 / 100
 
-            Debug.Log("Line: " + lineDistance);
             float xScale = lineDistance / (WIDTH * Screen.dpi / 1.2f);
             trajectoryLineRenderer.material.SetTextureScale("_MainTex", new Vector2(xScale, 1.0f));
         }

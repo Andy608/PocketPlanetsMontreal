@@ -182,7 +182,7 @@ namespace Managers
 
             foreach (RaycastResult raycast in results)
             {
-                if (raycast.gameObject.layer == LayerMask.GetMask("UI"))
+                if (raycast.gameObject.layer == LayerMask.NameToLayer("UI"))
                 {
                     return true;
                 }

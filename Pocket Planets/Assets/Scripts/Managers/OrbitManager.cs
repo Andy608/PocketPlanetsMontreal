@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 namespace Managers
 {
@@ -9,7 +9,7 @@ namespace Managers
     {
         private float orbitCount;
 
-        [SerializeField] private Text orbitLabel;
+        [SerializeField] private TextMeshProUGUI orbitLabel;
 
         private void OnEnable()
         {

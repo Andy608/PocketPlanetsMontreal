@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum EnumPlanetState
 {
-    ANCHOR,
     SPAWNING,
     ALIVE,
     DEAD
@@ -13,8 +12,6 @@ public enum EnumPlanetState
 [RequireComponent(typeof(Rigidbody2D))]
 public class Planet : MonoBehaviour
 {
-    //Every time two planets collide, all of the faces get added onto the planet lol
-    private List<GameObject> childFaces = new List<GameObject>();
     private List<Planet> planetsImGravitating = new List<Planet>();
 
     private Color currentColor;
@@ -60,11 +57,6 @@ public class Planet : MonoBehaviour
 
     private void OnEnable()
     {
-        if (gameObject.tag == "Anchor")
-        {
-            planetState = EnumPlanetState.ANCHOR;
-        }
-
         planetTrajectory = GetComponent<Trajectory>();
         planetRigidbody = GetComponent<Rigidbody2D>();
         currentMass = planetProperties.DefaultMass;
@@ -86,13 +78,13 @@ public class Planet : MonoBehaviour
         }
     }
 
-    private void OnValidate()
-    {
-        currentMass = planetProperties.DefaultMass;
-        GetComponent<Rigidbody2D>().mass = currentMass;
-        UpdatePlanetDimensions();
-        SetColor(planetProperties.DefaultColor);
-    }
+    //private void OnValidate()
+    //{
+    //    currentMass = planetProperties.DefaultMass;
+    //    GetComponent<Rigidbody2D>().mass = currentMass;
+    //    UpdatePlanetDimensions();
+    //    SetColor(planetProperties.DefaultColor);
+    //}
 
     public void SetPlanetState(EnumPlanetState state)
     {
@@ -122,7 +114,6 @@ public class Planet : MonoBehaviour
 
     private void SetColor(Color color)
     {
-        Debug.Log("SETTING COLOR: " + color);
         currentColor = color;
 
         planetObject.GetComponent<SpriteRenderer>().color = currentColor;
@@ -146,7 +137,7 @@ public class Planet : MonoBehaviour
             Managers.EventManager.OnPlanetAbsorbed(this, absorbed);
         }
 
-        if (planetState != EnumPlanetState.ANCHOR)
+        if (!planetProperties.IsAnchor)
         {
             //Add the impact force.
             //We need to experiment with this. This is wrong.

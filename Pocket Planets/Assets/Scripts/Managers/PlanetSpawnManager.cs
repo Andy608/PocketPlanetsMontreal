@@ -83,6 +83,7 @@ namespace Managers
         private Planet SpawnPlanet(Touch touch)
         {
             if (InputManager.IsPointerOverUIObject()) return null;
+            Debug.Log("SPAWNING");
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
 
@@ -146,6 +147,30 @@ namespace Managers
 
                 Destroy(planet.gameObject);
             }
+        }
+
+        public Planet SpawnPlanet(EnumPlanetType planetType, Vector2 position)
+        {
+            Planet prefab = PlanetStoreManager.Instance.GetPlanetPrefab(planetType);
+
+            GameObject spawnedPlanet = Instantiate(prefab.gameObject, position, Quaternion.identity);
+
+            if (spawnedPlanet)
+            {
+                spawnedPlanet.transform.SetParent(worldParent);
+
+                Planet newPlanet = spawnedPlanet.GetComponent<Planet>();
+                newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
+
+                if (EventManager.OnPlanetSpawned != null && newPlanet)
+                {
+                    EventManager.OnPlanetSpawned(newPlanet);
+                }
+
+                return newPlanet;
+            }
+
+            return null;
         }
 
         //Call this from the awake method in the PlanetStore with the default planet to spawn for now

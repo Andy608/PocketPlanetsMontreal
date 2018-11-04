@@ -18,7 +18,7 @@ namespace Managers
             {
                 Planet attractee = planets[i];
 
-                if (attractee.PlanetState == EnumPlanetState.ALIVE)
+                if (attractee.PlanetState == EnumPlanetState.ALIVE && !attractee.PlanetProperties.IsAnchor)
                 {
                     for (j = 0; j < planets.Count; ++j)
                     {
@@ -28,8 +28,7 @@ namespace Managers
                         {
                             continue;
                         }
-                        else if (attractor.PlanetState == EnumPlanetState.ANCHOR || 
-                            attractor.PlanetState == EnumPlanetState.ALIVE)
+                        else if (attractor.PlanetState == EnumPlanetState.ALIVE)
                         {
                             //Pull attractee
                             AttractPlanet(attractor, attractee);

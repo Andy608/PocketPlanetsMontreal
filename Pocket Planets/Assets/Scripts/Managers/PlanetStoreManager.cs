@@ -8,33 +8,50 @@ namespace Managers
     {
         //List of all the planet prefabs
         [SerializeField] private Planet unknownPlanetPrefab;
-        [SerializeField] private List<Planet> planetPrefabs = new List<Planet>();
+        [SerializeField] private List<Planet> userPlanetPrefabs = new List<Planet>();
 
-        private void Awake()
+        private Dictionary<Planet, PlanetProperties> planetPrefabList = new Dictionary<Planet, PlanetProperties>();
+
+        public Dictionary<Planet, PlanetProperties> PlanetPrefabs { get { return planetPrefabList; } }
+
+        private void OnEnable()
         {
-            if (planetPrefabs.Count > 0)
-            {
-                PlanetSpawnManager.Instance.SetPlanetToSpawn(planetPrefabs[0]);
-            }
-            else
-            {
-                Debug.Log("ERROR. PLANET PREFAB LIST IS EMPTY.");
-                PlanetSpawnManager.Instance.SetPlanetToSpawn(null);
-            }
+            PopulatePlanetList();
+
+            PlanetSpawnManager.Instance.SetPlanetToSpawn(EnumPlanetType.ASTEROID);
+            //if (planetPrefabs.Count > 0)
+            //{
+            //    PlanetSpawnManager.Instance.SetPlanetToSpawn(planetPrefabs[0]);
+            //}
+            //else
+            //{
+            //    Debug.Log("ERROR. PLANET PREFAB LIST IS EMPTY.");
+            //    PlanetSpawnManager.Instance.SetPlanetToSpawn(null);
+            //}
         }
 
         public Planet GetPlanetPrefab(EnumPlanetType planetType)
         {
-            foreach (Planet planet in planetPrefabs)
+            foreach (KeyValuePair<Planet, PlanetProperties> planetIndex in planetPrefabList)
             {
-                if (planet.PlanetProperties.PlanetType == planetType)
+                if (planetIndex.Value.PlanetType == planetType)
                 {
-                    return planet;
+                    return planetIndex.Key;
                 }
             }
 
             Debug.Log("ERROR. NO PLANET WITH TYPE: " + planetType.ToString());
             return null;
+        }
+
+        private void PopulatePlanetList()
+        {
+            Debug.Log("POPULATING PREFAB LIST");
+            foreach (Planet planet in userPlanetPrefabs)
+            {
+                PlanetProperties newProperties = Instantiate(planet.PlanetProperties);
+                planetPrefabList.Add(planet, newProperties);
+            }
         }
     }
 }

@@ -8,10 +8,12 @@ namespace Managers
     public class TitleSceneManager : ManagerBase<TitleSceneManager>
     {
         //Once a planet is absorbed into this, the game starts.
-        [SerializeField] private Planet anchorGoal;
+        private Planet anchorGoal;
 
         private void OnEnable()
         {
+            anchorGoal = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, new Vector2(0, -50));
+
             EventManager.OnPlanetAbsorbed += HandleAbsorbed;
         }
 

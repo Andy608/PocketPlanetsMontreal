@@ -41,7 +41,6 @@ public class Trail : MonoBehaviour
         planetTrailRenderer.endColor = Color.Lerp(currentPlanet.CurrentColor, Managers.DisplayManager.Instance.BackgroundColor, 0.3f);
 
         //Update trail width
-        Debug.Log("UPDATING TRAIL: " + currentPlanet.Circumference);
         float width = currentPlanet.Circumference;
         planetTrailRenderer.startWidth = width;
         planetTrailRenderer.endWidth = width;

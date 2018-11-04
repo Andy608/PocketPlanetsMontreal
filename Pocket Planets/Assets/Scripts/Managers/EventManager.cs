@@ -55,6 +55,9 @@ namespace Managers
 
         public delegate void PlanetUpgraded(Planet planet);
         public static PlanetUpgraded OnPlanetUpgraded;
+
+        public delegate void NewPlanetUnlocked(EnumPlanetType planetType);
+        public static NewPlanetUnlocked OnNewPlanetUnlocked;
         //////////////////////////////////////////////////////////////
 
         //  Scene Events

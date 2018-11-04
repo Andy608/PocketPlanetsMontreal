@@ -5,12 +5,14 @@ using UnityEngine;
 //The different planet emotions
 public enum EnumPlanetType
 {
-    ANCHOR,     // Cool sunglasses
-    NEUTRAL,    //  :|
-    CURIOUS,    //  :o
-    GRUMPY,     //  >:(
-    SMILEY,     //  :)
-    BIG_SMILEY, //  :D
+    BLACKHOLE,
+    ASTEROID,
+    COMET,
+    TERRESTRIAL_PLANET,
+    RING_PLANET,
+    GAS_PLANET,
+    STAR,
+    SUPERGIANT
 }
 
 [CreateAssetMenu(fileName = "New PlanetProperty", menuName = "PlanetProperty")]
@@ -18,6 +20,7 @@ public class PlanetProperties : ScriptableObject
 {
     [SerializeField] private bool isUnlocked;
     [SerializeField] private EnumPlanetType planetType;
+    [SerializeField] private bool isAnchor;
 
     //There will be an animation sequence in the future.
     //Put the animation on the child object
@@ -43,6 +46,8 @@ public class PlanetProperties : ScriptableObject
     public EnumPlanetType PlanetType { get { return planetType; } }
     public EnumPlanetType UpgradedPlanetType { get { return upgradedPlanetType; } }
 
+    public bool IsAnchor { get { return isAnchor; } }
+
     //Use an animation in the future.
     public Sprite PlanetSprite { get { return sprite; } }
     public Color DefaultColor { get { return defaultColor; } }
@@ -54,12 +59,7 @@ public class PlanetProperties : ScriptableObject
     
     public float DefaultMass { get { return defaultMass; } }
     public float MaxMass { get { return maxMass; } }
-    public bool IsUnlocked { get { return isUnlocked; } set { isUnlocked = value; } }
-
-    private void Awake()
-    {
-        buyCounter = 0;
-    }
+    public bool IsUnlocked { get { return isUnlocked; } }
 
     private void OnEnable()
     {
@@ -69,10 +69,6 @@ public class PlanetProperties : ScriptableObject
     private void OnDisable()
     {
         //Unsubscribe to buy event.
-
-        //Reset before game ends.
-        isUnlocked = false;
-        buyCounter = 0;
     }
 
     public void BuyObject()

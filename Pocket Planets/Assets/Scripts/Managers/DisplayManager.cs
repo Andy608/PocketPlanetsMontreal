@@ -12,10 +12,6 @@ namespace Managers
         [SerializeField] private Vector2 nativeResolution = new Vector2(1125, 2436);
         [SerializeField] private Camera gameCamera;
 
-        public Color BackgroundColor { get { return gameCamera.backgroundColor; } }
-        public float CurrentCameraSize { get { return currentSize; } }
-        public float DefaultCameraSize { get { return defaultSize; } }
-
         private float zoomSpeed;
 
         private float defaultSize;
@@ -30,7 +26,14 @@ namespace Managers
         private float prevZoomDist = 0;
         private float zoomOffset = 0;
 
+        public Color BackgroundColor { get { return gameCamera.backgroundColor; } }
+
         public float CameraOrthoSize { get { return gameCamera.orthographicSize; } }
+        public float CurrentCameraSize { get { return currentSize; } }
+        public float DefaultCameraSize { get { return defaultSize; } }
+
+        public float MaxCameraHeight { get { return maximumSize; } }
+        public float MaxCameraWidth { get { return maximumSize * Screen.width / Screen.height; } }
 
         public float Scale { get { return scale; } }
 
