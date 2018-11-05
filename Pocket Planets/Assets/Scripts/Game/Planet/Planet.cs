@@ -6,6 +6,7 @@ public enum EnumPlanetState
 {
     SPAWNING,
     ALIVE,
+    PAUSED,
     DEAD
 }
 
@@ -15,7 +16,8 @@ public class Planet : MonoBehaviour
     private List<Planet> planetsImGravitating = new List<Planet>();
 
     private Color currentColor;
-    private EnumPlanetState planetState;
+    private EnumPlanetState planetState = EnumPlanetState.DEAD;
+    private EnumPlanetState previousPlanetState = EnumPlanetState.DEAD;
 
     private float currentScale = 1.0f;
     private Vector3 currentScaleAsVec = new Vector3();
@@ -33,6 +35,10 @@ public class Planet : MonoBehaviour
 
     private Rigidbody2D planetRigidbody;
     private Trajectory planetTrajectory;
+    private Trail planetTrail;
+
+    //In the future make a collisionscript that keeps track of all the objects collided into it.
+    private float asteroidCollisionCounter = 0;
 
     public List<Planet> PlanetsImGravitating { get { return planetsImGravitating; } }
 
@@ -41,14 +47,18 @@ public class Planet : MonoBehaviour
     public Rigidbody2D PlanetRigidbody { get { return planetRigidbody; } }
     public Trajectory PlanetTrajectory {  get { return planetTrajectory; } }
 
-    public EnumPlanetState PlanetState { get { return planetState; } }
+    public EnumPlanetState PlanetState { get { return planetState; } set { previousPlanetState = planetState; planetState = value; } }
+    public EnumPlanetState PreviousPlanetState { get { return previousPlanetState; } }
     public Color CurrentColor { get { return currentColor; } }
+    public Trail PlanetTrail { get { return planetTrail; } }
 
     public Vector2 InitialVelocity { get { return initialVelocity; } set { if (initialVelocity == Vector2.zero) { initialVelocity = value; } } }
     public float Circumference { get { return circumference; } }
     public float Radius { get { return circumference / 2.0f; } }
     public float RadiusSquared { get { float r = Radius; return r * r; } }
     public float CurrentMass { get { return currentMass; } }
+
+    public float AsteroidCollisionCounter { get { return asteroidCollisionCounter; } }
 
     private void Awake()
     {
@@ -57,6 +67,8 @@ public class Planet : MonoBehaviour
 
     private void OnEnable()
     {
+        planetTrail = GetComponent<Trail>();
+
         planetTrajectory = GetComponent<Trajectory>();
         planetRigidbody = GetComponent<Rigidbody2D>();
         currentMass = planetProperties.DefaultMass;
@@ -145,15 +157,21 @@ public class Planet : MonoBehaviour
 
             if (currentMass >= planetProperties.MaxMass)
             {
-                UpgradePlanet();
+                CollapsePlanet();
             }
+        }
+
+        //Move this to separate script in future.
+        if (absorbed.PlanetProperties.PlanetType == EnumPlanetType.ASTEROID)
+        {
+            ++asteroidCollisionCounter;
         }
 
         Destroy(absorbed.gameObject);
     }
 
-    private void UpgradePlanet()
+    private void CollapsePlanet()
     {
-        Managers.PlanetSpawnManager.Instance.SpawnPlanetUpgrade(this);
+        Managers.PlanetSpawnManager.Instance.CollapsePlanet(this);
     }
 }

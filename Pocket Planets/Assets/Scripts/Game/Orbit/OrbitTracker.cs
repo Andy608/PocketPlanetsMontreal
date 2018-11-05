@@ -185,22 +185,22 @@ public class OrbitTracker : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (Managers.GameState.Instance.IsState(Managers.GameState.EnumGameState.RUNNING))
-        //{
-        for (int i = 0; i < childList.Count; ++i)
+        if (Managers.GameStateManager.Instance.IsState(Managers.GameStateManager.EnumGameState.RUNNING))
         {
-            OrbitData currentData = childList[i];
+            for (int i = 0; i < childList.Count; ++i)
+            {
+                OrbitData currentData = childList[i];
 
-            if (currentData.ChildTransform == null || currentData.ParentTransform == null)
-            {
-                childList.Remove(currentData);
-                --i;
-            }
-            else
-            {
-                currentData.UpdateOrbit();
+                if (currentData.ChildTransform == null || currentData.ParentTransform == null)
+                {
+                    childList.Remove(currentData);
+                    --i;
+                }
+                else
+                {
+                    currentData.UpdateOrbit();
+                }
             }
         }
-        //}
     }
 }

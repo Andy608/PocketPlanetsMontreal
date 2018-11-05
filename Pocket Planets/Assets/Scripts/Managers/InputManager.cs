@@ -28,6 +28,11 @@ namespace Managers
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameStateManager.Instance.TogglePause();
+            }
+
             if (Input.touchCount > 0)
             {
                 if (Input.touchCount == 2)
@@ -180,8 +185,11 @@ namespace Managers
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
+            //Debug.Log("Raycasts: " + results.Count);
+
             foreach (RaycastResult raycast in results)
             {
+                //Debug.Log("Raycast Layer: " + raycast.gameObject.layer.ToString());
                 if (raycast.gameObject.layer == LayerMask.NameToLayer("UI"))
                 {
                     return true;

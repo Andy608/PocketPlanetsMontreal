@@ -24,6 +24,7 @@ namespace Managers
         }
     }
 
+    //Gonna have to redo this.
     public class Money
     {
         private int[] moneyLevels = new int[(int)EnumEconomyLevel.H];

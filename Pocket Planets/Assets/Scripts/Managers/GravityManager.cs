@@ -6,32 +6,35 @@ namespace Managers
 {
     public class GravityManager : ManagerBase<GravityManager>
     {
-        public static readonly float G = 66.7408f * 100.0f;//Heuristic
+        public static readonly float G = 6.67408f * 1000.0f;//Heuristic
         private static readonly float MIN_THRESHOLD = 1.0f;
 
         private void Update()
         {
-            List<Planet> planets = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
-
-            int i, j;
-            for (i = 0; i < planets.Count; ++i)
+            if (GameStateManager.Instance.IsState(GameStateManager.EnumGameState.RUNNING))
             {
-                Planet attractee = planets[i];
+                List<Planet> planets = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
 
-                if (attractee.PlanetState == EnumPlanetState.ALIVE && !attractee.PlanetProperties.IsAnchor)
+                int i, j;
+                for (i = 0; i < planets.Count; ++i)
                 {
-                    for (j = 0; j < planets.Count; ++j)
-                    {
-                        Planet attractor = planets[j];
+                    Planet attractee = planets[i];
 
-                        if (attractor == attractee)
+                    if (attractee.PlanetState == EnumPlanetState.ALIVE && !attractee.PlanetProperties.IsAnchor)
+                    {
+                        for (j = 0; j < planets.Count; ++j)
                         {
-                            continue;
-                        }
-                        else if (attractor.PlanetState == EnumPlanetState.ALIVE)
-                        {
-                            //Pull attractee
-                            AttractPlanet(attractor, attractee);
+                            Planet attractor = planets[j];
+
+                            if (attractor == attractee)
+                            {
+                                continue;
+                            }
+                            else if (attractor.PlanetState == EnumPlanetState.ALIVE)
+                            {
+                                //Pull attractee
+                                AttractPlanet(attractor, attractee);
+                            }
                         }
                     }
                 }

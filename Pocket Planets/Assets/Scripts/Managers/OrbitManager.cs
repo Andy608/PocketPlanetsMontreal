@@ -21,7 +21,7 @@ namespace Managers
             EventManager.OnOrbitOccurred -= TrackOrbit;
         }
 
-        private void TrackOrbit(Planet parent, Planet orbital)
+        private void TrackOrbit(OrbitData orbitData)
         {
             //For now.
             ++orbitCount;

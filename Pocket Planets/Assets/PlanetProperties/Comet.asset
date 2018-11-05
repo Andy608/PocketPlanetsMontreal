@@ -18,8 +18,6 @@ MonoBehaviour:
   defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
   planetName: Planet B
   description: 
-  moneyPerMass: 0.16
   radiusScaleMultiplier: 100
   defaultMass: 50
-  maxMass: 500
-  upgradedPlanetType: 2
+  maxMass: 10000

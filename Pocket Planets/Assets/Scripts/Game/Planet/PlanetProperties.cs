@@ -31,20 +31,17 @@ public class PlanetProperties : ScriptableObject
     [SerializeField] private string planetName;
     [SerializeField] [Multiline] private string description;
 
-    [SerializeField] private float moneyPerMass;
+    //[SerializeField] private Money costPerMass;
+    //[SerializeField] private Money profitPerSec;
     [SerializeField] private float radiusScaleMultiplier;
     [SerializeField] private float defaultMass;
 
     //If this is reached, they turn into a different planet type.
     [SerializeField] private float maxMass;
 
-    //The different planet type
-    [SerializeField] private EnumPlanetType upgradedPlanetType;
-
     private int buyCounter;
 
     public EnumPlanetType PlanetType { get { return planetType; } }
-    public EnumPlanetType UpgradedPlanetType { get { return upgradedPlanetType; } }
 
     public bool IsAnchor { get { return isAnchor; } }
 
@@ -55,11 +52,12 @@ public class PlanetProperties : ScriptableObject
     public string PlanetName { get { return planetName; } }
     public string PlanetDesc { get { return description; } }
     public float RadiusScaleMult { get { return radiusScaleMultiplier; } }
-    public float MoneyPerMass { get { return moneyPerMass; } }
+    //public float CostPerMass { get { return costPerMass; } }
+    //public float ProfitPerSecond { get { return ProfitPerSecond; } }
     
     public float DefaultMass { get { return defaultMass; } }
     public float MaxMass { get { return maxMass; } }
-    public bool IsUnlocked { get { return isUnlocked; } }
+    public bool IsUnlocked { get { return isUnlocked; } set { isUnlocked = true; } }
 
     private void OnEnable()
     {

@@ -18,8 +18,6 @@ MonoBehaviour:
   defaultColor: {r: 0.72526294, g: 0.25882357, b: 0.93333334, a: 1}
   planetName: Planet G
   description: 
-  moneyPerMass: 0
   radiusScaleMultiplier: 100
   defaultMass: 800
-  maxMass: 1000
-  upgradedPlanetType: 4
+  maxMass: 10000

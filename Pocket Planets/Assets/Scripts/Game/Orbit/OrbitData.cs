@@ -65,11 +65,6 @@ public class OrbitData
 
     public void UpdateOrbit()
     {
-        if (childTransform == null || parentTransform == null)
-        {
-            
-        }
-
         deltaDuration = Vector2.Angle(prevDirection, currentDirection);
 
         prevDirection = currentDirection;
@@ -86,7 +81,7 @@ public class OrbitData
 
             if (Managers.EventManager.OnOrbitOccurred != null)
             {
-                Managers.EventManager.OnOrbitOccurred(orbitParent, orbitChild);
+                Managers.EventManager.OnOrbitOccurred(this);
             }
         }
     }

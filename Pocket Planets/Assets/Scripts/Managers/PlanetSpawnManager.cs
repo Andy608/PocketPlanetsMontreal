@@ -107,9 +107,9 @@ namespace Managers
             return null;
         }
 
-        public void SpawnPlanetUpgrade(Planet planet)
+        public void CollapsePlanet(Planet planet)
         {
-            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(planet.PlanetProperties.UpgradedPlanetType);
+            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(EnumPlanetType.BLACKHOLE);
 
             //The upgrade is not in the list.
             if (!upgradedPrefab)
@@ -125,8 +125,8 @@ namespace Managers
 
                 //Spawn in the new planet
                 Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
-                newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
-                newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                //newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
+                //newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
                 newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
@@ -134,9 +134,9 @@ namespace Managers
                     EventManager.OnPlanetSpawned(newPlanet);
                 }
 
-                if (EventManager.OnPlanetUpgraded != null)
+                if (EventManager.OnPlanetCollapsed != null)
                 {
-                    EventManager.OnPlanetUpgraded(newPlanet);
+                    EventManager.OnPlanetCollapsed(newPlanet);
                 }
 
                 //Destroy the old planet
@@ -179,6 +179,15 @@ namespace Managers
         {
             //Ask planet store for planet prefab by type
             planetToSpawnPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(planetType);
+
+            if (planetToSpawnPrefab != null)
+            {
+                Debug.Log("Setting Planet Spawn Type: " + planetType);
+            }
+            else
+            {
+                Debug.Log("Unable to set Planet Spawn Type. Null.");
+            }
         }
 
         public void SetPlanetToSpawn(Planet planetPrefab)

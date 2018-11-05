@@ -18,8 +18,6 @@ MonoBehaviour:
   defaultColor: {r: 0.37201852, g: 0.8301887, b: 0.53567433, a: 1}
   planetName: Planet C
   description: 
-  moneyPerMass: 0.18
   radiusScaleMultiplier: 100
   defaultMass: 300
-  maxMass: 1000
-  upgradedPlanetType: 3
+  maxMass: 10000

@@ -6,7 +6,8 @@ namespace Managers
 {
     public class DrawOrderManager : ManagerBase<DrawOrderManager>
     {
-        private const string SORTING_LAYER = "Planet";
+        private const string PLANET_SORTING_LAYER = "Planet";
+        private const string TRAIL_SORTING_LAYER = "Trail";
 
         private void OnEnable()
         {
@@ -21,7 +22,8 @@ namespace Managers
         private void UpdateDrawOrder(Planet newPlanet)
         {
             //Set the new objects draw layer to the space object draw layer
-            newPlanet.PlanetObject.GetComponent<SpriteRenderer>().sortingLayerName = SORTING_LAYER;
+            newPlanet.PlanetObject.GetComponent<SpriteRenderer>().sortingLayerName = PLANET_SORTING_LAYER;
+            newPlanet.PlanetTrail.PlanetTrailerRenderer.sortingLayerName = TRAIL_SORTING_LAYER;
 
             //Get list of active objects in universe.
             List<Planet> activePlanets = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
@@ -36,7 +38,9 @@ namespace Managers
             int currentIndex = 0;
             for (; currentIndex < activePlanets.Count; ++currentIndex)
             {
-                activePlanets[currentIndex].PlanetObject.GetComponent<SpriteRenderer>().sortingOrder = currentIndex;
+                Planet currentPlanet = activePlanets[currentIndex];
+                currentPlanet.PlanetObject.GetComponent<SpriteRenderer>().sortingOrder = currentIndex;
+                currentPlanet.PlanetTrail.PlanetTrailerRenderer.sortingOrder = activePlanets.Count - 1 - currentIndex;
             }
         }
 

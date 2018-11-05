@@ -9,7 +9,6 @@ namespace Managers
         //List of all the planet prefabs
         [SerializeField] private Planet unknownPlanetPrefab;
         [SerializeField] private List<Planet> userPlanetPrefabs = new List<Planet>();
-
         private Dictionary<Planet, PlanetProperties> planetPrefabList = new Dictionary<Planet, PlanetProperties>();
 
         public Dictionary<Planet, PlanetProperties> PlanetPrefabs { get { return planetPrefabList; } }

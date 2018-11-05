@@ -18,8 +18,6 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 0.90669376, b: 0.523, a: 1}
   planetName: Planet D
   description: 
-  moneyPerMass: 0
   radiusScaleMultiplier: 100
   defaultMass: 600
-  maxMass: 1000
-  upgradedPlanetType: 5
+  maxMass: 10000
