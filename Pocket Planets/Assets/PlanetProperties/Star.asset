@@ -19,12 +19,12 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 0.7828489, b: 0.4470588, a: 1}
   planetName: STAR
   description: 
-  defaultCostLevel: 4
-  defaultPrimaryCost: 14
+  defaultCostLevel: 2
+  defaultPrimaryCost: 1
   defaultSecondaryCost: 0
-  defaultProfitLevel: 3
-  defaultPrimaryProfit: 30
-  defaultSecondaryProfit: 80
+  defaultProfitLevel: 1
+  defaultPrimaryProfit: 15
+  defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100
   defaultMass: 1000
   planetUpgrade: {fileID: 11400000, guid: b6b28f53e91eba545b6c6664e976b6e4, type: 2}

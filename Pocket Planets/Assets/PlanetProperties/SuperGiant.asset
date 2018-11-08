@@ -19,12 +19,12 @@ MonoBehaviour:
   defaultColor: {r: 0.9245283, g: 0.4518562, b: 0.33579564, a: 1}
   planetName: SUPERGIANT
   description: 
-  defaultCostLevel: 5
-  defaultPrimaryCost: 30
+  defaultCostLevel: 2
+  defaultPrimaryCost: 6
   defaultSecondaryCost: 0
-  defaultProfitLevel: 4
-  defaultPrimaryProfit: 60
+  defaultProfitLevel: 1
+  defaultPrimaryProfit: 80
   defaultSecondaryProfit: 0
-  radiusScaleMultiplier: 500
-  defaultMass: 5000
+  radiusScaleMultiplier: 400
+  defaultMass: 8000
   planetUpgrade: {fileID: 11400000, guid: de8a02dd38506f947be12619da75ad41, type: 2}

@@ -16,7 +16,7 @@ public class MoneyHandler : MonoBehaviour
 
     private void Update()
     {
-        if (currentPlanet.PlanetState == EnumPlanetState.ALIVE)
+        if (Managers.PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME && currentPlanet.PlanetState == EnumPlanetState.ALIVE)
         {
             Debug.Log("PROFIT: " + profitPerFrame.GetBalance());
             Managers.EconomyManager.Instance.Wallet.AddMoney(profitPerFrame);

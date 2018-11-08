@@ -38,20 +38,23 @@ public class OrbitTracker : MonoBehaviour
 
     private void ShouldTrackOrbit(Planet firstPlanet, Planet secondPlanet)
     {
-        if (firstPlanet == currentPlanet)
+        if (firstPlanet != null && secondPlanet != null)
         {
-            if (firstPlanet.PlanetRigidbody.mass > secondPlanet.PlanetRigidbody.mass)
+            if (firstPlanet == currentPlanet)
             {
-                TrackChildOrbit(secondPlanet);
-            }
-            else if (firstPlanet.PlanetRigidbody.mass == secondPlanet.PlanetRigidbody.mass &&
-                !secondPlanet.GetComponent<OrbitTracker>().IsTrackingChildOrbit(firstPlanet))
-            {
-                TrackChildOrbit(secondPlanet);
-            }
-            else
-            {
-                TrackParentOrbit(secondPlanet);
+                if (firstPlanet.PlanetRigidbody.mass > secondPlanet.PlanetRigidbody.mass)
+                {
+                    TrackChildOrbit(secondPlanet);
+                }
+                else if (firstPlanet.PlanetRigidbody.mass == secondPlanet.PlanetRigidbody.mass &&
+                    !secondPlanet.GetComponent<OrbitTracker>().IsTrackingChildOrbit(firstPlanet))
+                {
+                    TrackChildOrbit(secondPlanet);
+                }
+                else
+                {
+                    TrackParentOrbit(secondPlanet);
+                }
             }
         }
     }

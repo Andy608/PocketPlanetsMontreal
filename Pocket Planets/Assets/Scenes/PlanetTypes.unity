@@ -152,6 +152,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4743395277878128, guid: 767d81082676e4e44b601df994d640e8, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.6925687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743395277878128, guid: 767d81082676e4e44b601df994d640e8, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.6925687
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114917954471975874, guid: 767d81082676e4e44b601df994d640e8, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 767d81082676e4e44b601df994d640e8, type: 2}
@@ -724,7 +732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1155700785
 Transform:
   m_ObjectHideFlags: 0

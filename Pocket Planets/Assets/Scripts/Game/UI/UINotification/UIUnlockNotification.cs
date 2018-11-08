@@ -26,8 +26,8 @@ public class UIUnlockNotification : MonoBehaviour
     {
         planetImage.sprite = planetProperties.PlanetSprite;
         planetName.text = planetProperties.PlanetName;
-        //planetCost.text = planetProperties.PlanetCost;
-        //planetProfit.text = planetProperties.PlanetProfit;
+        planetCost.text = planetProperties.DefaultCost.GetBalance();
+        planetProfit.text = planetProperties.DefaultProfitPerSecond.GetBalance();
     }
 
     public void OnCloseButtonPressed()

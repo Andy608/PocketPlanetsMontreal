@@ -19,11 +19,11 @@ MonoBehaviour:
   defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
   planetName: COMET
   description: 
-  defaultCostLevel: 2
-  defaultPrimaryCost: 8
+  defaultCostLevel: 1
+  defaultPrimaryCost: 5
   defaultSecondaryCost: 0
   defaultProfitLevel: 1
-  defaultPrimaryProfit: 60
+  defaultPrimaryProfit: 1
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100
   defaultMass: 50

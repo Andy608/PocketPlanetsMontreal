@@ -19,11 +19,11 @@ MonoBehaviour:
   defaultColor: {r: 0.71780396, g: 0.38074043, b: 0.8679245, a: 1}
   planetName: RING PLANET
   description: 
-  defaultCostLevel: 2
-  defaultPrimaryCost: 40
+  defaultCostLevel: 1
+  defaultPrimaryCost: 50
   defaultSecondaryCost: 0
   defaultProfitLevel: 1
-  defaultPrimaryProfit: 3
+  defaultPrimaryProfit: 8
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 200
   defaultMass: 800

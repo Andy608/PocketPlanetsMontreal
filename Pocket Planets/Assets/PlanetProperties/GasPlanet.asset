@@ -19,11 +19,11 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 0.90669376, b: 0.523, a: 1}
   planetName: GAS PLANET
   description: 
-  defaultCostLevel: 3
-  defaultPrimaryCost: 2
+  defaultCostLevel: 1
+  defaultPrimaryCost: 18
   defaultSecondaryCost: 0
-  defaultProfitLevel: 2
-  defaultPrimaryProfit: 60
+  defaultProfitLevel: 1
+  defaultPrimaryProfit: 3
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100
   defaultMass: 600

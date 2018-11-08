@@ -86,7 +86,7 @@ namespace Managers
         {
             if (InputManager.IsPointerOverUIObject()) return null;
 
-            if (!CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType))
+            if (PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME && !CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType))
             {
                 if (EventManager.OnPlanetSpawnDenied != null)
                 {
