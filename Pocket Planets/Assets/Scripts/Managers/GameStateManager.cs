@@ -25,27 +25,21 @@
 
         public void RequestPause()
         {
-            if (currentGameState == EnumGameState.RUNNING)
-            {
-                currentGameState = EnumGameState.PAUSED;
+            currentGameState = EnumGameState.PAUSED;
 
-                if (EventManager.OnGamePaused != null)
-                {
-                    EventManager.OnGamePaused();
-                }
+            if (EventManager.OnGamePaused != null)
+            {
+                EventManager.OnGamePaused();
             }
         }
 
         public void RequestUnpause()
         {
-            if (currentGameState == EnumGameState.PAUSED)
-            {
-                currentGameState = EnumGameState.RUNNING;
+            currentGameState = EnumGameState.RUNNING;
 
-                if (EventManager.OnGameUnpaused != null)
-                {
-                    EventManager.OnGameUnpaused();
-                }
+            if (EventManager.OnGameUnpaused != null)
+            {
+                EventManager.OnGameUnpaused();
             }
         }
 
