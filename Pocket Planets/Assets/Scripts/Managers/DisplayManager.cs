@@ -121,5 +121,19 @@ namespace Managers
             position = Camera.main.ScreenToWorldPoint(touch.position);
             position.z = 0;
         }
+
+        public bool IsInView(Vector2 position)
+        {
+            float yRadius = gameCamera.orthographicSize;
+            float xRadius = gameCamera.orthographicSize * Screen.width / Screen.height;
+
+            if (position.x < xRadius && position.x > -xRadius &&
+                position.y < yRadius && position.y > -yRadius)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

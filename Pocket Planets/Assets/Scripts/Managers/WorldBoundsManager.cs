@@ -31,6 +31,11 @@ namespace Managers
                 {
                     Debug.Log("Outside boundry!");
 
+                    if (activePlanets[i].PlanetProperties.PlanetType == EnumPlanetType.COMET && !PlanetStoreManager.Instance.GetPlanetProperty(EnumPlanetType.COMET).IsUnlocked)
+                    {
+                        continue;
+                    }
+
                     if (EventManager.OnPlanetDestroyed != null)
                     {
                         EventManager.OnPlanetDestroyed(activePlanets[i]);

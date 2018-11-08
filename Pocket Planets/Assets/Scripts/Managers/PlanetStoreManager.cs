@@ -43,6 +43,20 @@ namespace Managers
             return null;
         }
 
+        public PlanetProperties GetPlanetProperty(EnumPlanetType planetType)
+        {
+            foreach (KeyValuePair<Planet, PlanetProperties> planetIndex in planetPrefabList)
+            {
+                if (planetIndex.Value.PlanetType == planetType)
+                {
+                    return planetIndex.Value;
+                }
+            }
+
+            Debug.Log("ERROR. NO PLANET WITH TYPE: " + planetType.ToString());
+            return null;
+        }
+
         private void PopulatePlanetList()
         {
             Debug.Log("POPULATING PREFAB LIST");
