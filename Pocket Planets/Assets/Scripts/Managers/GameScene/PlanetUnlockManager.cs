@@ -10,7 +10,7 @@ namespace Managers
         private List<Planet> unlockedPlanetPrefabs = new List<Planet>();
 
         private static int TERRESTRIAL_PLANET_ORBIT_COUNT = 1;
-        private static int SECONDS_BEFORE_COMET_SPAWNS = 2;
+        private static int SECONDS_BEFORE_COMET_SPAWNS = 10;
         private float cometSecondsCounter = 0;
         private bool cometUnlocked = false;
 
