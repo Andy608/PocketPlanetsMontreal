@@ -24,6 +24,6 @@ MonoBehaviour:
   defaultProfitLevel: 2
   defaultPrimaryProfit: 3
   defaultSecondaryProfit: 0
-  radiusScaleMultiplier: 100
+  radiusScaleMultiplier: 200
   defaultMass: 800
   planetUpgrade: {fileID: 11400000, guid: de8a02dd38506f947be12619da75ad41, type: 2}
