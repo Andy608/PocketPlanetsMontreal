@@ -15,6 +15,7 @@ MonoBehaviour:
   planetType: 7
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
+  uiSprite: {fileID: 21300000, guid: f45cee73f922393479b4fe839ba25018, type: 3}
   defaultColor: {r: 0.9245283, g: 0.4518562, b: 0.33579564, a: 1}
   planetName: SUPERGIANT
   description: 

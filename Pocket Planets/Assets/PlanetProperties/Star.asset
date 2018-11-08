@@ -15,6 +15,7 @@ MonoBehaviour:
   planetType: 6
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
+  uiSprite: {fileID: 21300000, guid: c6016e9b9c969cc41bc7c431e5aee159, type: 3}
   defaultColor: {r: 1, g: 0.7828489, b: 0.4470588, a: 1}
   planetName: STAR
   description: 
