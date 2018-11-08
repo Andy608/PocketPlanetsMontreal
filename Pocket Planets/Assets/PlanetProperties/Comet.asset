@@ -16,12 +16,12 @@ MonoBehaviour:
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
-  planetName: Planet B
+  planetName: COMET
   description: 
-  defaultCostLevel: 3
+  defaultCostLevel: 2
   defaultPrimaryCost: 8
   defaultSecondaryCost: 0
-  defaultProfitLevel: 2
+  defaultProfitLevel: 1
   defaultPrimaryProfit: 60
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100

@@ -16,7 +16,7 @@ MonoBehaviour:
   isAnchor: 1
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
-  planetName: Blackhole
+  planetName: BLACKHOLE
   description: 
   defaultCostLevel: 0
   defaultPrimaryCost: 0

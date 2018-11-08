@@ -16,12 +16,12 @@ MonoBehaviour:
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   defaultColor: {r: 0.37201852, g: 0.8301887, b: 0.53567433, a: 1}
-  planetName: Planet C
+  planetName: ROCKY PLANET
   description: 
   defaultCostLevel: 2
-  defaultPrimaryCost: 1
+  defaultPrimaryCost: 2
   defaultSecondaryCost: 0
-  defaultProfitLevel: 2
+  defaultProfitLevel: 1
   defaultPrimaryProfit: 1
   defaultSecondaryProfit: 20
   radiusScaleMultiplier: 200

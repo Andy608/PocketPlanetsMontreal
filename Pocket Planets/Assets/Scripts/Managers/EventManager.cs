@@ -62,6 +62,9 @@ namespace Managers
 
         public delegate void PlanetToSpawnChanged(EnumPlanetType planetType);
         public static PlanetToSpawnChanged OnPlanetToSpawnChanged;
+
+        public delegate void PlanetSpawnDenied(Touch touch);
+        public static PlanetSpawnDenied OnPlanetSpawnDenied;
         //////////////////////////////////////////////////////////////
 
 

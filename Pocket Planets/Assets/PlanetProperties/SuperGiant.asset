@@ -16,14 +16,14 @@ MonoBehaviour:
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   defaultColor: {r: 0.9245283, g: 0.4518562, b: 0.33579564, a: 1}
-  planetName: Planet F
+  planetName: SUPERGIANT
   description: 
   defaultCostLevel: 5
-  defaultPrimaryCost: 80
+  defaultPrimaryCost: 30
   defaultSecondaryCost: 0
   defaultProfitLevel: 4
   defaultPrimaryProfit: 60
   defaultSecondaryProfit: 0
-  radiusScaleMultiplier: 100
-  defaultMass: 2000
+  radiusScaleMultiplier: 500
+  defaultMass: 5000
   planetUpgrade: {fileID: 11400000, guid: de8a02dd38506f947be12619da75ad41, type: 2}

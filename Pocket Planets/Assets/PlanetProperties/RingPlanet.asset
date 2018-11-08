@@ -16,12 +16,12 @@ MonoBehaviour:
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   defaultColor: {r: 0.71780396, g: 0.38074043, b: 0.8679245, a: 1}
-  planetName: Planet G
+  planetName: RING PLANET
   description: 
   defaultCostLevel: 2
-  defaultPrimaryCost: 2
+  defaultPrimaryCost: 40
   defaultSecondaryCost: 0
-  defaultProfitLevel: 2
+  defaultProfitLevel: 1
   defaultPrimaryProfit: 3
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 200

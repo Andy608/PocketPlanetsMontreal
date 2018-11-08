@@ -10,6 +10,7 @@ namespace Managers
 
         [SerializeField] private RectTransform notificationsParent;
         [SerializeField] private UIUnlockNotification unlockNotificationPrefab;
+        [SerializeField] private FloatAwayText notEnoughMoneyPrefab;
 
         //Holds a queue of notifications that need to be displayed.
         //Displays them in order:
@@ -26,12 +27,14 @@ namespace Managers
         {
             EventManager.OnNewPlanetUnlocked += AddNewNotification;
             EventManager.OnCloseUnlockNotification += UpdateCurrentNotification;
+            EventManager.OnPlanetSpawnDenied += SpawnBadFundsNotification;
         }
 
         private void OnDisable()
         {
             EventManager.OnNewPlanetUnlocked -= AddNewNotification;
             EventManager.OnCloseUnlockNotification -= UpdateCurrentNotification;
+            EventManager.OnPlanetSpawnDenied -= SpawnBadFundsNotification;
         }
 
         private void AddNewNotification(EnumPlanetType planetType)
@@ -84,6 +87,12 @@ namespace Managers
                 currentShowingNotification = pendingNotifications.Dequeue();
                 currentShowingNotification.gameObject.SetActive(true);
             }
+        }
+
+        private void SpawnBadFundsNotification(Touch touch)
+        {
+            FloatAwayText text = Instantiate(notEnoughMoneyPrefab, notificationsParent, false);
+            text.transform.position = touch.position;
         }
     }
 }

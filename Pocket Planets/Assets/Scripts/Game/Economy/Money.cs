@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum EnumEconomyLevel
 {
-    PreA, A, B, C, D, E, F, G, H
+    A, B, C, D, E, F, G, H
 }
 
 public class Money
@@ -47,7 +47,7 @@ public class Money
             moneyLevels[i] = 0;
         }
 
-        currentLevel = EnumEconomyLevel.PreA;
+        currentLevel = EnumEconomyLevel.A;
         primaryAmount = 0;
         secondaryAmount = 0;
     }
@@ -136,7 +136,7 @@ public class Money
         float prevPrimaryLevelAmount = primaryAmount;
         float prevSecondaryAmount = secondaryAmount;
 
-        currentLevel = EnumEconomyLevel.PreA;
+        currentLevel = EnumEconomyLevel.A;
         primaryAmount = 0;
         secondaryAmount = 0;
 
@@ -195,16 +195,7 @@ public class Money
         for (int i = 0; i < money.moneyLevels.Length; ++i)
         {
             //Debug.Log("Level: " + (EnumEconomyLevel)i + " - " + (int)Mathf.Round(money.moneyLevels[i] * scaler));
-            float prevLevelAmount = money.moneyLevels[i] * scaler * 100;
-            //1.2B / 60
-            //1 / 60 = 0.016666B
-            //20 / 60 = 0.333A
-            //0.0166B = 1.66A
-
-            if (i - 1 >= 0)
-            {
-                scaled.AddMoney((EnumEconomyLevel)(i - 1), prevLevelAmount);
-            }
+            scaled.AddMoney((EnumEconomyLevel)i, money.moneyLevels[i] * scaler);
         }
 
         //float amount = 0;

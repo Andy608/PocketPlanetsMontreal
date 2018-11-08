@@ -85,7 +85,16 @@ namespace Managers
         private Planet SpawnPlanet(Touch touch)
         {
             if (InputManager.IsPointerOverUIObject()) return null;
-            if (!CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType)) return null;
+
+            if (!CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType))
+            {
+                if (EventManager.OnPlanetSpawnDenied != null)
+                {
+                    EventManager.OnPlanetSpawnDenied(touch);
+                }
+
+                return null;
+            }
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
 
