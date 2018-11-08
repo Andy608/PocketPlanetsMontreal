@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8684bc4b07a4fa408371efbad992833, type: 3}
+  m_Name: Asteroid
+  m_EditorClassIdentifier: 
+  isUnlocked: 1
+  planetType: 1
+  isAnchor: 0
+  sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
+  defaultColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
+  planetName: Planet A
+  description: 
+  defaultCostLevel: 1
+  defaultPrimaryCost: 2
+  defaultSecondaryCost: 0
+  defaultProfitLevel: 1
+  defaultPrimaryProfit: 1
+  defaultSecondaryProfit: 80
+  radiusScaleMultiplier: 100
+  defaultMass: 100
+  planetUpgrade: {fileID: 11400000, guid: cd2a1b32faf0a5f4f84ece333259fb98, type: 2}

@@ -39,12 +39,13 @@ namespace Managers
         public static PlanetDestroyed OnPlanetDestroyed;
         //////////////////////////////////////////////////////////////
 
+
         //  Special Game Events
         //////////////////////////////////////////////////////////////
         public delegate void PlanetAbsorbed(Planet absorber, Planet absorbed);
         public static PlanetAbsorbed OnPlanetAbsorbed;
 
-        public delegate void OrbitOccurred(Planet parent, Planet orbital);
+        public delegate void OrbitOccurred(OrbitData orbitData);
         public static OrbitOccurred OnOrbitOccurred;
 
         public delegate void PlanetEnteredGravitationalPull(Planet absorber, Planet absorbed);
@@ -53,8 +54,53 @@ namespace Managers
         public delegate void PlanetExitedGravitationalPull(Planet parent, Planet orbital);
         public static PlanetExitedGravitationalPull OnPlanetExitedGravitationalPull;
 
-        public delegate void PlanetUpgraded(Planet planet);
-        public static PlanetUpgraded OnPlanetUpgraded;
+        public delegate void PlanetCollapsed(Planet planet);
+        public static PlanetCollapsed OnPlanetCollapsed;
+
+        public delegate void NewPlanetUnlocked(EnumPlanetType planetType);
+        public static NewPlanetUnlocked OnNewPlanetUnlocked;
+
+        public delegate void PlanetToSpawnChanged(EnumPlanetType planetType);
+        public static PlanetToSpawnChanged OnPlanetToSpawnChanged;
+        //////////////////////////////////////////////////////////////
+
+
+        //  Scene Events
+        //////////////////////////////////////////////////////////////
+        public delegate void SetTargetScene(EnumScene targetScene);
+        public static SetTargetScene OnSetTargetScene;
+
+        public delegate void RequestSceneChange();
+        public static RequestSceneChange OnRequestSceneChange;
+
+        public delegate void StartFadeOut();
+        public static StartFadeOut OnStartFadeOut;
+        //////////////////////////////////////////////////////////////
+
+        //  Game State Events
+        //////////////////////////////////////////////////////////////
+        public delegate void GamePaused();
+        public static GamePaused OnGamePaused;
+
+        public delegate void GameUnpaused();
+        public static GameUnpaused OnGameUnpaused;
+        //////////////////////////////////////////////////////////////
+
+
+        //  Money Events
+        //////////////////////////////////////////////////////////////
+        public delegate void MoneyChanged(Money money);
+        public static MoneyChanged OnMoneyChanged;
+        //////////////////////////////////////////////////////////////
+
+
+        //  UI Events
+        //////////////////////////////////////////////////////////////
+        public delegate void CloseUnlockNotification();
+        public static CloseUnlockNotification OnCloseUnlockNotification;
+
+        public delegate void OpenPlanetUIList();
+        public static OpenPlanetUIList OnOpenPlanetUIList;
         //////////////////////////////////////////////////////////////
     }
 }

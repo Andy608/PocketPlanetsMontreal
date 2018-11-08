@@ -15,6 +15,7 @@ public class Trajectory : MonoBehaviour
     private List<Vector2> vertices = new List<Vector2>();
 
     private float vertexSpacing = 1.0f;
+    private float lineDistance = 0.0f;
 
     private Planet currentPlanet;
 
@@ -83,7 +84,7 @@ public class Trajectory : MonoBehaviour
             //texture is 64 pix
             //scale should be 64 / 100
 
-            float xScale = (vertices[0] - vertices.Last()).magnitude / (WIDTH * Screen.dpi / 1.2f);
+            float xScale = lineDistance / (WIDTH * Screen.dpi / 1.2f);
             trajectoryLineRenderer.material.SetTextureScale("_MainTex", new Vector2(xScale, 1.0f));
         }
     }
@@ -91,6 +92,7 @@ public class Trajectory : MonoBehaviour
     private void ClearTrajectory()
     {
         vertices.Clear();
+        lineDistance = 0.0f;
         trajectoryLineRenderer.positionCount = 0;
     }
 
@@ -150,6 +152,7 @@ public class Trajectory : MonoBehaviour
 
             if (Vector2.Distance(vertices.Last(), position) > vertexSpacing)
             {
+                lineDistance += (vertices.Last() - position).magnitude;
                 AddVertex(position);
             }
 

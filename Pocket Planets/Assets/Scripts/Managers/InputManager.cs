@@ -28,6 +28,11 @@ namespace Managers
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GameStateManager.Instance.TogglePause();
+            }
+
             if (Input.touchCount > 0)
             {
                 if (Input.touchCount == 2)
@@ -66,7 +71,7 @@ namespace Managers
                     dragRecognized = false;
                     tapFailed = true;
 
-                    Debug.Log("PINCH BEGAN");
+                    //Debug.Log("PINCH BEGAN");
                     if (EventManager.OnPinchBegan != null)
                     {
                         EventManager.OnPinchBegan(firstTouch, secondTouch);
@@ -74,7 +79,7 @@ namespace Managers
                 }
                 else if (pinchRecognized)
                 {
-                    Debug.Log("PINCH HELD");
+                    //Debug.Log("PINCH HELD");
                     if (EventManager.OnPinchHeld != null)
                     {
                         EventManager.OnPinchHeld(firstTouch, secondTouch);
@@ -89,7 +94,7 @@ namespace Managers
             {
                 if (pinchRecognized)
                 {
-                    Debug.Log("PINCH ENDED");
+                    //Debug.Log("PINCH ENDED");
                     if (EventManager.OnPinchEnded != null)
                     {
                         EventManager.OnPinchEnded(firstTouch, secondTouch);
@@ -120,7 +125,7 @@ namespace Managers
                     pinchRecognized = false;
                     tapFailed = true;
 
-                    Debug.Log("DRAG BEGAN");
+                    //Debug.Log("DRAG BEGAN");
                     if (EventManager.OnDragBegan != null)
                     {
                         EventManager.OnDragBegan(touch);
@@ -128,7 +133,7 @@ namespace Managers
                 }
                 else if (dragRecognized)
                 {
-                    Debug.Log("DRAG HELD");
+                    //Debug.Log("DRAG HELD");
                     if (EventManager.OnDragHeld != null)
                     {
                         EventManager.OnDragHeld(touch);
@@ -143,7 +148,7 @@ namespace Managers
             {
                 if (dragRecognized)
                 {
-                    Debug.Log("DRAG ENDED");
+                    //Debug.Log("DRAG ENDED");
                     if (EventManager.OnDragEnded != null)
                     {
                         EventManager.OnDragEnded(touch);
@@ -164,7 +169,7 @@ namespace Managers
 
             if (!tapFailed)
             {
-                Debug.Log("TAP HAPPENED");
+                //Debug.Log("TAP HAPPENED");
                 if (EventManager.OnTapOccurred != null)
                 {
                     EventManager.OnTapOccurred(Input.touches[0]);
@@ -179,7 +184,19 @@ namespace Managers
             eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            return results.Count > 0;
+
+            //Debug.Log("Raycasts: " + results.Count);
+
+            foreach (RaycastResult raycast in results)
+            {
+                //Debug.Log("Raycast Layer: " + raycast.gameObject.layer.ToString());
+                if (raycast.gameObject.layer == LayerMask.NameToLayer("UI"))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

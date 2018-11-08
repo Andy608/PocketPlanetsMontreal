@@ -15,6 +15,8 @@ namespace Managers
 
         private Planet currentSpawningPlanet;
 
+        public EnumPlanetType PlanetToSpawnType { get { return planetToSpawnPrefab.PlanetProperties.PlanetType; } }
+
         private void OnEnable()
         {
             EventManager.OnTapOccurred += SpawnTapOccurred;
@@ -83,8 +85,11 @@ namespace Managers
         private Planet SpawnPlanet(Touch touch)
         {
             if (InputManager.IsPointerOverUIObject()) return null;
+            if (!CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType)) return null;
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
+
+            Debug.Log("SPAWNING");
 
             GameObject spawnedPlanet = Instantiate(planetToSpawnPrefab.gameObject, spawnPosition, Quaternion.identity);
 
@@ -106,9 +111,9 @@ namespace Managers
             return null;
         }
 
-        public void SpawnPlanetUpgrade(Planet planet)
+        public void UpgradePlanet(Planet planet, EnumPlanetType upgradeType)
         {
-            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(planet.PlanetProperties.UpgradedPlanetType);
+            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(upgradeType);
 
             //The upgrade is not in the list.
             if (!upgradedPrefab)
@@ -116,16 +121,20 @@ namespace Managers
                 return;
             }
 
-            GameObject upgradedPlanet = Instantiate(upgradedPrefab.gameObject, planet.transform);
+            GameObject upgradedPlanet = Instantiate(upgradedPrefab.gameObject, worldParent);
 
             if (upgradedPlanet)
             {
-                upgradedPlanet.transform.SetParent(worldParent);
-
                 //Spawn in the new planet
                 Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
-                newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
-                newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                newPlanet.transform.position = planet.transform.position;
+
+                if (!newPlanet.PlanetProperties.IsAnchor)
+                {
+                    newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
+                    newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                }
+
                 newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
@@ -133,9 +142,9 @@ namespace Managers
                     EventManager.OnPlanetSpawned(newPlanet);
                 }
 
-                if (EventManager.OnPlanetUpgraded != null)
+                if (EventManager.OnPlanetCollapsed != null)
                 {
-                    EventManager.OnPlanetUpgraded(newPlanet);
+                    EventManager.OnPlanetCollapsed(newPlanet);
                 }
 
                 //Destroy the old planet
@@ -148,18 +157,79 @@ namespace Managers
             }
         }
 
+        public void CollapsePlanet(Planet planet)
+        {
+            UpgradePlanet(planet, EnumPlanetType.BLACKHOLE);
+        }
+
+        public Planet SpawnPlanet(EnumPlanetType planetType, Vector2 position)
+        {
+            Planet prefab = PlanetStoreManager.Instance.GetPlanetPrefab(planetType);
+
+            GameObject spawnedPlanet = Instantiate(prefab.gameObject, position, Quaternion.identity);
+
+            if (spawnedPlanet)
+            {
+                spawnedPlanet.transform.SetParent(worldParent);
+
+                Planet newPlanet = spawnedPlanet.GetComponent<Planet>();
+                newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
+
+                if (EventManager.OnPlanetSpawned != null && newPlanet)
+                {
+                    EventManager.OnPlanetSpawned(newPlanet);
+                }
+
+                return newPlanet;
+            }
+
+            return null;
+        }
+
         //Call this from the awake method in the PlanetStore with the default planet to spawn for now
         //Call this when a player selects a new planet from the gui menu
         public void SetPlanetToSpawn(EnumPlanetType planetType)
         {
             //Ask planet store for planet prefab by type
             planetToSpawnPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(planetType);
+
+            if (planetToSpawnPrefab != null)
+            {
+                Debug.Log("Setting Planet Spawn Type: " + planetType);
+
+                if (EventManager.OnPlanetToSpawnChanged != null)
+                {
+                    EventManager.OnPlanetToSpawnChanged(planetType);
+                }
+            }
+            else
+            {
+                Debug.Log("Unable to set Planet Spawn Type. Null.");
+            }
         }
 
         public void SetPlanetToSpawn(Planet planetPrefab)
         {
             //Ask planet store for planet prefab by type
             planetToSpawnPrefab = planetPrefab;
+        }
+
+        public bool CanAfford(EnumPlanetType planetType)
+        {
+            if (PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME)
+            {
+                if (EconomyManager.Instance.CanAfford(planetToSpawnPrefab.PlanetProperties.DefaultCost))
+                {
+                    EconomyManager.Instance.Buy(planetToSpawnPrefab);
+                    return true;
+                }
+                else
+                {
+                    Debug.Log("NOT ENOUGH MONEY: " + EconomyManager.Instance.Wallet);
+                }
+            }
+
+            return false;
         }
     }
 }
