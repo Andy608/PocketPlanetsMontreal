@@ -52,7 +52,7 @@ public class PlanetItemUI : MonoBehaviour
     public void UpdateUI()
     {
         planetTitle.text = planetProperties.PlanetName;
-        planetImage.sprite = planetProperties.PlanetSprite;
+        planetImage.sprite = planetProperties.PlanetUISprite;
         planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
         planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";
 
