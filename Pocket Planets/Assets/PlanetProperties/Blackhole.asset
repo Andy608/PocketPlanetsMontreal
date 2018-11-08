@@ -18,8 +18,12 @@ MonoBehaviour:
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   planetName: Blackhole
   description: 
-  moneyPerMass: 0
+  defaultCostLevel: 0
+  defaultPrimaryCost: 0
+  defaultSecondaryCost: 0
+  defaultProfitLevel: 0
+  defaultPrimaryProfit: 0
+  defaultSecondaryProfit: 0
   radiusScaleMultiplier: 3000
-  defaultMass: 10000
-  maxMass: 0
-  upgradedPlanetType: 0
+  defaultMass: 15000
+  planetUpgrade: {fileID: 0}

@@ -15,6 +15,8 @@ namespace Managers
 
         private Planet currentSpawningPlanet;
 
+        public EnumPlanetType PlanetToSpawnType { get { return planetToSpawnPrefab.PlanetProperties.PlanetType; } }
+
         private void OnEnable()
         {
             EventManager.OnTapOccurred += SpawnTapOccurred;
@@ -83,9 +85,11 @@ namespace Managers
         private Planet SpawnPlanet(Touch touch)
         {
             if (InputManager.IsPointerOverUIObject()) return null;
-            Debug.Log("SPAWNING");
+            if (!CanAfford(planetToSpawnPrefab.PlanetProperties.PlanetType)) return null;
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
+
+            Debug.Log("SPAWNING");
 
             GameObject spawnedPlanet = Instantiate(planetToSpawnPrefab.gameObject, spawnPosition, Quaternion.identity);
 
@@ -107,9 +111,9 @@ namespace Managers
             return null;
         }
 
-        public void CollapsePlanet(Planet planet)
+        public void UpgradePlanet(Planet planet, EnumPlanetType upgradeType)
         {
-            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(EnumPlanetType.BLACKHOLE);
+            Planet upgradedPrefab = PlanetStoreManager.Instance.GetPlanetPrefab(upgradeType);
 
             //The upgrade is not in the list.
             if (!upgradedPrefab)
@@ -117,16 +121,20 @@ namespace Managers
                 return;
             }
 
-            GameObject upgradedPlanet = Instantiate(upgradedPrefab.gameObject, planet.transform);
+            GameObject upgradedPlanet = Instantiate(upgradedPrefab.gameObject, worldParent);
 
             if (upgradedPlanet)
             {
-                upgradedPlanet.transform.SetParent(worldParent);
-
                 //Spawn in the new planet
                 Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
-                //newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
-                //newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                newPlanet.transform.position = planet.transform.position;
+
+                if (!newPlanet.PlanetProperties.IsAnchor)
+                {
+                    newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
+                    newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                }
+
                 newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
@@ -147,6 +155,11 @@ namespace Managers
 
                 Destroy(planet.gameObject);
             }
+        }
+
+        public void CollapsePlanet(Planet planet)
+        {
+            UpgradePlanet(planet, EnumPlanetType.BLACKHOLE);
         }
 
         public Planet SpawnPlanet(EnumPlanetType planetType, Vector2 position)
@@ -183,6 +196,11 @@ namespace Managers
             if (planetToSpawnPrefab != null)
             {
                 Debug.Log("Setting Planet Spawn Type: " + planetType);
+
+                if (EventManager.OnPlanetToSpawnChanged != null)
+                {
+                    EventManager.OnPlanetToSpawnChanged(planetType);
+                }
             }
             else
             {
@@ -194,6 +212,24 @@ namespace Managers
         {
             //Ask planet store for planet prefab by type
             planetToSpawnPrefab = planetPrefab;
+        }
+
+        public bool CanAfford(EnumPlanetType planetType)
+        {
+            if (PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME)
+            {
+                if (EconomyManager.Instance.CanAfford(planetToSpawnPrefab.PlanetProperties.DefaultCost))
+                {
+                    EconomyManager.Instance.Buy(planetToSpawnPrefab);
+                    return true;
+                }
+                else
+                {
+                    Debug.Log("NOT ENOUGH MONEY: " + EconomyManager.Instance.Wallet);
+                }
+            }
+
+            return false;
         }
     }
 }

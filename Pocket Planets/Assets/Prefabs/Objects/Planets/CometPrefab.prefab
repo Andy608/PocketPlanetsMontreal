@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114277539087086116}
   - component: {fileID: 114075281696188078}
   - component: {fileID: 114846955285331862}
+  - component: {fileID: 114002833326852372}
   m_Layer: 0
   m_Name: CometPrefab
   m_TagString: Untagged
@@ -247,6 +248,17 @@ TrailRenderer:
   m_MinVertexDistance: 1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114002833326852372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1045010876875010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114075281696188078
 MonoBehaviour:
   m_ObjectHideFlags: 1

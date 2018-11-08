@@ -102,9 +102,14 @@ namespace Managers
 
                 if (absorber.AsteroidCollisionCounter >= 5)
                 {
-                    if (!ringPlanet.PlanetProperties.IsUnlocked && !unlockedPlanetPrefabs.Contains(ringPlanet))
+                    if (!unlockedPlanetPrefabs.Contains(ringPlanet))
                     {
-                        UnlockPlanet(ringPlanet);
+                        if (!ringPlanet.PlanetProperties.IsUnlocked)
+                        {
+                            UnlockPlanet(ringPlanet);
+                        }
+
+                        absorber.UpgradePlanet(EnumPlanetType.RING_PLANET);
                     }
                 }
             }
@@ -116,7 +121,8 @@ namespace Managers
             Planet child = orbitData.OrbitChild;
 
             //Unlock Gas Planet
-            if (child.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET)
+            if (child.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET ||
+                child.PlanetProperties.PlanetType == EnumPlanetType.RING_PLANET)
             {
                 if (orbitData.OrbitCount >= TERRESTRIAL_PLANET_ORBIT_COUNT)
                 {

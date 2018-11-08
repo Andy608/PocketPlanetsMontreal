@@ -31,17 +31,30 @@ public class PlanetProperties : ScriptableObject
     [SerializeField] private string planetName;
     [SerializeField] [Multiline] private string description;
 
-    //[SerializeField] private Money costPerMass;
-    //[SerializeField] private Money profitPerSec;
+    //Cost of a planet
+    [SerializeField] private EnumEconomyLevel defaultCostLevel;
+    [SerializeField] private int defaultPrimaryCost;
+    [SerializeField] private int defaultSecondaryCost;
+    private Money defaultCost;
+
+    //Profit per frame
+    [SerializeField] private EnumEconomyLevel defaultProfitLevel;
+    [SerializeField] private int defaultPrimaryProfit;
+    [SerializeField] private int defaultSecondaryProfit;
+    private Money defaultProfitPerSecond;
+
     [SerializeField] private float radiusScaleMultiplier;
     [SerializeField] private float defaultMass;
 
+    [SerializeField] private PlanetProperties planetUpgrade;
+
     //If this is reached, they turn into a different planet type.
-    [SerializeField] private float maxMass;
+    //[SerializeField] private float maxMass;
 
     private int buyCounter;
 
     public EnumPlanetType PlanetType { get { return planetType; } }
+    public PlanetProperties PlanetUpgrade { get { return planetUpgrade; } }
 
     public bool IsAnchor { get { return isAnchor; } }
 
@@ -52,16 +65,18 @@ public class PlanetProperties : ScriptableObject
     public string PlanetName { get { return planetName; } }
     public string PlanetDesc { get { return description; } }
     public float RadiusScaleMult { get { return radiusScaleMultiplier; } }
-    //public float CostPerMass { get { return costPerMass; } }
-    //public float ProfitPerSecond { get { return ProfitPerSecond; } }
+    public Money DefaultCost { get { return defaultCost; } }
+    public Money DefaultProfitPerSecond { get { return defaultProfitPerSecond; } }
     
     public float DefaultMass { get { return defaultMass; } }
-    public float MaxMass { get { return maxMass; } }
+    //public float MaxMass { get { return maxMass; } }
     public bool IsUnlocked { get { return isUnlocked; } set { isUnlocked = true; } }
 
     private void OnEnable()
     {
-        //Subscribe to the buy event.
+        //Subscribe to buy event
+        defaultCost = new Money(defaultCostLevel, defaultPrimaryCost, defaultSecondaryCost);
+        defaultProfitPerSecond = new Money(defaultProfitLevel, defaultPrimaryProfit, defaultSecondaryProfit);
     }
 
     private void OnDisable()

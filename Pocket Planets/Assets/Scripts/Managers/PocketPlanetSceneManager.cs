@@ -16,6 +16,8 @@ namespace Managers
         private EnumScene currentScene;
         private EnumScene targetScene;
 
+        public EnumScene CurrentScene { get { return currentScene; } }
+
         private void Awake()
         {
             currentScene = (EnumScene)SceneManager.GetActiveScene().buildIndex;

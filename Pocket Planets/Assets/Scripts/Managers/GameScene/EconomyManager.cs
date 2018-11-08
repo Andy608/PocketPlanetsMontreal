@@ -2,110 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnumEconomyLevel
-{
-    A, B, C, D, E, F, G, H
-}
-
 namespace Managers
 {
     public class EconomyManager : ManagerBase<EconomyManager>
     {
+        [SerializeField] private EnumEconomyLevel startingLevel;
+        [SerializeField] private int primaryAmount;
+        [SerializeField] private int secondaryAmount;
+
         private Money currentBalance;
+
+        public Money Wallet { get { return currentBalance; } }
 
         private void Start()
         {
-            currentBalance = new Money();
+            currentBalance = new Money(startingLevel, primaryAmount, secondaryAmount);
+            UIWalletManager.Instance.UpdateLabels(currentBalance);
         }
 
         private void Update()
         {
-            currentBalance.AddMoney(EnumEconomyLevel.A, 1);
-        }
-    }
-
-    //Gonna have to redo this.
-    public class Money
-    {
-        private int[] moneyLevels = new int[(int)EnumEconomyLevel.H];
-
-        public Money()
-        {
-            InitMoney();
+            //currentBalance.RemoveMoney(EnumEconomyLevel.A, 1);
+            //Debug.Log(currentBalance.GetBalance());
         }
 
-        private void InitMoney()
+        public bool CanAfford(Money cost)
         {
-            for (int i = 0; i < moneyLevels.Length; ++i)
-            {
-                moneyLevels[i] = 0;
-            }
+            return Wallet.IsGreaterOrEqual(cost);
         }
 
-        public void AddMoney(EnumEconomyLevel level, int amount)
+        public void Buy(Planet planet)
         {
-            amount = Mathf.Clamp(amount, 0, 99);
-
-            int currentBalance = moneyLevels[(int)level];
-
-            if (currentBalance + amount >= 100)
-            {
-                int overflow = currentBalance + amount - 100;
-
-                moneyLevels[(int)level] = overflow;
-                AddMoney(level + 1, 1);
-            }
-            else
-            {
-                moneyLevels[(int)level] += amount;
-            }
-
-            //Debug.Log("A: " + moneyLevels[0] + " B: " + moneyLevels[1]);
-        }
-
-        public void RemoveMoney(EnumEconomyLevel level, int cost)
-        {
-
-        }
-
-        public string GetBalance()
-        {
-            EnumEconomyLevel currentLevel = EnumEconomyLevel.A;
-            int levelAmount = 0;
-            int prevLevelAmount = 0;
-
-            for (int i = 0; i < moneyLevels.Length; ++i)
-            {
-                int currentLevelAmount = moneyLevels[i];
-                if (currentLevelAmount > 0)
-                {
-                    currentLevel = (EnumEconomyLevel)i;
-                    levelAmount = currentLevelAmount;
-
-                    if (i > 0)
-                    {
-                        prevLevelAmount = moneyLevels[i - 1];
-                    }
-                    else
-                    {
-                        prevLevelAmount = 0;
-                    }
-                }
-            }
-
-            return (levelAmount.ToString() + "." + getPrevLevel(prevLevelAmount) + " " + currentLevel.ToString());
-        }
-
-        private string getPrevLevel(int amount)
-        {
-            if (amount < 10)
-            {
-                return "0" + amount.ToString();
-            }
-            else
-            {
-                return amount.ToString();
-            }
+            Wallet.RemoveMoney(planet.PlanetProperties.DefaultCost);
         }
     }
 }

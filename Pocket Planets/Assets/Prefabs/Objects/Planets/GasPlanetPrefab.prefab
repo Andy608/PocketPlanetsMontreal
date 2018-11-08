@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114374344028556506}
   - component: {fileID: 114353380143723066}
   - component: {fileID: 114301361864904894}
+  - component: {fileID: 114230140969933628}
   m_Layer: 0
   m_Name: GasPlanetPrefab
   m_TagString: Untagged
@@ -247,6 +248,17 @@ TrailRenderer:
   m_MinVertexDistance: 1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114230140969933628
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122792079895968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114301361864904894
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 114582034107130430}
   - component: {fileID: 114720780409321020}
   - component: {fileID: 114585175645535992}
+  - component: {fileID: 114944459644146146}
   m_Layer: 0
   m_Name: TerrestrialPlanettPrefab
   m_TagString: Untagged
@@ -116,7 +117,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 300
+  m_Mass: 600
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -266,6 +267,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetObject: {fileID: 1800338963808358}
   planetProperties: {fileID: 11400000, guid: cd2a1b32faf0a5f4f84ece333259fb98, type: 2}
+--- !u!114 &114944459644146146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907158381121304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &120071853696253432
 LineRenderer:
   m_ObjectHideFlags: 1

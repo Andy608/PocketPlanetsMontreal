@@ -65,6 +65,16 @@ public class Planet : MonoBehaviour
         SetColor(planetProperties.DefaultColor);
     }
 
+    private void Update()
+    {
+        //if (Managers.GameStateManager.Instance.IsState(Managers.GameStateManager.EnumGameState.RUNNING))
+        //{
+            //prevVelocity = planetRigidbody.velocity;
+            //prevAcceleration = acceleration;
+            //acceleration = planetRigidbody.velocity - prevVelocity;
+        //}
+    }
+
     private void OnEnable()
     {
         planetTrail = GetComponent<Trail>();
@@ -90,13 +100,13 @@ public class Planet : MonoBehaviour
         }
     }
 
-    //private void OnValidate()
-    //{
-    //    currentMass = planetProperties.DefaultMass;
-    //    GetComponent<Rigidbody2D>().mass = currentMass;
-    //    UpdatePlanetDimensions();
-    //    SetColor(planetProperties.DefaultColor);
-    //}
+    private void OnValidate()
+    {
+        currentMass = planetProperties.DefaultMass;
+        GetComponent<Rigidbody2D>().mass = currentMass;
+        UpdatePlanetDimensions();
+        SetColor(planetProperties.DefaultColor);
+    }
 
     public void SetPlanetState(EnumPlanetState state)
     {
@@ -153,11 +163,19 @@ public class Planet : MonoBehaviour
         {
             //Add the impact force.
             //We need to experiment with this. This is wrong.
-            planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
+            //planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
+            //planetRigidbody.AddForce(acceleration * absorbed.CurrentMass, ForceMode2D.Impulse);
 
-            if (currentMass >= planetProperties.MaxMass)
+            if (absorbed.planetRigidbody.mass == planetRigidbody.mass && 
+                absorbed.planetRigidbody.velocity.sqrMagnitude > planetRigidbody.velocity.sqrMagnitude)
             {
-                CollapsePlanet();
+                planetRigidbody.velocity = absorbed.planetRigidbody.velocity;
+            }
+
+            if (planetProperties.PlanetUpgrade != null && currentMass >= planetProperties.PlanetUpgrade.DefaultMass)
+            {
+                Debug.Log("Planet Properties: " + planetProperties.PlanetUpgrade.PlanetType);
+                UpgradePlanet(planetProperties.PlanetUpgrade.PlanetType);
             }
         }
 
@@ -170,8 +188,8 @@ public class Planet : MonoBehaviour
         Destroy(absorbed.gameObject);
     }
 
-    private void CollapsePlanet()
+    public void UpgradePlanet(EnumPlanetType planetType)
     {
-        Managers.PlanetSpawnManager.Instance.CollapsePlanet(this);
+        Managers.PlanetSpawnManager.Instance.UpgradePlanet(this, planetType);
     }
 }

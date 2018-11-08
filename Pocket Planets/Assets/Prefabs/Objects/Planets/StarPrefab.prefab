@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 114908443680162068}
   - component: {fileID: 114899771593767280}
   - component: {fileID: 114353747865850476}
+  - component: {fileID: 114622621729661456}
   m_Layer: 0
   m_Name: StarPrefab
   m_TagString: Untagged
@@ -300,6 +301,17 @@ MonoBehaviour:
   animationPrefab: {fileID: 1118605767966802, guid: 340e2c1e2a76b4940862723d4bd41a7f,
     type: 2}
   overlaps: 2
+--- !u!114 &114622621729661456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1445387186067240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114899771593767280
 MonoBehaviour:
   m_ObjectHideFlags: 1

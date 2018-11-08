@@ -32,12 +32,29 @@ public class PlanetItemUI : MonoBehaviour
         }
     }
 
+    public void SetColor(Color backgroundColor)
+    {
+        GetComponent<Image>().color = backgroundColor;
+    }
+
+    public void SetTextColor(Color textColor)
+    {
+        planetTitle.color = textColor;
+        planetCost.color = textColor;
+        planetProfit.color = textColor;
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        planetUIButton.enabled = enabled;
+    }
+
     public void UpdateUI()
     {
         planetTitle.text = planetProperties.PlanetName;
         planetImage.sprite = planetProperties.PlanetSprite;
-        //planetCost.text = "COST: " + planetProperties.PlanetCost + " / MASS";
-        //planetProfit.text = "PROFIT: " + planetProperties.PlanetProfit + " / SEC";
+        planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
+        planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";
 
         if (planetProperties.IsUnlocked)
         {
@@ -55,7 +72,7 @@ public class PlanetItemUI : MonoBehaviour
     {
         if (unlockedPanel.gameObject.activeSelf)
         {
-            Managers.PlanetSpawnManager.Instance.SetPlanetToSpawn(planetProperties.PlanetType);
+            Managers.UIPlanetListManager.Instance.SetSelectedUIElement(this);
         }
     }
 }

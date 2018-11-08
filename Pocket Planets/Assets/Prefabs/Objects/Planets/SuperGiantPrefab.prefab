@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 114392537566136736}
   - component: {fileID: 114576604389734480}
   - component: {fileID: 114917954471975874}
+  - component: {fileID: 114344523804393172}
   m_Layer: 0
   m_Name: SuperGiantPrefab
   m_TagString: Untagged
@@ -275,6 +276,17 @@ MonoBehaviour:
   animationPrefab: {fileID: 1159984138101262, guid: 7b46d02c78dac6b4e85c4ff96c72edb6,
     type: 2}
   overlaps: 2
+--- !u!114 &114344523804393172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458304210160462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114392537566136736
 MonoBehaviour:
   m_ObjectHideFlags: 1

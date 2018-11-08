@@ -18,6 +18,12 @@ MonoBehaviour:
   defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
   planetName: Planet B
   description: 
+  defaultCostLevel: 3
+  defaultPrimaryCost: 8
+  defaultSecondaryCost: 0
+  defaultProfitLevel: 2
+  defaultPrimaryProfit: 60
+  defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100
   defaultMass: 50
-  maxMass: 10000
+  planetUpgrade: {fileID: 11400000, guid: de8a02dd38506f947be12619da75ad41, type: 2}

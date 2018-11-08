@@ -18,8 +18,12 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 0.7828489, b: 0.4470588, a: 1}
   planetName: Planet E
   description: 
-  moneyPerMass: 0
+  defaultCostLevel: 4
+  defaultPrimaryCost: 14
+  defaultSecondaryCost: 0
+  defaultProfitLevel: 4
+  defaultPrimaryProfit: 1
+  defaultSecondaryProfit: 80
   radiusScaleMultiplier: 100
   defaultMass: 1000
-  maxMass: 10000
-  upgradedPlanetType: 6
+  planetUpgrade: {fileID: 11400000, guid: b6b28f53e91eba545b6c6664e976b6e4, type: 2}

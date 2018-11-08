@@ -59,6 +59,9 @@ namespace Managers
 
         public delegate void NewPlanetUnlocked(EnumPlanetType planetType);
         public static NewPlanetUnlocked OnNewPlanetUnlocked;
+
+        public delegate void PlanetToSpawnChanged(EnumPlanetType planetType);
+        public static PlanetToSpawnChanged OnPlanetToSpawnChanged;
         //////////////////////////////////////////////////////////////
 
 
@@ -83,10 +86,21 @@ namespace Managers
         public static GameUnpaused OnGameUnpaused;
         //////////////////////////////////////////////////////////////
 
-        //  UI Events
+
+        //  Money Events
+        //////////////////////////////////////////////////////////////
+        public delegate void MoneyChanged(Money money);
+        public static MoneyChanged OnMoneyChanged;
         //////////////////////////////////////////////////////////////
 
 
+        //  UI Events
+        //////////////////////////////////////////////////////////////
+        public delegate void CloseUnlockNotification();
+        public static CloseUnlockNotification OnCloseUnlockNotification;
+
+        public delegate void OpenPlanetUIList();
+        public static OpenPlanetUIList OnOpenPlanetUIList;
         //////////////////////////////////////////////////////////////
     }
 }
