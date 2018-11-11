@@ -42,11 +42,11 @@ public class OrbitTracker : MonoBehaviour
         {
             if (firstPlanet == currentPlanet)
             {
-                if (firstPlanet.PlanetRigidbody.mass > secondPlanet.PlanetRigidbody.mass)
+                if (firstPlanet.CurrentMass > secondPlanet.CurrentMass)
                 {
                     TrackChildOrbit(secondPlanet);
                 }
-                else if (firstPlanet.PlanetRigidbody.mass == secondPlanet.PlanetRigidbody.mass &&
+                else if (firstPlanet.CurrentMass == secondPlanet.CurrentMass &&
                     !secondPlanet.GetComponent<OrbitTracker>().IsTrackingChildOrbit(firstPlanet))
                 {
                     TrackChildOrbit(secondPlanet);
@@ -66,7 +66,7 @@ public class OrbitTracker : MonoBehaviour
 
         if (absorber != currentPlanet)
         {
-            if (absorber.PlanetRigidbody.mass > currentPlanet.PlanetRigidbody.mass)
+            if (absorber.CurrentMass > currentPlanet.CurrentMass)
             {
                 TrackParentOrbit(absorber);
             }

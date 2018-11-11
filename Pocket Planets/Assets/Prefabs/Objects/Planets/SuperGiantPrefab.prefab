@@ -53,12 +53,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4535776606002822}
-  - component: {fileID: 50584849957091584}
   - component: {fileID: 114031953738582986}
   - component: {fileID: 114392537566136736}
   - component: {fileID: 114576604389734480}
   - component: {fileID: 114917954471975874}
   - component: {fileID: 114344523804393172}
+  - component: {fileID: 114746868339777276}
   m_Layer: 0
   m_Name: SuperGiantPrefab
   m_TagString: Untagged
@@ -137,26 +137,6 @@ Transform:
   m_Father: {fileID: 4535776606002822}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50584849957091584
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458304210160462}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 8000
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!96 &96203534793547218
 TrailRenderer:
   serializedVersion: 2
@@ -312,6 +292,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trailObject: {fileID: 1309822448791356}
+--- !u!114 &114746868339777276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458304210160462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialVelocity: {x: 0, y: 0}
+  initialAcceleration: {x: 0, y: 0}
 --- !u!114 &114917954471975874
 MonoBehaviour:
   m_ObjectHideFlags: 1

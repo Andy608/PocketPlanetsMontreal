@@ -36,10 +36,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4557894927757660}
-  - component: {fileID: 50972285428400724}
   - component: {fileID: 114644790102630648}
   - component: {fileID: 114662550780791630}
   - component: {fileID: 114629749343366502}
+  - component: {fileID: 114369674423828026}
   m_Layer: 0
   m_Name: BlackholePrefab
   m_TagString: Untagged
@@ -104,26 +104,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50972285428400724
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1816692783581230}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 15000
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!96 &96976705613751368
 TrailRenderer:
   serializedVersion: 2
@@ -216,6 +196,19 @@ TrailRenderer:
   m_MinVertexDistance: 1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114369674423828026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1816692783581230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialVelocity: {x: 0, y: 0}
+  initialAcceleration: {x: 0, y: 0}
 --- !u!114 &114424125338117966
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -44,12 +44,12 @@ namespace Managers
             }
 
             //Spawn comet and fly it across the screen
-            Debug.Log("SPAWN COMET");
+            //Debug.Log("SPAWN COMET");
 
             Vector2 spawnPosition = new Vector2(DisplayManager.Instance.MaxCameraWidth, Random.Range(-DisplayManager.Instance.MaxCameraHeight / 2.0f, -DisplayManager.Instance.MaxCameraHeight / 2.0f));
             cometSpawn = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.COMET, spawnPosition);
             cometSpawn.InitialVelocity = new Vector2(-200.0f, 0.0f);
-            cometSpawn.PlanetRigidbody.velocity = cometSpawn.InitialVelocity;
+            cometSpawn.PhysicsIntegrator.InitialVelocity = cometSpawn.InitialVelocity;
             cometSpawnCoroutine = null;
         }
 

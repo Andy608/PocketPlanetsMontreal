@@ -46,6 +46,8 @@ namespace Managers
 
         public void UnregisterPlanet(Planet planet)
         {
+            Debug.Log("REMOVED PLANET");
+
             if (planetsInWorld != null)
             {
                 planetsInWorld.Remove(planet);
@@ -83,7 +85,7 @@ namespace Managers
         {
             if (planet.PlanetState != EnumPlanetState.PAUSED)
             {
-                planet.PlanetRigidbody.simulated = false;
+                //planet.PlanetRigidbody.simulated = false;
 
                 planet.PlanetTrail.Pause();
 
@@ -98,7 +100,7 @@ namespace Managers
         {
             if (planet.PlanetState == EnumPlanetState.PAUSED)
             {
-                planet.PlanetRigidbody.simulated = true;
+                //planet.PlanetRigidbody.simulated = true;
                 planet.PlanetTrail.Unpause();
 
                 pausedPlanetsInWorld.Remove(planet);

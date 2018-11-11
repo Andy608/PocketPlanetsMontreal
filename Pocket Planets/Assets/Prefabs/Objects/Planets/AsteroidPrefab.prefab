@@ -36,12 +36,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4587366309961824}
-  - component: {fileID: 50559129056993906}
   - component: {fileID: 114315422718314698}
   - component: {fileID: 114948659391131962}
   - component: {fileID: 114991770573783816}
   - component: {fileID: 114967885033673868}
   - component: {fileID: 114290838505499582}
+  - component: {fileID: 114324575382870446}
   m_Layer: 0
   m_Name: AsteroidPrefab
   m_TagString: Untagged
@@ -106,26 +106,6 @@ Transform:
   m_Father: {fileID: 4587366309961824}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50559129056993906
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1217261275996326}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 100
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!96 &96713914425287402
 TrailRenderer:
   serializedVersion: 2
@@ -242,6 +222,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetObject: {fileID: 1210935959962652}
   planetProperties: {fileID: 11400000, guid: 15e68bb885ca9454fb2b4e34b007e6db, type: 2}
+--- !u!114 &114324575382870446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1217261275996326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialVelocity: {x: 0, y: 0}
+  initialAcceleration: {x: 0, y: 0}
 --- !u!114 &114948659391131962
 MonoBehaviour:
   m_ObjectHideFlags: 1

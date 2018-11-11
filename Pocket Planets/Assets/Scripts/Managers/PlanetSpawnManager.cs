@@ -62,6 +62,7 @@ namespace Managers
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / Managers.DisplayManager.Instance.CurrentCameraSize);
             }
         }
 
@@ -70,13 +71,15 @@ namespace Managers
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
-                currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);
 
-                currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
+                Debug.Log("DRAG ENDED!!!!");
+                //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
                 //Remove the lines.
                 //Set the velocity to the distance multiplied by a scale factor that works for the game.
-                currentSpawningPlanet.PlanetRigidbody.velocity += currentSpawningPlanet.InitialVelocity;
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / Managers.DisplayManager.Instance.CurrentCameraSize);
                 currentSpawningPlanet.PlanetTrajectory.Hide();
+
+                currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);
             }
 
             currentSpawningPlanet = null;
@@ -98,7 +101,7 @@ namespace Managers
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
 
-            Debug.Log("SPAWNING");
+            Debug.Log("SPAWNING: " + planetToSpawnPrefab);
 
             GameObject spawnedPlanet = Instantiate(planetToSpawnPrefab.gameObject, spawnPosition, Quaternion.identity);
 
@@ -111,6 +114,7 @@ namespace Managers
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
                 {
+                    Debug.Log("SPAWNING NEW PLANET");
                     EventManager.OnPlanetSpawned(newPlanet);
                 }
 
@@ -140,8 +144,7 @@ namespace Managers
 
                 if (!newPlanet.PlanetProperties.IsAnchor)
                 {
-                    newPlanet.InitialVelocity = planet.PlanetRigidbody.velocity;
-                    newPlanet.PlanetRigidbody.velocity = newPlanet.InitialVelocity;
+                    newPlanet.PhysicsIntegrator.InitialVelocity = planet.PhysicsIntegrator.Velocity;
                 }
 
                 newPlanet.SetPlanetState(EnumPlanetState.ALIVE);

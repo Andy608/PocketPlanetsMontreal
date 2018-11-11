@@ -58,10 +58,10 @@ namespace Managers
 
         private void UpdateCurrentNotification()
         {
-            Debug.Log("UPDATE");
+            //Debug.Log("UPDATE");
             if (currentShowingNotification != null)
             {
-                Debug.Log("DELETE");
+                //Debug.Log("DELETE");
                 Destroy(currentShowingNotification.gameObject);
                 currentShowingNotification = null;
 

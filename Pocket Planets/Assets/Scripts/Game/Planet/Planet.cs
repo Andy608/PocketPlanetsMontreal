@@ -10,7 +10,6 @@ public enum EnumPlanetState
     DEAD
 }
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Planet : MonoBehaviour
 {
     private List<Planet> planetsImGravitating = new List<Planet>();
@@ -33,9 +32,9 @@ public class Planet : MonoBehaviour
     [SerializeField] private GameObject planetObject;
     [SerializeField] private PlanetProperties planetProperties;
 
-    private Rigidbody2D planetRigidbody;
     private Trajectory planetTrajectory;
     private Trail planetTrail;
+    private PhysicsIntegrator physicsIntegrator;
 
     //In the future make a collisionscript that keeps track of all the objects collided into it.
     private float asteroidCollisionCounter = 0;
@@ -44,8 +43,8 @@ public class Planet : MonoBehaviour
 
     public GameObject PlanetObject { get { return planetObject; } }
     public PlanetProperties PlanetProperties { get { return planetProperties; } }
-    public Rigidbody2D PlanetRigidbody { get { return planetRigidbody; } }
-    public Trajectory PlanetTrajectory {  get { return planetTrajectory; } }
+    public Trajectory PlanetTrajectory { get { return planetTrajectory; } }
+    public PhysicsIntegrator PhysicsIntegrator { get { return physicsIntegrator; } }
 
     public EnumPlanetState PlanetState { get { return planetState; } set { previousPlanetState = planetState; planetState = value; } }
     public EnumPlanetState PreviousPlanetState { get { return previousPlanetState; } }
@@ -80,9 +79,9 @@ public class Planet : MonoBehaviour
         planetTrail = GetComponent<Trail>();
 
         planetTrajectory = GetComponent<Trajectory>();
-        planetRigidbody = GetComponent<Rigidbody2D>();
+        physicsIntegrator = GetComponent<PhysicsIntegrator>();
+
         currentMass = planetProperties.DefaultMass;
-        planetRigidbody.mass = currentMass;
 
         UpdatePlanetDimensions();
 
@@ -94,6 +93,7 @@ public class Planet : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("WHY IS THIS BEING DISABLED");
         if (Managers.WorldPlanetTrackingManager.Instance)
         {
             Managers.WorldPlanetTrackingManager.Instance.UnregisterPlanet(this);
@@ -103,7 +103,6 @@ public class Planet : MonoBehaviour
     private void OnValidate()
     {
         currentMass = planetProperties.DefaultMass;
-        GetComponent<Rigidbody2D>().mass = currentMass;
         UpdatePlanetDimensions();
         SetColor(planetProperties.DefaultColor);
     }
@@ -117,8 +116,7 @@ public class Planet : MonoBehaviour
     private void UpdatePlanetDimensions()
     {
         //The radius is in world units.
-        //Debug.Log("DPI: " + Screen.dpi);
-        circumference = Mathf.Sqrt(currentMass / (Mathf.PI * planetProperties.RadiusScaleMult)) * Screen.dpi;
+        circumference = Mathf.Sqrt(currentMass / (Mathf.PI * planetProperties.RadiusScaleMult)) * Managers.DisplayManager.TARGET_SCREEN_DENSITY;
 
         //Example:
         //Radius is 1.
@@ -147,7 +145,6 @@ public class Planet : MonoBehaviour
     public void AbsorbPlanet(Planet absorbed)
     {
         currentMass += absorbed.CurrentMass;
-        planetRigidbody.mass = currentMass;
         UpdatePlanetDimensions();
 
         if (Managers.EventManager.OnPlanetDestroyed != null)
@@ -167,11 +164,12 @@ public class Planet : MonoBehaviour
             //planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
             //planetRigidbody.AddForce(acceleration * absorbed.CurrentMass, ForceMode2D.Impulse);
 
-            if (absorbed.planetRigidbody.mass == planetRigidbody.mass && 
-                absorbed.planetRigidbody.velocity.sqrMagnitude > planetRigidbody.velocity.sqrMagnitude)
-            {
-                planetRigidbody.velocity = absorbed.planetRigidbody.velocity;
-            }
+            physicsIntegrator.AddAcceleration(absorbed.PhysicsIntegrator.Acceleration);
+
+            //if (absorbed.CurrentMass == CurrentMass && absorbed.PhysicsIntegrator.Velocity.sqrMagnitude > PhysicsIntegrator.Velocity.sqrMagnitude)
+            //{
+            //    PhysicsIntegrator.Velocity = absorbed.PhysicsIntegrator.Velocity;
+            //}
 
             if (planetProperties.PlanetUpgrade != null && currentMass >= planetProperties.PlanetUpgrade.DefaultMass)
             {

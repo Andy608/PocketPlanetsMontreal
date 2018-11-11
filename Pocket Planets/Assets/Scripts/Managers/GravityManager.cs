@@ -43,29 +43,28 @@ namespace Managers
 
         private void AttractPlanet(Planet attractor, Planet attractee)
         {
-            Rigidbody2D attractorRB = attractor.PlanetRigidbody;
-            Rigidbody2D attracteeRB = attractee.PlanetRigidbody;
-
-            Vector2 direction = attractorRB.position - attracteeRB.position;
+            Vector2 direction = attractor.PhysicsIntegrator.Position - attractee.PhysicsIntegrator.Position;
             float distanceSquared = direction.sqrMagnitude;
             float distanceFromCenter = attractor.Radius + attractee.Radius;
 
-            //Debug.Log("Attracting");
+            //Debug.Log("Attractor dist: " + attractor.PhysicsIntegrator.Position + " | Attractee dist: " + attractee.PhysicsIntegrator.Position);
+            //Debug.Log("Distance Squared: " + distanceSquared + " | Distance From Center: " + distanceFromCenter);
 
             //If the planets are far enough away, then attract.
             if (distanceSquared > (distanceFromCenter * distanceFromCenter))
             {
-                float gravitationScalar = (G * (attractorRB.mass * attracteeRB.mass) / distanceSquared);
-                Vector2 gravitationalForce = direction.normalized * gravitationScalar;
-                attracteeRB.AddForce(gravitationalForce);
+                float gravitationScalar = (G * (attractor.CurrentMass) / distanceSquared);
+                Vector2 gravitationalAcceleration = direction.normalized * gravitationScalar;
 
-                if (gravitationalForce.sqrMagnitude > MIN_THRESHOLD)
+                attractee.PhysicsIntegrator.AddAcceleration(gravitationalAcceleration);
+
+                if (gravitationalAcceleration.sqrMagnitude > MIN_THRESHOLD)
                 {
                     if (!attractor.PlanetsImGravitating.Contains(attractee))
                     {
                         attractor.PlanetsImGravitating.Add(attractee);
 
-                        if (attractor.PlanetRigidbody.mass >= attractee.PlanetRigidbody.mass)
+                        if (attractor.CurrentMass >= attractee.CurrentMass)
                         {
                             if (EventManager.OnPlanetEnteredGravitationalPull != null)
                             {
@@ -81,7 +80,7 @@ namespace Managers
 
                     if (EventManager.OnPlanetExitedGravitationalPull != null)
                     {
-                        if (attractor.PlanetRigidbody.mass >= attractee.PlanetRigidbody.mass)
+                        if (attractor.CurrentMass >= attractee.CurrentMass)
                         {
                             Debug.Log("EXIT GRAVITATIONAL RANGE");
                             EventManager.OnPlanetExitedGravitationalPull(attractor, attractee);
@@ -101,7 +100,7 @@ namespace Managers
             Planet absorber;
             Planet absorbed;
 
-            if (attractor.PlanetRigidbody.mass >= attractee.PlanetRigidbody.mass)
+            if (attractor.CurrentMass >= attractee.CurrentMass)
             {
                 absorber = attractor;
                 absorbed = attractee;
