@@ -117,7 +117,7 @@ public class Planet : MonoBehaviour
     private void UpdatePlanetDimensions()
     {
         //The radius is in world units.
-        circumference = Mathf.Sqrt(currentMass / (Mathf.PI * planetProperties.RadiusScaleMult)) * Screen.dpi;
+        circumference = Mathf.Sqrt(currentMass / (Mathf.PI * planetProperties.RadiusScaleMult)) * Managers.DisplayManager.TARGET_SCREEN_DENSITY;
 
         //Example:
         //Radius is 1.

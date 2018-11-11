@@ -6,6 +6,7 @@ namespace Managers
 {
     public class DisplayManager : ManagerBase<DisplayManager>
     {
+        public static int TARGET_SCREEN_DENSITY = 96;
         private static float scale = 1.0f;
 
         //Designed for iPhone X resolution.
@@ -74,7 +75,7 @@ namespace Managers
                 minimumSize = maximumSize / 8.0f;
             }
 
-            zoomSpeed = Screen.dpi;
+            zoomSpeed = TARGET_SCREEN_DENSITY;
 
             UpdateCameraSize(currentSize);
         }
