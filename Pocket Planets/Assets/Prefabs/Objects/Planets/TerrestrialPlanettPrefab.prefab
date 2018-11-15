@@ -233,6 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prevVelocity: {x: 0, y: 0}
+  prevTheoreticalVelocity: {x: 0, y: 0}
   initialVelocity: {x: 0, y: 0}
   initialAcceleration: {x: 0, y: 0}
 --- !u!114 &114720780409321020

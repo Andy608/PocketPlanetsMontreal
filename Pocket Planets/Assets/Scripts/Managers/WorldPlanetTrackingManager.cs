@@ -11,8 +11,8 @@ namespace Managers
 
         public List<Planet> PlanetsInWorld { get { return planetsInWorld; } }
 
-        private List<Planet> pausedPlanetsInWorld = new List<Planet>();
-        private List<Planet> unpausedPlanetsInWorld = new List<Planet>();
+        //private List<Planet> pausedPlanetsInWorld = new List<Planet>();
+        //private List<Planet> unpausedPlanetsInWorld = new List<Planet>();
 
         private void OnEnable()
         {
@@ -33,14 +33,14 @@ namespace Managers
                 Debug.Log("ADDED PLANET");
                 planetsInWorld.Add(planet);
 
-                if (planet.PlanetState == EnumPlanetState.PAUSED)
-                {
-                    pausedPlanetsInWorld.Add(planet);
-                }
-                else
-                {
-                    unpausedPlanetsInWorld.Add(planet);
-                }
+                //if (planet.PlanetState == EnumPlanetState.PAUSED)
+                //{
+                //    pausedPlanetsInWorld.Add(planet);
+                //}
+                //else
+                //{
+                //    unpausedPlanetsInWorld.Add(planet);
+                //}
             }
         }
 
@@ -53,31 +53,29 @@ namespace Managers
                 planetsInWorld.Remove(planet);
             }
 
-            if (planet.PlanetState == EnumPlanetState.PAUSED)
-            {
-                pausedPlanetsInWorld.Remove(planet);
-            }
-            else
-            {
-                unpausedPlanetsInWorld.Remove(planet);
-            }
+            //if (planet.PlanetState == EnumPlanetState.PAUSED)
+            //{
+            //    pausedPlanetsInWorld.Remove(planet);
+            //}
+            //else
+            //{
+            //    unpausedPlanetsInWorld.Remove(planet);
+            //}
         }
 
         private void HandlePause()
         {
-            for (int i = 0; i < unpausedPlanetsInWorld.Count; ++i)
+            foreach(Planet planet in planetsInWorld)
             {
-                PausePlanet(unpausedPlanetsInWorld[i]);
-                --i;
+                PausePlanet(planet);
             }
         }
 
         private void HandleUnpause()
         {
-            for (int i = 0; i < pausedPlanetsInWorld.Count; ++i)
+            foreach (Planet planet in planetsInWorld)
             {
-                UnpausePlanet(pausedPlanetsInWorld[i]);
-                --i;
+                UnpausePlanet(planet);
             }
         }
 
@@ -89,8 +87,8 @@ namespace Managers
 
                 planet.PlanetTrail.Pause();
 
-                pausedPlanetsInWorld.Add(planet);
-                unpausedPlanetsInWorld.Remove(planet);
+                //pausedPlanetsInWorld.Add(planet);
+                //unpausedPlanetsInWorld.Remove(planet);
 
                 planet.PlanetState = EnumPlanetState.PAUSED;
             }
@@ -102,9 +100,10 @@ namespace Managers
             {
                 //planet.PlanetRigidbody.simulated = true;
                 planet.PlanetTrail.Unpause();
+                Debug.Log("UNPAUSE");
 
-                pausedPlanetsInWorld.Remove(planet);
-                unpausedPlanetsInWorld.Add(planet);
+                //pausedPlanetsInWorld.Remove(planet);
+                //unpausedPlanetsInWorld.Add(planet);
 
                 planet.PlanetState = planet.PreviousPlanetState;
             }

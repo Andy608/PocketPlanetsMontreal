@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 147093118}
   - component: {fileID: 147093119}
   - component: {fileID: 147093120}
+  - component: {fileID: 147093121}
   m_Layer: 0
   m_Name: PlanetManager
   m_TagString: Untagged
@@ -474,6 +475,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c499875b3bddac4439e7a49d2c46811a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  counter: 0
+  ticker: 1
+--- !u!114 &147093121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 147093108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306a56d1f34ee654ea49991d7fee3a42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetTime: 1
 --- !u!1 &262865996
 GameObject:
   m_ObjectHideFlags: 0

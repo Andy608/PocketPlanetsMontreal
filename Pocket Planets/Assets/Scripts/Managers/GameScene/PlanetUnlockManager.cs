@@ -37,7 +37,7 @@ namespace Managers
 
         private IEnumerator CometSpawn()
         {
-            while (cometSecondsCounter < SECONDS_BEFORE_COMET_SPAWNS)
+            while (cometSecondsCounter < SECONDS_BEFORE_COMET_SPAWNS || GameStateManager.Instance.CurrentGameState == GameStateManager.EnumGameState.PAUSED)
             {
                 yield return new WaitForFixedUpdate();
                 cometSecondsCounter += Time.fixedDeltaTime;
@@ -46,7 +46,7 @@ namespace Managers
             //Spawn comet and fly it across the screen
             //Debug.Log("SPAWN COMET");
 
-            Vector2 spawnPosition = new Vector2(DisplayManager.Instance.MaxCameraWidth, Random.Range(-DisplayManager.Instance.MaxCameraHeight / 2.0f, -DisplayManager.Instance.MaxCameraHeight / 2.0f));
+            Vector2 spawnPosition = new Vector2(DisplayManager.Instance.MaxCameraWidth, Random.Range(-DisplayManager.Instance.MaxCameraHeight / 2.0f, DisplayManager.Instance.MaxCameraHeight / 2.0f));
             cometSpawn = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.COMET, spawnPosition);
             cometSpawn.InitialVelocity = new Vector2(-200.0f, 0.0f);
             cometSpawn.PhysicsIntegrator.InitialVelocity = cometSpawn.InitialVelocity;

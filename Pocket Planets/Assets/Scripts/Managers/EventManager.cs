@@ -29,9 +29,15 @@ namespace Managers
         public static PinchEnd OnPinchEnded;
         //////////////////////////////////////////////////////////////
 
-        
+
         //  Planet Lifetime Events
         //////////////////////////////////////////////////////////////
+        public delegate void PlanetSpawning(Planet spawningPlanet);
+        public static PlanetSpawning OnPlanetSpawning;
+
+        public delegate void PlanetAlive(Planet alivePlanet);
+        public static PlanetAlive OnPlanetAlive;
+
         public delegate void PlanetSpawned(Planet spawnedPlanet);
         public static PlanetSpawned OnPlanetSpawned;
 
@@ -44,6 +50,9 @@ namespace Managers
         //////////////////////////////////////////////////////////////
         public delegate void PlanetAbsorbed(Planet absorber, Planet absorbed);
         public static PlanetAbsorbed OnPlanetAbsorbed;
+
+        public delegate void PlanetTheoreticallyAbsorbed(Planet absorber, Planet absorbed);
+        public static PlanetTheoreticallyAbsorbed OnPlanetTheoreticallyAbsorbed;
 
         public delegate void OrbitOccurred(OrbitData orbitData);
         public static OrbitOccurred OnOrbitOccurred;

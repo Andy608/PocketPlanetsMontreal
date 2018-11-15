@@ -16,6 +16,7 @@ namespace Managers
         private Planet currentSpawningPlanet;
 
         public EnumPlanetType PlanetToSpawnType { get { return planetToSpawnPrefab.PlanetProperties.PlanetType; } }
+        public Planet CurrentSpawningPlanet { get { return currentSpawningPlanet; } }
 
         private void OnEnable()
         {
@@ -53,7 +54,13 @@ namespace Managers
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.SPAWNING);
-                currentSpawningPlanet.PlanetTrajectory.Show();
+
+                if (EventManager.OnPlanetSpawning != null)
+                {
+                    EventManager.OnPlanetSpawning(currentSpawningPlanet);
+                }
+
+                TrajectoryManager.Instance.Show();
             }
         }
 
@@ -62,7 +69,7 @@ namespace Managers
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
-                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / Managers.DisplayManager.Instance.CurrentCameraSize);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
             }
         }
 
@@ -76,8 +83,12 @@ namespace Managers
                 //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
                 //Remove the lines.
                 //Set the velocity to the distance multiplied by a scale factor that works for the game.
-                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / Managers.DisplayManager.Instance.CurrentCameraSize);
-                currentSpawningPlanet.PlanetTrajectory.Hide();
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
+
+                if (EventManager.OnPlanetAlive != null)
+                {
+                    EventManager.OnPlanetAlive(currentSpawningPlanet);
+                }
 
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);
             }
@@ -140,7 +151,7 @@ namespace Managers
             {
                 //Spawn in the new planet
                 Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
-                newPlanet.transform.position = planet.transform.position;
+                newPlanet.PhysicsIntegrator.SetPhysicsIntegrator(planet.PhysicsIntegrator);
 
                 if (!newPlanet.PlanetProperties.IsAnchor)
                 {

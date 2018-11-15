@@ -5,7 +5,7 @@ using UnityEngine;
 public class PhysicsIntegrator : MonoBehaviour
 {
     private Vector2 prevPosition = new Vector2();
-    private Vector2 prevVelocity = new Vector2();
+    public Vector2 prevVelocity = new Vector2();
     private Vector2 prevAcceleration = new Vector2();
 
     private Vector2 position = new Vector2();
@@ -15,7 +15,7 @@ public class PhysicsIntegrator : MonoBehaviour
     ///////////////////////////////////////////////////////
 
     private Vector2 prevTheoreticalPosition = new Vector2();
-    private Vector2 prevTheoreticalVelocity = new Vector2();
+    public Vector2 prevTheoreticalVelocity = new Vector2();
     private Vector2 prevTheoreticalAcceleration = new Vector2();
 
     private Vector2 theoreticalPosition = new Vector2();
@@ -33,21 +33,40 @@ public class PhysicsIntegrator : MonoBehaviour
     public Vector2 Velocity { get { return velocity; } }
     public Vector2 Position { get { return position; } }
 
-    public Vector2 InitialVelocity { get { return initialVelocity; } set { initialVelocity = value; prevVelocity = initialVelocity; } }
+    public Vector2 InitialVelocity {
+        get { return initialVelocity; }
+        set
+        {
+            initialVelocity = value;
+            prevVelocity = initialVelocity;
+            prevTheoreticalVelocity = initialVelocity;
+        }
+    }
+
+    public Vector2 TheoreticalPosition { get { return theoreticalPosition; } }
+    public Vector2 TheoreticalVelocity { get { return theoreticalVelocity; } }
+
 
     private void OnEnable()
     {
         objectTransform = transform;
 
         prevPosition = objectTransform.position;
-        prevVelocity = initialVelocity;
         AddAcceleration(initialAcceleration);
 
         position = objectTransform.position;
+
+        SyncTheoreticalData();
+        //Debug.Log("Initing position data: " + position + " ID: " + GetInstanceID());
     }
 
     public void Integrate()
-    { 
+    {
+        //if (!gameObject.GetComponent<Planet>().PlanetProperties.IsAnchor)
+        //{
+        //    Debug.Log("Integrate P Vel: " + prevVelocity + " | Vel: " + velocity);
+        //}
+
         velocity = prevVelocity + acceleration * Time.fixedDeltaTime;
         position = prevPosition + velocity * Time.fixedDeltaTime;
 
@@ -55,35 +74,41 @@ public class PhysicsIntegrator : MonoBehaviour
         prevVelocity = velocity;
         prevPosition = position;
 
-        //Debug.Log("Vel: " + velocity);
-        objectTransform.position = position;
-
         acceleration = Vector2.zero;
-    }
-    
-    public void SyncTheoreticalData()
-    {
-        prevTheoreticalPosition = prevPosition;
-        prevTheoreticalVelocity = prevVelocity;
-        prevTheoreticalAcceleration = prevAcceleration;
 
-        theoreticalPosition = position;
-        theoreticalVelocity = velocity;
-        theoreticalAcceleration = acceleration;
+        objectTransform.position = position;
     }
-     
-    public void IntegrateTheoretical(float deltaTime)
+
+    public void IntegrateTheoretical()
     {
-        theoreticalVelocity = prevTheoreticalVelocity + theoreticalAcceleration * deltaTime;
-        theoreticalPosition = prevTheoreticalPosition + theoreticalVelocity * deltaTime;
-     
+        theoreticalVelocity = prevTheoreticalVelocity + theoreticalAcceleration * Time.fixedDeltaTime;
+        theoreticalPosition = prevTheoreticalPosition + theoreticalVelocity * Time.fixedDeltaTime;
+
         prevTheoreticalAcceleration = theoreticalAcceleration;
         prevTheoreticalVelocity = theoreticalVelocity;
         prevTheoreticalPosition = theoreticalPosition;
 
         theoreticalAcceleration = Vector2.zero;
+
+        //objectTransform.position = theoreticalPosition;
     }
-    
+
+    public void SyncTheoreticalData()
+    {
+        prevTheoreticalAcceleration = prevAcceleration;
+        prevTheoreticalVelocity = prevVelocity;
+        prevTheoreticalPosition = prevPosition;
+
+        //if (!gameObject.GetComponent<Planet>().PlanetProperties.IsAnchor)
+        //{
+        //    Debug.Log("SYNC P VEL: " + prevVelocity);
+        //}
+
+        theoreticalAcceleration = acceleration;
+        theoreticalVelocity = velocity;
+        theoreticalPosition = position;
+    }
+
     public void AddAcceleration(Vector2 acc)
     {
         acceleration += acc;
@@ -92,5 +117,29 @@ public class PhysicsIntegrator : MonoBehaviour
     public void AddTheoreticalAcceleration(Vector2 acc)
     {
         theoreticalAcceleration += acc;
+    }
+
+    public void SetPhysicsIntegrator(PhysicsIntegrator otherPlanet)
+    {
+        prevAcceleration = otherPlanet.prevAcceleration;
+        acceleration = otherPlanet.acceleration;
+
+        prevVelocity = otherPlanet.prevVelocity;
+        velocity = otherPlanet.velocity;
+
+        prevPosition = otherPlanet.prevPosition;
+        position = otherPlanet.position;
+
+        initialVelocity = otherPlanet.initialVelocity;
+        initialAcceleration = otherPlanet.initialAcceleration;
+
+        prevTheoreticalAcceleration = otherPlanet.prevTheoreticalAcceleration;
+        theoreticalAcceleration = otherPlanet.theoreticalAcceleration;
+
+        prevTheoreticalVelocity = otherPlanet.prevTheoreticalVelocity;
+        theoreticalVelocity = otherPlanet.theoreticalVelocity;
+
+        prevTheoreticalPosition = otherPlanet.prevTheoreticalPosition;
+        theoreticalPosition = otherPlanet.theoreticalPosition;
     }
 }

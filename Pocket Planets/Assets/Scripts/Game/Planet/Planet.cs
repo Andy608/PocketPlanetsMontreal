@@ -109,6 +109,7 @@ public class Planet : MonoBehaviour
 
     public void SetPlanetState(EnumPlanetState state)
     {
+        //if (Managers.GameStateManager.Instance.CurrentGameState == Managers.GameStateManager.EnumGameState.PAUSED)
         planetState = state;
         //Do stuff if need be
     }

@@ -9,7 +9,7 @@ namespace Managers
         public static readonly float G = 6.67408f * 1000.0f;//Heuristic
         private static readonly float MIN_THRESHOLD = 1.0f;
 
-        private void Update()
+        public void IntegrateGravity()
         {
             if (GameStateManager.Instance.IsState(GameStateManager.EnumGameState.RUNNING))
             {
@@ -41,14 +41,40 @@ namespace Managers
             }
         }
 
+        public void IntegrateTheoreticalGravity()
+        {
+            List<Planet> planets = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
+
+            int i, j;
+            for (i = 0; i < planets.Count; ++i)
+            {
+                Planet attractee = planets[i];
+
+                if (attractee.PlanetState != EnumPlanetState.DEAD && !attractee.PlanetProperties.IsAnchor)
+                {
+                    for (j = 0; j < planets.Count; ++j)
+                    {
+                        Planet attractor = planets[j];
+
+                        if (attractor == attractee)
+                        {
+                            continue;
+                        }
+                        else if (attractor.PlanetState != EnumPlanetState.DEAD)
+                        {
+                            //Pull attractee
+                            AttractTheoreticalPlanet(attractor, attractee);
+                        }
+                    }
+                }
+            }
+        }
+
         private void AttractPlanet(Planet attractor, Planet attractee)
         {
             Vector2 direction = attractor.PhysicsIntegrator.Position - attractee.PhysicsIntegrator.Position;
             float distanceSquared = direction.sqrMagnitude;
             float distanceFromCenter = attractor.Radius + attractee.Radius;
-
-            //Debug.Log("Attractor dist: " + attractor.PhysicsIntegrator.Position + " | Attractee dist: " + attractee.PhysicsIntegrator.Position);
-            //Debug.Log("Distance Squared: " + distanceSquared + " | Distance From Center: " + distanceFromCenter);
 
             //If the planets are far enough away, then attract.
             if (distanceSquared > (distanceFromCenter * distanceFromCenter))
@@ -95,23 +121,65 @@ namespace Managers
             }
         }
 
-        private void AbsorbObject(Planet attractor, Planet attractee)
+        private void AttractTheoreticalPlanet(Planet attractor, Planet attractee)
         {
-            Planet absorber;
-            Planet absorbed;
+            Vector2 direction = attractor.PhysicsIntegrator.TheoreticalPosition - attractee.PhysicsIntegrator.TheoreticalPosition;
+            float distanceSquared = direction.sqrMagnitude;
+            float distanceFromCenter = attractor.Radius + attractee.Radius;
 
-            if (attractor.CurrentMass >= attractee.CurrentMass)
+            //If the planets are far enough away, then attract.
+            if (distanceSquared > (distanceFromCenter * distanceFromCenter))
             {
-                absorber = attractor;
-                absorbed = attractee;
+                float gravitationScalar = (G * (attractor.CurrentMass) / distanceSquared);
+                Vector2 gravitationalAcceleration = direction.normalized * gravitationScalar;
+
+                attractee.PhysicsIntegrator.AddTheoreticalAcceleration(gravitationalAcceleration);
             }
+            //Otherwise, absorb the smaller one!
             else
             {
-                absorber = attractee;
-                absorbed = attractor;
+                TheoreticallyAbsorbObject(attractor, attractee);
             }
+        }
 
+        private void TheoreticallyAbsorbObject(Planet absorber, Planet absorbed)
+        {
+            GetAbsorberAndAbsorbed(ref absorber, ref absorbed);
+
+            if (EventManager.OnPlanetTheoreticallyAbsorbed != null)
+            {
+                EventManager.OnPlanetTheoreticallyAbsorbed(absorber, absorbed);
+            }
+        }
+
+        private void AbsorbObject(Planet absorber, Planet absorbed)
+        {
+            //Planet absorber;
+            //Planet absorbed;
+
+            //if (attractor.CurrentMass >= attractee.CurrentMass)
+            //{
+            //    absorber = attractor;
+            //    absorbed = attractee;
+            //}
+            //else
+            //{
+            //    absorber = attractee;
+            //    absorbed = attractor;
+            //}
+
+            GetAbsorberAndAbsorbed(ref absorber, ref absorbed);
             absorber.AbsorbPlanet(absorbed);
+        }
+
+        private void GetAbsorberAndAbsorbed(ref Planet absorber, ref Planet absorbed)
+        {
+            if (absorber.CurrentMass < absorbed.CurrentMass)
+            {
+                Planet temp = absorber;
+                absorber = absorbed;
+                absorbed = temp;
+            }
         }
     }
 }
