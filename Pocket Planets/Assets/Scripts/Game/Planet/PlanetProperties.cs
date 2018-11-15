@@ -26,7 +26,7 @@ public class PlanetProperties : ScriptableObject
     //Put the animation on the child object
 
     [SerializeField] private Sprite sprite;
-    [SerializeField] private Sprite uiSprite;
+    [SerializeField] private RenderTexture uiRenderTexture;
     [SerializeField] private Color defaultColor;
 
     [SerializeField] private string planetName;
@@ -61,7 +61,7 @@ public class PlanetProperties : ScriptableObject
 
     //Use an animation in the future.
     public Sprite PlanetSprite { get { return sprite; } }
-    public Sprite PlanetUISprite { get { return uiSprite; } }
+    public RenderTexture PlanetUIRenderTexture { get { return uiRenderTexture; } }
     public Color DefaultColor { get { return defaultColor; } }
 
     public string PlanetName { get { return planetName; } }

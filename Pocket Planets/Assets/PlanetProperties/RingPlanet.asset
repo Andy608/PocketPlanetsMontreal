@@ -15,7 +15,7 @@ MonoBehaviour:
   planetType: 4
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiSprite: {fileID: 21300000, guid: 61fe696633c45ba4290c0d9f280d6a57, type: 3}
+  uiRenderTexture: {fileID: 8400000, guid: 2ecbbe39ca5ca8a43b787b1896751245, type: 2}
   defaultColor: {r: 0.71780396, g: 0.38074043, b: 0.8679245, a: 1}
   planetName: RING PLANET
   description: 

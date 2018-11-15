@@ -288,7 +288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trajectoryObject: {fileID: 1438433415525046}
-  offsetTime: 1
 --- !u!114 &114486591819080826
 MonoBehaviour:
   m_ObjectHideFlags: 1

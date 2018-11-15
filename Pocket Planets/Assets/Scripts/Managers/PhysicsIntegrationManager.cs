@@ -6,7 +6,6 @@ namespace Managers
 {
     public class PhysicsIntegrationManager : ManagerBase<PhysicsIntegrationManager>
     {
-        private float gameSpeed = 1.0f;
         private List<Planet> planetsInUniverse;
 
         private bool isTheoretical = false;
@@ -17,18 +16,16 @@ namespace Managers
             isTheoretical = true;
         }
 
-        public float counter = 0.0f;
-        public float ticker = 1.0f;
+        private float counter = 0.0f;
+        public float gameSpeed = 1.0f;
 
         private void FixedUpdate()
         {
-            //Debug.Log("GAME STATE: " + GameStateManager.Instance.CurrentGameState);
             if (GameStateManager.Instance.IsState(GameStateManager.EnumGameState.RUNNING))
             {
                 planetsInUniverse = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
-                //Debug.Log("Planets In Universe: " + planetsInUniverse.Count);
 
-                if ((counter += ticker) >= 1.0f)
+                if ((counter += gameSpeed) >= 1.0f)
                 {
                     while (counter > 1.0f)
                     {
@@ -60,6 +57,7 @@ namespace Managers
             }
         }
 
+        //Might need to take into account slow down/speed up if we ever actually use that feature.
         public void IntegrateTheoretical()
         {
             planetsInUniverse = WorldPlanetTrackingManager.Instance.PlanetsInWorld;

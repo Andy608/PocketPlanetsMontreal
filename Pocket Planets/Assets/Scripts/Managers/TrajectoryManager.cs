@@ -41,7 +41,7 @@ namespace Managers
         {
             if (!planet.PlanetProperties.IsAnchor)
             {
-                Debug.Log("Setting Current Planet: " + planet + " ID: " + planet.GetInstanceID());
+                //Debug.Log("Setting Current Planet: " + planet + " ID: " + planet.GetInstanceID());
                 currentPlanet = planet;
                 currentTrajectory = currentPlanet.GetComponent<Trajectory>();
             }
@@ -57,7 +57,7 @@ namespace Managers
 
         private void RemoveCurrentPlanet()
         {
-            Debug.Log("Removing Current Planet");
+            //Debug.Log("Removing Current Planet");
             Hide();
             currentPlanet = null;
             currentTrajectory = null;
@@ -67,7 +67,7 @@ namespace Managers
         {
             if (currentTrajectory)
             {
-                Debug.Log("Showing Trajectory");
+                //Debug.Log("Showing Trajectory");
                 currentTrajectory.Show();
             }
         }
@@ -76,7 +76,7 @@ namespace Managers
         {
             if (currentTrajectory)
             {
-                Debug.Log("Hiding Trajectory");
+                //Debug.Log("Hiding Trajectory");
                 currentTrajectory.Hide();
             }
         }
@@ -88,9 +88,6 @@ namespace Managers
                 Vector3 worldTouchPos = Vector3.zero;
                 DisplayManager.TouchPositionToWorldVector3(touch, ref worldTouchPos);
 
-                Vector2 worldPos = worldTouchPos;
-
-                //Debug.Log("Updating Starting Velocity: " + currentPlanet.PhysicsIntegrator.InitialVelocity);
                 currentTrajectory.ClearTrajectory();
                 currentTrajectory.CreateTrajectory(PlanetSpawnManager.Instance.CurrentSpawningPlanet.PhysicsIntegrator.InitialVelocity, offsetTime);
             }

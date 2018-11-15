@@ -15,7 +15,7 @@ MonoBehaviour:
   planetType: 2
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiSprite: {fileID: 21300000, guid: b8762d078c383af4ca50c491d2989b17, type: 3}
+  uiRenderTexture: {fileID: 8400000, guid: 149232a8fcaf0ea47b1cf9e300fb1702, type: 2}
   defaultColor: {r: 0.35857958, g: 0.90909946, b: 0.9622642, a: 1}
   planetName: COMET
   description: 

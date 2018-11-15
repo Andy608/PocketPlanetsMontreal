@@ -61,7 +61,6 @@ public class Trail : MonoBehaviour
 
     public void Unpause()
     {
-        Debug.Log("Set tail back to normal");
         planetTrailRenderer.time = trailTime;
     }
 }

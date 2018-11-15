@@ -7,8 +7,6 @@ public class Trajectory : MonoBehaviour
 {
     [SerializeField] private GameObject trajectoryObject;
 
-    //Amount of time to look ahead.
-    [SerializeField] private float offsetTime = 1.0f;
     private float WIDTH = 64.0f;
 
     private LineRenderer trajectoryLineRenderer;
@@ -77,7 +75,7 @@ public class Trajectory : MonoBehaviour
 
     public void ClearTrajectory()
     {
-        Debug.Log("CLEAR");
+        //Debug.Log("CLEAR");
         vertices.Clear();
         lineDistance = 0.0f;
         trajectoryLineRenderer.positionCount = 0;

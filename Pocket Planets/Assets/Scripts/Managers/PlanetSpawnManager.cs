@@ -79,7 +79,7 @@ namespace Managers
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
 
-                Debug.Log("DRAG ENDED!!!!");
+                //Debug.Log("DRAG ENDED!!!!");
                 //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
                 //Remove the lines.
                 //Set the velocity to the distance multiplied by a scale factor that works for the game.
@@ -112,7 +112,7 @@ namespace Managers
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
 
-            Debug.Log("SPAWNING: " + planetToSpawnPrefab);
+            //Debug.Log("SPAWNING: " + planetToSpawnPrefab);
 
             GameObject spawnedPlanet = Instantiate(planetToSpawnPrefab.gameObject, spawnPosition, Quaternion.identity);
 
@@ -125,7 +125,7 @@ namespace Managers
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
                 {
-                    Debug.Log("SPAWNING NEW PLANET");
+                    //Debug.Log("SPAWNING NEW PLANET");
                     EventManager.OnPlanetSpawned(newPlanet);
                 }
 
@@ -218,7 +218,7 @@ namespace Managers
 
             if (planetToSpawnPrefab != null)
             {
-                Debug.Log("Setting Planet Spawn Type: " + planetType);
+                //Debug.Log("Setting Planet Spawn Type: " + planetType);
 
                 if (EventManager.OnPlanetToSpawnChanged != null)
                 {

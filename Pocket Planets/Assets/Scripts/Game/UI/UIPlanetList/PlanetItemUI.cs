@@ -9,7 +9,7 @@ public class PlanetItemUI : MonoBehaviour
     [SerializeField] private RectTransform unlockedPanel;
     [SerializeField] private RectTransform lockedPanel;
 
-    [SerializeField] private Image planetImage;
+    [SerializeField] private RawImage planetImage;
     [SerializeField] private TextMeshProUGUI planetTitle;
     [SerializeField] private TextMeshProUGUI planetCost;
     [SerializeField] private TextMeshProUGUI planetProfit;
@@ -52,7 +52,7 @@ public class PlanetItemUI : MonoBehaviour
     public void UpdateUI()
     {
         planetTitle.text = planetProperties.PlanetName;
-        planetImage.sprite = planetProperties.PlanetUISprite;
+        planetImage.texture = planetProperties.PlanetUIRenderTexture;
         planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
         planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";
 

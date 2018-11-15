@@ -15,7 +15,7 @@ MonoBehaviour:
   planetType: 0
   isAnchor: 1
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiSprite: {fileID: 21300000, guid: ad28303858795cd428206e447865d764, type: 3}
+  uiRenderTexture: {fileID: 8400000, guid: 11ccc98aca9be7547bbd9ae71cf97337, type: 2}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   planetName: BLACKHOLE
   description: 
