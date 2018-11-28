@@ -36,6 +36,11 @@ namespace Managers
 
         private void SpawnTapOccurred(Touch touch)
         {
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            {
+                return;
+            }
+
             currentSpawningPlanet = SpawnPlanet(touch);
 
             if (currentSpawningPlanet)
@@ -48,6 +53,11 @@ namespace Managers
 
         private void SpawnDragBegan(Touch touch)
         {
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            {
+                return;
+            }
+
             currentSpawningPlanet = SpawnPlanet(touch);
 
             if (currentSpawningPlanet)
@@ -66,15 +76,25 @@ namespace Managers
 
         private void SpawnDragHeld(Touch touch)
         {
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            {
+                return;
+            }
+
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
-                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
             }
         }
 
         private void SpawnDragEnded(Touch touch)
         {
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            {
+                return;
+            }
+
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
@@ -83,7 +103,7 @@ namespace Managers
                 //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
                 //Remove the lines.
                 //Set the velocity to the distance multiplied by a scale factor that works for the game.
-                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
 
                 if (EventManager.OnPlanetAlive != null)
                 {

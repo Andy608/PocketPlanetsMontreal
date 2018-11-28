@@ -113,6 +113,15 @@ namespace Managers
 
         public delegate void OpenPlanetUIList();
         public static OpenPlanetUIList OnOpenPlanetUIList;
+
+        public delegate void CameraCenterSelected();
+        public static CameraCenterSelected OnCameraCenterSelected;
+
+        public delegate void CameraFreeroamSelected();
+        public static CameraFreeroamSelected OnCameraFreeroamSelected;
+
+        public delegate void CameraAnchoredSelected();
+        public static CameraAnchoredSelected OnCameraAnchoredSelected;
         //////////////////////////////////////////////////////////////
     }
 }

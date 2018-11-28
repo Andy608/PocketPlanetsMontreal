@@ -27,10 +27,15 @@ namespace Managers
         private float prevZoomDist = 0;
         private float zoomOffset = 0;
 
+        private float futureZoomDist = 0;
+        private float futurePrevZoomDist = 0;
+        private float futureZoomOffset = 0;
+
         public Color BackgroundColor { get { return gameCamera.backgroundColor; } }
 
         public float CameraOrthoSize { get { return gameCamera.orthographicSize; } }
-        public float CurrentCameraSize { get { return currentSize; } }
+        public float CurrentCameraHeight { get { return currentSize; } }
+        public float CurrentCameraWidth { get { return currentSize * Screen.width / Screen.height; } }
         public float DefaultCameraSize { get { return defaultSize; } }
 
         public float MaxCameraHeight { get { return maximumSize; } }
@@ -83,23 +88,69 @@ namespace Managers
         private void ZoomBegan(Touch first, Touch second)
         {
             currentSize = gameCamera.orthographicSize;
-            zoomDist = (first.position - second.position).magnitude;
-            prevZoomDist = zoomDist;
+            futureZoomDist = (first.position - second.position).magnitude;
+            futurePrevZoomDist = futureZoomDist;
 
-            Zoom();
+            futureZoomOffset = futurePrevZoomDist - futureZoomDist;
+
+            if (!CanZoom(currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed), 
+                currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed) * Screen.width / Screen.height))
+            {
+                futureZoomDist = zoomDist;
+                futurePrevZoomDist = prevZoomDist;
+                futureZoomOffset = zoomOffset;
+            }
+            else
+            {
+                zoomDist = futureZoomDist;
+                prevZoomDist = futurePrevZoomDist;
+                Zoom();
+            }
         }
 
         private void ZoomHeld(Touch first, Touch second)
         {
-            prevZoomDist = zoomDist;
-            zoomDist = (first.position - second.position).magnitude;
+            //if (!CanZoom()) return;
 
-            Zoom();
+            //prevZoomDist = zoomDist;
+            //zoomDist = (first.position - second.position).magnitude;
+
+            //Zoom();
+
+            futurePrevZoomDist = zoomDist;
+            futureZoomDist = (first.position - second.position).magnitude;
+
+            futureZoomOffset = futurePrevZoomDist - futureZoomDist;
+
+            if (!CanZoom(currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed),
+                currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed) * Screen.width / Screen.height))
+            {
+                futureZoomDist = zoomDist;
+                futurePrevZoomDist = prevZoomDist;
+                futureZoomOffset = zoomOffset;
+            }
+            else
+            {
+                zoomDist = futureZoomDist;
+                prevZoomDist = futurePrevZoomDist;
+                Zoom();
+            }
         }
 
         private void ZoomEnded(Touch first, Touch second)
         {
-            Zoom();
+            //if (!CanZoom()) return;
+
+            //Zoom();
+
+            //prevZoomDist = 0;
+            //zoomDist = 0;
+
+            if (CanZoom(currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed),
+                currentSize + (futureZoomOffset * Time.deltaTime * zoomSpeed) * Screen.width / Screen.height))
+            {
+                Zoom();
+            }
 
             prevZoomDist = 0;
             zoomDist = 0;
@@ -109,6 +160,27 @@ namespace Managers
         {
             zoomOffset = prevZoomDist - zoomDist;
             UpdateCameraSize(currentSize + (zoomOffset * Time.deltaTime * zoomSpeed));
+        }
+
+        private bool CanZoom(float futureWidth, float futureHeight)
+        {
+            float topBorderY = gameCamera.transform.position.y + futureHeight;
+            float bottomBorderY = gameCamera.transform.position.y - futureHeight;
+            float rightBorderX = gameCamera.transform.position.x + futureWidth;
+            float leftBorderX = gameCamera.transform.position.x - futureWidth;
+
+            float borderX = WorldBoundsManager.Instance.HorizontalRadius;
+            float borderY = WorldBoundsManager.Instance.VerticalRadius;
+
+            if (topBorderY >= borderY ||
+                bottomBorderY <= -borderY ||
+                rightBorderX >= borderX ||
+                leftBorderX <= -borderX)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void UpdateCameraSize(float size)

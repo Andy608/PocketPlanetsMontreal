@@ -17,21 +17,35 @@ public class TiledBackground : MonoBehaviour
         textureWidth = backgroundSprite.textureRect.width;
         textureHeight = backgroundSprite.textureRect.height;
 
-        UpdateDimensions();
+        SetDimensions();
     }
 
-    private void Update()
-    {
-        if (prevWidth != Screen.width || prevHeight != Screen.height)
-        {
-            UpdateDimensions();
-        }
-    }
+    //private void Update()
+    //{
+        //if (prevWidth != Screen.width || prevHeight != Screen.height)
+        //{
+        //    UpdateDimensions();
+        //}
+    //}
 
-    private void UpdateDimensions()
+    //private void UpdateDimensions()
+    //{
+    //    var newWidth = Mathf.Ceil(Screen.width / (textureWidth * Managers.DisplayManager.Instance.Scale));
+    //    var newHeight = Mathf.Ceil(Screen.height / (textureHeight * Managers.DisplayManager.Instance.Scale));
+
+    //    scaleHelper.x = newWidth;
+    //    scaleHelper.y = newHeight;
+    //    GetComponent<Renderer>().material.mainTextureScale = scaleHelper;
+
+    //    scaleHelper.x *= textureWidth;
+    //    scaleHelper.y *= textureHeight;
+    //    transform.localScale = scaleHelper;
+    //}
+
+    private void SetDimensions()
     {
-        var newWidth = Mathf.Ceil(Screen.width / (textureWidth * Managers.DisplayManager.Instance.Scale));
-        var newHeight = Mathf.Ceil(Screen.height / (textureHeight * Managers.DisplayManager.Instance.Scale));
+        var newWidth = Mathf.Ceil(Managers.WorldBoundsManager.Instance.HorizontalRadius * 2.0f / textureWidth);
+        var newHeight = Mathf.Ceil(Managers.WorldBoundsManager.Instance.VerticalRadius * 2.0f / textureHeight);
 
         scaleHelper.x = newWidth;
         scaleHelper.y = newHeight;

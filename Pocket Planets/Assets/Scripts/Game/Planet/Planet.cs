@@ -93,7 +93,6 @@ public class Planet : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("WHY IS THIS BEING DISABLED");
         if (Managers.WorldPlanetTrackingManager.Instance)
         {
             Managers.WorldPlanetTrackingManager.Instance.UnregisterPlanet(this);
