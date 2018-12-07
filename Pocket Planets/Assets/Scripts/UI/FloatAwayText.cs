@@ -10,10 +10,11 @@ public class FloatAwayText : MonoBehaviour
     [SerializeField] private Vector2 startingVelocity;
     [SerializeField] private float fadeTime;
 
+    //Replace rigidbody in the future.
     private Rigidbody2D textRigidbody;
 
-    private Vector2 worldUp = Vector2.up;
-    private Vector2 newVelocity = new Vector2();
+    //private Vector2 worldUp = Vector2.up;
+    //private Vector2 newVelocity = new Vector2();
 
     private float fadeCounter;
 

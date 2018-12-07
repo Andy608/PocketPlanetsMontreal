@@ -61,7 +61,7 @@ namespace Managers
 
                     for (otherIndex = currentIndex + 1; otherIndex < planets.Count; ++otherIndex)
                     {
-                        if (planets[otherIndex].PlanetRigidbody.mass < planets[currentIndex].PlanetRigidbody.mass)
+                        if (planets[otherIndex].CurrentMass < planets[currentIndex].CurrentMass)
                         {
                             maxIndex = otherIndex;
                         }
@@ -82,7 +82,7 @@ namespace Managers
             string s = "";
             int n = arr.Count;
             for (int i = 0; i < n; ++i)
-                s += ("[" + arr[i].PlanetRigidbody.mass.ToString() + "] ");
+                s += ("[" + arr[i].CurrentMass.ToString() + "] ");
 
             //Debug.Log(s);
         }

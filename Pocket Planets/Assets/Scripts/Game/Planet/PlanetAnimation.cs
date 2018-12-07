@@ -20,6 +20,7 @@ public class PlanetAnimation : MonoBehaviour
             currentAnimation = animations[i];
             currentAnimation = Instantiate(animationPrefab, transform);
             currentAnimation.transform.SetParent(transform);
+            currentAnimation.layer = transform.gameObject.layer;
             currentAnimation.GetComponent<Animator>().SetFloat("CycleOffset", i * normalizedTimeDelta);
         }
     }

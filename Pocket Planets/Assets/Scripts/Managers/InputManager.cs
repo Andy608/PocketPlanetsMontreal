@@ -169,7 +169,6 @@ namespace Managers
 
             if (!tapFailed)
             {
-                //Debug.Log("TAP HAPPENED");
                 if (EventManager.OnTapOccurred != null)
                 {
                     EventManager.OnTapOccurred(Input.touches[0]);

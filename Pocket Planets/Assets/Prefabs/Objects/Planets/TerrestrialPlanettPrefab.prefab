@@ -52,12 +52,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4322838978776622}
-  - component: {fileID: 50670452535479488}
   - component: {fileID: 114904965904169734}
   - component: {fileID: 114582034107130430}
   - component: {fileID: 114720780409321020}
   - component: {fileID: 114585175645535992}
   - component: {fileID: 114944459644146146}
+  - component: {fileID: 114607936251609704}
   m_Layer: 0
   m_Name: TerrestrialPlanettPrefab
   m_TagString: Untagged
@@ -106,26 +106,6 @@ Transform:
   m_Father: {fileID: 4322838978776622}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50670452535479488
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1907158381121304}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 600
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!96 &96042402049816754
 TrailRenderer:
   serializedVersion: 2
@@ -230,7 +210,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trajectoryObject: {fileID: 1236711974257438}
-  offsetTime: 1
 --- !u!114 &114585175645535992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,6 +221,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fda83c26087bb4db8c80f9b34a9eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114607936251609704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1907158381121304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevVelocity: {x: 0, y: 0}
+  prevTheoreticalVelocity: {x: 0, y: 0}
+  initialVelocity: {x: 0, y: 0}
+  initialAcceleration: {x: 0, y: 0}
 --- !u!114 &114720780409321020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -285,7 +279,7 @@ LineRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236711974257438}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 0

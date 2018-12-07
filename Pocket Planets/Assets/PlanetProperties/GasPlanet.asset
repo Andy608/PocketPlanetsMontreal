@@ -15,15 +15,15 @@ MonoBehaviour:
   planetType: 5
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiSprite: {fileID: 21300000, guid: 5d2581ab0ade4924695942c275535cf3, type: 3}
+  uiRenderTexture: {fileID: 8400000, guid: ac603ef05b46439498b26bef6d1656a8, type: 2}
   defaultColor: {r: 1, g: 0.90669376, b: 0.523, a: 1}
   planetName: GAS PLANET
   description: 
-  defaultCostLevel: 3
-  defaultPrimaryCost: 2
+  defaultCostLevel: 1
+  defaultPrimaryCost: 18
   defaultSecondaryCost: 0
-  defaultProfitLevel: 2
-  defaultPrimaryProfit: 60
+  defaultProfitLevel: 1
+  defaultPrimaryProfit: 3
   defaultSecondaryProfit: 0
   radiusScaleMultiplier: 100
   defaultMass: 600

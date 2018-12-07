@@ -35,12 +35,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4578324892803404}
-  - component: {fileID: 50042320813751158}
   - component: {fileID: 114486591819080826}
   - component: {fileID: 114374344028556506}
   - component: {fileID: 114353380143723066}
   - component: {fileID: 114301361864904894}
   - component: {fileID: 114230140969933628}
+  - component: {fileID: 114536038120127356}
   m_Layer: 0
   m_Name: GasPlanetPrefab
   m_TagString: Untagged
@@ -136,26 +136,6 @@ Transform:
   m_Father: {fileID: 4578324892803404}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50042320813751158
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1122792079895968}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 600
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!96 &96776052910169846
 TrailRenderer:
   serializedVersion: 2
@@ -308,7 +288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trajectoryObject: {fileID: 1438433415525046}
-  offsetTime: 1
 --- !u!114 &114486591819080826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,6 +301,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetObject: {fileID: 1402724944723592}
   planetProperties: {fileID: 11400000, guid: 8fc995a14a37f26489ca7eabfd44f644, type: 2}
+--- !u!114 &114536038120127356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122792079895968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e9f0c34682944c82c9e1909937117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevVelocity: {x: 0, y: 0}
+  prevTheoreticalVelocity: {x: 0, y: 0}
+  initialVelocity: {x: 0, y: 0}
+  initialAcceleration: {x: 0, y: 0}
 --- !u!120 &120616697494348942
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -329,7 +323,7 @@ LineRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1438433415525046}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 0

@@ -10,6 +10,13 @@ namespace Managers
         private List<Planet> unlockedPlanetPrefabs = new List<Planet>();
 
         private static int TERRESTRIAL_PLANET_ORBIT_COUNT = 1;
+        private static int SECONDS_BEFORE_COMET_SPAWNS = 10;
+        private float cometSecondsCounter = 0;
+        private bool cometUnlocked = false;
+
+        private Planet cometSpawn = null;
+
+        private IEnumerator cometSpawnCoroutine;
 
         private void Start()
         {
@@ -28,6 +35,43 @@ namespace Managers
             EventManager.OnOrbitOccurred -= HandleOrbit;
         }
 
+        private IEnumerator CometSpawn()
+        {
+            while (cometSecondsCounter < SECONDS_BEFORE_COMET_SPAWNS || GameStateManager.Instance.CurrentGameState == GameStateManager.EnumGameState.PAUSED)
+            {
+                yield return new WaitForFixedUpdate();
+                cometSecondsCounter += Time.fixedDeltaTime;
+            }
+
+            //Spawn comet and fly it across the screen
+            //Debug.Log("SPAWN COMET");
+
+            Vector2 spawnPosition = new Vector2(DisplayManager.Instance.MaxCameraWidth, Random.Range(-DisplayManager.Instance.MaxCameraHeight / 2.0f, DisplayManager.Instance.MaxCameraHeight / 2.0f));
+            cometSpawn = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.COMET, spawnPosition);
+            cometSpawn.InitialVelocity = new Vector2(-200.0f, 0.0f);
+            cometSpawn.PhysicsIntegrator.InitialVelocity = cometSpawn.InitialVelocity;
+            cometSpawnCoroutine = null;
+        }
+
+        private void Update()
+        {
+            if (!cometUnlocked)
+            {
+                if (cometSpawn && DisplayManager.Instance.IsInView(cometSpawn.transform.position))
+                {
+                    Planet comet = PlanetStoreManager.Instance.GetPlanetPrefab(EnumPlanetType.COMET);
+
+                    //Unlock comet!
+                    if (!comet.PlanetProperties.IsUnlocked && !unlockedPlanetPrefabs.Contains(comet))
+                    {
+                        UnlockPlanet(comet);
+                    }
+
+                    cometUnlocked = true;
+                }
+            }
+        }
+
         private void UnlockPlanet(Planet planetPrefab)
         {
             if (!unlockedPlanetPrefabs.Contains(planetPrefab))
@@ -38,6 +82,18 @@ namespace Managers
                 if (EventManager.OnNewPlanetUnlocked != null)
                 {
                     EventManager.OnNewPlanetUnlocked(planetPrefab.PlanetProperties.PlanetType);
+                }
+
+                if (cometSpawnCoroutine != null)
+                {
+                    StopCoroutine(cometSpawnCoroutine);
+                    cometSpawnCoroutine = null;
+                }
+
+                if (!unlockedPlanetPrefabs.Contains(PlanetStoreManager.Instance.GetPlanetPrefab(EnumPlanetType.COMET)))
+                {
+                    cometSpawnCoroutine = CometSpawn();
+                    StartCoroutine(cometSpawnCoroutine);
                 }
             }
         }
