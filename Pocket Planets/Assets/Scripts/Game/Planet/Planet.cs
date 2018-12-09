@@ -51,7 +51,7 @@ public class Planet : MonoBehaviour
     public Color CurrentColor { get { return currentColor; } }
     public Trail PlanetTrail { get { return planetTrail; } }
 
-    public Vector2 InitialVelocity { get { return initialVelocity; } set { if (initialVelocity == Vector2.zero) { initialVelocity = value; } } }
+    public Vector2 InitialVelocity { get { return initialVelocity; } set { initialVelocity = value; } }
     public float Circumference { get { return circumference; } }
     public float Radius { get { return circumference / 2.0f; } }
     public float RadiusSquared { get { float r = Radius; return r * r; } }
@@ -144,19 +144,6 @@ public class Planet : MonoBehaviour
 
     public void AbsorbPlanet(Planet absorbed)
     {
-        currentMass += absorbed.CurrentMass;
-        UpdatePlanetDimensions();
-
-        if (Managers.EventManager.OnPlanetDestroyed != null)
-        {
-            Managers.EventManager.OnPlanetDestroyed(absorbed);
-        }
-
-        if (Managers.EventManager.OnPlanetAbsorbed != null)
-        {
-            Managers.EventManager.OnPlanetAbsorbed(this, absorbed);
-        }
-
         if (!planetProperties.IsAnchor)
         {
             //Add the impact force.
@@ -164,7 +151,36 @@ public class Planet : MonoBehaviour
             //planetRigidbody.AddForce(absorbed.planetRigidbody.velocity * absorbed.CurrentMass, ForceMode2D.Impulse);
             //planetRigidbody.AddForce(acceleration * absorbed.CurrentMass, ForceMode2D.Impulse);
 
+            //We need to figure out why this is 0
+            //Debug.Log("BEFORE: OTHER: " + absorbed.PhysicsIntegrator.Velocity + " ABSORBER: " + PhysicsIntegrator.Velocity);
+
+            //if (Vector2.Dot(physicsIntegrator.prevVelocity, absorbed.physicsIntegrator.prevVelocity) > 0)
+            //{
+            //    physicsIntegrator.prevVelocity = ((physicsIntegrator.prevVelocity * CurrentMass) - (absorbed.PhysicsIntegrator.prevVelocity * absorbed.CurrentMass)) / CurrentMass;
+            //}
+            //else
+            //{
+            physicsIntegrator.prevVelocity = (((physicsIntegrator.prevVelocity) * CurrentMass) + ((absorbed.PhysicsIntegrator.prevVelocity) * absorbed.CurrentMass)) / (CurrentMass + absorbed.CurrentMass);
+            //}
+
             physicsIntegrator.AddAcceleration(absorbed.PhysicsIntegrator.Acceleration);
+            //Debug.Log("AFTER: OTHER: " + absorbed.PhysicsIntegrator.Velocity + " ABSORBER: " + PhysicsIntegrator.Velocity);
+
+            //Vector2 rv = absorbed.PhysicsIntegrator.Velocity - PhysicsIntegrator.Velocity;
+
+            //float velAlongNormal = Vector2.Dot(rv, PhysicsIntegrator.Velocity.normalized);//Idk if the second thing is right
+
+            //float e = 1.0f;
+
+            //float j = -(1 + e) * velAlongNormal;
+            //j /= 1 / CurrentMass + 1 / absorbed.CurrentMass;
+
+            //Vector2 impulse = j * PhysicsIntegrator.Velocity.normalized;
+            //PhysicsIntegrator.Velocity -= 1 / currentMass * impulse;
+            //absorbed.PhysicsIntegrator.Velocity += 1 / absorbed.currentMass * impulse;
+
+            currentMass += absorbed.CurrentMass;
+            UpdatePlanetDimensions();
 
             //if (absorbed.CurrentMass == CurrentMass && absorbed.PhysicsIntegrator.Velocity.sqrMagnitude > PhysicsIntegrator.Velocity.sqrMagnitude)
             //{
@@ -182,6 +198,16 @@ public class Planet : MonoBehaviour
         if (absorbed.PlanetProperties.PlanetType == EnumPlanetType.ASTEROID)
         {
             ++asteroidCollisionCounter;
+        }
+
+        if (Managers.EventManager.OnPlanetDestroyed != null)
+        {
+            Managers.EventManager.OnPlanetDestroyed(absorbed);
+        }
+
+        if (Managers.EventManager.OnPlanetAbsorbed != null)
+        {
+            Managers.EventManager.OnPlanetAbsorbed(this, absorbed);
         }
 
         Destroy(absorbed.gameObject);

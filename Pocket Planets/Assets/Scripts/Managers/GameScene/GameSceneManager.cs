@@ -8,7 +8,20 @@ namespace Managers
     {
         private void OnEnable()
         {
-            PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, Vector2.zero);
+            //PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, Vector2.zero);
+        }
+
+        public void OnExitClicked()
+        {
+            if (EventManager.OnStartFadeOut != null)
+            {
+                EventManager.OnStartFadeOut();
+            }
+
+            if (EventManager.OnSetTargetScene != null)
+            {
+                EventManager.OnSetTargetScene(EnumScene.TITLE);
+            }
         }
     }
 }

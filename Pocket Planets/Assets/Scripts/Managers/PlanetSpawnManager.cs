@@ -36,7 +36,8 @@ namespace Managers
 
         private void SpawnTapOccurred(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
+                CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
             {
                 return;
             }
@@ -46,6 +47,15 @@ namespace Managers
             if (currentSpawningPlanet)
             {
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);
+
+                Vector2 relativeVel = Vector2.zero;
+
+                if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && CameraMovementManager.Instance.TargetPlanet)
+                {
+                    relativeVel = CameraMovementManager.Instance.TargetPlanet.PhysicsIntegrator.Velocity;
+                }
+
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity += relativeVel;
             }
 
             currentSpawningPlanet = null;
@@ -53,7 +63,8 @@ namespace Managers
 
         private void SpawnDragBegan(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
+                CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
             {
                 return;
             }
@@ -76,7 +87,8 @@ namespace Managers
 
         private void SpawnDragHeld(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
+                CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
             {
                 return;
             }
@@ -84,13 +96,24 @@ namespace Managers
             if (currentSpawningPlanet)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+                //currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
+
+                Vector2 relativeVel = Vector2.zero;
+
+                if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && CameraMovementManager.Instance.TargetPlanet)
+                {
+                    relativeVel = CameraMovementManager.Instance.TargetPlanet.PhysicsIntegrator.Velocity;
+                }
+
                 currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity += relativeVel;
             }
         }
 
         private void SpawnDragEnded(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
+                CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
             {
                 return;
             }
@@ -103,7 +126,17 @@ namespace Managers
                 //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
                 //Remove the lines.
                 //Set the velocity to the distance multiplied by a scale factor that works for the game.
+                Vector2 relativeVel = Vector2.zero;
+
+                if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && CameraMovementManager.Instance.TargetPlanet)
+                {
+                    relativeVel = CameraMovementManager.Instance.TargetPlanet.PhysicsIntegrator.Velocity;
+                }
+
+                //Debug.Log("Rel: " + relativeVel);
+
                 currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
+                currentSpawningPlanet.PhysicsIntegrator.InitialVelocity += relativeVel;
 
                 if (EventManager.OnPlanetAlive != null)
                 {
@@ -173,12 +206,22 @@ namespace Managers
                 Planet newPlanet = upgradedPlanet.GetComponent<Planet>();
                 newPlanet.PhysicsIntegrator.SetPhysicsIntegrator(planet.PhysicsIntegrator);
 
-                if (!newPlanet.PlanetProperties.IsAnchor)
+                //if (!newPlanet.PlanetProperties.IsAnchor)
+                //{
+                //    newPlanet.PhysicsIntegrator.InitialVelocity = planet.PhysicsIntegrator.Velocity;
+                //}
+
+                if (newPlanet.PlanetProperties.IsAnchor)
                 {
-                    newPlanet.PhysicsIntegrator.InitialVelocity = planet.PhysicsIntegrator.Velocity;
+                    newPlanet.PhysicsIntegrator.AnchorObject();
                 }
 
                 newPlanet.SetPlanetState(EnumPlanetState.ALIVE);
+
+                if (EventManager.OnPlanetUpgraded != null && newPlanet)
+                {
+                    EventManager.OnPlanetUpgraded(newPlanet, planet);
+                }
 
                 if (EventManager.OnPlanetSpawned != null && newPlanet)
                 {

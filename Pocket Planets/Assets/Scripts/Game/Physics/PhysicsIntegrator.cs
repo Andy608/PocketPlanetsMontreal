@@ -12,6 +12,8 @@ public class PhysicsIntegrator : MonoBehaviour
     private Vector2 velocity = new Vector2();
     private Vector2 acceleration = new Vector2();
 
+    private Vector2 relativeVelocity = new Vector2();
+
     ///////////////////////////////////////////////////////
 
     private Vector2 prevTheoreticalPosition = new Vector2();
@@ -29,9 +31,11 @@ public class PhysicsIntegrator : MonoBehaviour
 
     ///////////////////////////////////////////////////////
 
+    public Vector2 PreviousAcceleration { get { return prevAcceleration; } }
     public Vector2 Acceleration { get { return acceleration; } }
-    public Vector2 Velocity { get { return velocity; } }
+    public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
     public Vector2 Position { get { return position; } }
+    public Vector2 RelativeVelocity { get { return relativeVelocity; } set { relativeVelocity = value; } }
 
     public Vector2 InitialVelocity {
         get { return initialVelocity; }
@@ -45,7 +49,6 @@ public class PhysicsIntegrator : MonoBehaviour
 
     public Vector2 TheoreticalPosition { get { return theoreticalPosition; } }
     public Vector2 TheoreticalVelocity { get { return theoreticalVelocity; } }
-
 
     private void OnEnable()
     {
@@ -67,28 +70,28 @@ public class PhysicsIntegrator : MonoBehaviour
         //    Debug.Log("Integrate P Vel: " + prevVelocity + " | Vel: " + velocity);
         //}
 
-        velocity = prevVelocity + acceleration * Time.fixedDeltaTime;
-        position = prevPosition + velocity * Time.fixedDeltaTime;
-
         prevAcceleration = acceleration;
+        acceleration = Vector2.zero;
+
+        velocity = prevVelocity + prevAcceleration * Time.fixedDeltaTime;
+        position = prevPosition + (relativeVelocity + velocity) * Time.fixedDeltaTime;
+
         prevVelocity = velocity;
         prevPosition = position;
-
-        acceleration = Vector2.zero;
 
         objectTransform.position = position;
     }
 
     public void IntegrateTheoretical()
     {
-        theoreticalVelocity = prevTheoreticalVelocity + theoreticalAcceleration * Time.fixedDeltaTime;
-        theoreticalPosition = prevTheoreticalPosition + theoreticalVelocity * Time.fixedDeltaTime;
-
         prevTheoreticalAcceleration = theoreticalAcceleration;
+        theoreticalAcceleration = Vector2.zero;
+
+        theoreticalVelocity = prevTheoreticalVelocity + prevTheoreticalAcceleration * Time.fixedDeltaTime;
+        theoreticalPosition = prevTheoreticalPosition + (relativeVelocity + theoreticalVelocity) * Time.fixedDeltaTime;
+
         prevTheoreticalVelocity = theoreticalVelocity;
         prevTheoreticalPosition = theoreticalPosition;
-
-        theoreticalAcceleration = Vector2.zero;
 
         //objectTransform.position = theoreticalPosition;
     }
@@ -119,6 +122,11 @@ public class PhysicsIntegrator : MonoBehaviour
         theoreticalAcceleration += acc;
     }
 
+    public void AddVelocity(Vector2 vel)
+    {
+        velocity += vel;
+    }
+
     public void SetPhysicsIntegrator(PhysicsIntegrator otherPlanet)
     {
         prevAcceleration = otherPlanet.prevAcceleration;
@@ -141,5 +149,21 @@ public class PhysicsIntegrator : MonoBehaviour
 
         prevTheoreticalPosition = otherPlanet.prevTheoreticalPosition;
         theoreticalPosition = otherPlanet.theoreticalPosition;
+
+        relativeVelocity = otherPlanet.relativeVelocity;
+    }
+
+    public void AnchorObject()
+    {
+        prevAcceleration = Vector2.zero;
+        acceleration = Vector2.zero;
+        prevVelocity = Vector2.zero;
+        velocity = Vector2.zero;
+        initialVelocity = Vector2.zero;
+        initialAcceleration = Vector2.zero;
+        prevTheoreticalAcceleration = Vector2.zero;
+        theoreticalAcceleration = Vector2.zero;
+        prevTheoreticalVelocity = Vector2.zero;
+        theoreticalVelocity = Vector2.zero;
     }
 }

@@ -26,8 +26,8 @@ public class UIUnlockNotification : MonoBehaviour
     {
         planetImage.texture = planetProperties.PlanetUIRenderTexture;
         planetName.text = planetProperties.PlanetName;
-        planetCost.text = planetProperties.DefaultCost.GetBalance();
-        planetProfit.text = planetProperties.DefaultProfitPerSecond.GetBalance();
+        planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
+        planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";
     }
 
     public void OnCloseButtonPressed()

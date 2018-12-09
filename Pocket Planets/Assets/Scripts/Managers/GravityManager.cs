@@ -174,7 +174,7 @@ namespace Managers
 
         private void GetAbsorberAndAbsorbed(ref Planet absorber, ref Planet absorbed)
         {
-            if (absorber.CurrentMass < absorbed.CurrentMass)
+            if (absorber.PlanetProperties.PlanetType != EnumPlanetType.BLACKHOLE && absorber.Radius < absorbed.Radius)
             {
                 Planet temp = absorber;
                 absorber = absorbed;

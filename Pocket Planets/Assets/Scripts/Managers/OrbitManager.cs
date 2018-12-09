@@ -23,6 +23,7 @@ namespace Managers
 
         private void TrackOrbit(OrbitData orbitData)
         {
+            Debug.Log("HELLO");
             //For now.
             ++orbitCount;
             orbitLabel.text = "Orbits: " + orbitCount.ToString();

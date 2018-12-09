@@ -16,6 +16,7 @@ public class FlashingText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
     public bool Flashing { get { return flashing; } set { flashing = value; } }
+    public bool IsFaded { get { return isFaded; } set { isFaded = value; } }
 
     private float fadeCounter = 0.0f;
     private float activeCounter = 0.0f;

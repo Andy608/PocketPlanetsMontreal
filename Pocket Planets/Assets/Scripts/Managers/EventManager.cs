@@ -29,6 +29,12 @@ namespace Managers
         public static PinchEnd OnPinchEnded;
         //////////////////////////////////////////////////////////////
 
+        //  Camera Events
+        //////////////////////////////////////////////////////////////
+        public delegate void PanCamera(Vector3 dragDistance);
+        public static PanCamera OnPanCamera;
+
+        //////////////////////////////////////////////////////////////
 
         //  Planet Lifetime Events
         //////////////////////////////////////////////////////////////
@@ -40,6 +46,9 @@ namespace Managers
 
         public delegate void PlanetSpawned(Planet spawnedPlanet);
         public static PlanetSpawned OnPlanetSpawned;
+
+        public delegate void PlanetUpgraded(Planet upgradedPlanet, Planet originalPlanet);
+        public static PlanetUpgraded OnPlanetUpgraded;
 
         public delegate void PlanetDestroyed(Planet destroyedPlanet);
         public static PlanetDestroyed OnPlanetDestroyed;
@@ -114,14 +123,17 @@ namespace Managers
         public delegate void OpenPlanetUIList();
         public static OpenPlanetUIList OnOpenPlanetUIList;
 
-        public delegate void CameraCenterSelected();
-        public static CameraCenterSelected OnCameraCenterSelected;
+        public delegate void GoToNextPlanetSelected();
+        public static GoToNextPlanetSelected OnGoToNextPlanetSelected;
 
         public delegate void CameraFreeroamSelected();
         public static CameraFreeroamSelected OnCameraFreeroamSelected;
 
         public delegate void CameraAnchoredSelected();
         public static CameraAnchoredSelected OnCameraAnchoredSelected;
+
+        public delegate void CameraFollowSelected();
+        public static CameraFollowSelected OnCameraFollowSelected;
         //////////////////////////////////////////////////////////////
     }
 }

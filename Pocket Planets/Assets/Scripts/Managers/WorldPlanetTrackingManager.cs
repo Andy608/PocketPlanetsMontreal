@@ -108,5 +108,18 @@ namespace Managers
                 planet.PlanetState = planet.PreviousPlanetState;
             }
         }
+
+        public Planet GetPlanetAtPosition(Vector2 worldPosition)
+        {
+            foreach (Planet planet in PlanetsInWorld)
+            {
+                if ((planet.PhysicsIntegrator.Position - worldPosition).sqrMagnitude <= planet.Circumference * planet.Circumference)
+                {
+                    return planet;
+                }
+            }
+
+            return null;
+        }
     }
 }

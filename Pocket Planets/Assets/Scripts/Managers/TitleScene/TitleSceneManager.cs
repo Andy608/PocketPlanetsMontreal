@@ -14,27 +14,53 @@ namespace Managers
         {
             anchorGoal = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, new Vector2(0, -50));
 
-            EventManager.OnPlanetAbsorbed += HandleAbsorbed;
+            //EventManager.OnPlanetAbsorbed += HandleAbsorbed;
         }
 
-        private void OnDisable()
-        {
-            EventManager.OnPlanetAbsorbed -= HandleAbsorbed;
-        }
+        //private void OnDisable()
+        //{
+        //    EventManager.OnPlanetAbsorbed -= HandleAbsorbed;
+        //}
 
-        private void HandleAbsorbed(Planet absorber, Planet absorbed)
+        //private void HandleAbsorbed(Planet absorber, Planet absorbed)
+        //{
+        //    if (absorber == anchorGoal)
+        //    {
+        //        if (EventManager.OnStartFadeOut != null)
+        //        {
+        //            EventManager.OnStartFadeOut();
+        //        }
+
+        //        if (EventManager.OnSetTargetScene != null)
+        //        {
+        //            EventManager.OnSetTargetScene(EnumScene.GAME);
+        //        }
+        //    }
+        //}
+
+        public void OnPlayClicked()
         {
-            if (absorber == anchorGoal)
+            if (EventManager.OnStartFadeOut != null)
             {
-                if (EventManager.OnStartFadeOut != null)
-                {
-                    EventManager.OnStartFadeOut();
-                }
+                EventManager.OnStartFadeOut();
+            }
 
-                if (EventManager.OnSetTargetScene != null)
-                {
-                    EventManager.OnSetTargetScene(EnumScene.GAME);
-                }
+            if (EventManager.OnSetTargetScene != null)
+            {
+                EventManager.OnSetTargetScene(EnumScene.GAME);
+            }
+        }
+
+        public void OnTutorialClicked()
+        {
+            if (EventManager.OnStartFadeOut != null)
+            {
+                EventManager.OnStartFadeOut();
+            }
+
+            if (EventManager.OnSetTargetScene != null)
+            {
+                EventManager.OnSetTargetScene(EnumScene.TUTORIAL);
             }
         }
     }

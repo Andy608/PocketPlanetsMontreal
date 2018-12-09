@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public enum EnumScene
 {
     TITLE,
-    GAME
+    GAME,
+    TUTORIAL
 }
 
 namespace Managers
