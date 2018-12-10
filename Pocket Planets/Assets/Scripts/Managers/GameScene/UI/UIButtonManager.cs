@@ -36,9 +36,13 @@ namespace Managers
             {
                 UpdateButtonPressed(planetSpawnButton);
             }
-            else
+            else if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
             {
                 UpdateButtonPressed(freeroamButton);
+            }
+            else
+            {
+                UpdateButtonPressed(destroyPlanetButton);
             }
         }
 
@@ -80,6 +84,16 @@ namespace Managers
             }
 
             UpdateButtonPressed(planetSpawnButton);
+        }
+
+        public void PlanetDeleteButtonSelected()
+        {
+            if (EventManager.OnDeletePlanetButtonSelected != null)
+            {
+                EventManager.OnDeletePlanetButtonSelected();
+            }
+
+            UpdateButtonPressed(destroyPlanetButton);
         }
 
         private void UpdateButtonPressed(Button buttonPressed)

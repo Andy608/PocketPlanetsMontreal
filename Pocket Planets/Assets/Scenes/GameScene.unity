@@ -320,7 +320,6 @@ MonoBehaviour:
   nextPlanetButton: {fileID: 399757930}
   destroyPlanetButton: {fileID: 2143673228}
   exitButton: {fileID: 857240271}
-  tutorialButton: {fileID: 1731596880}
   settingsButton: {fileID: 1637492066}
   selectedColor: {r: 1, g: 0.972549, b: 0.495283, a: 1}
 --- !u!1001 &103624225
@@ -621,7 +620,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 199009259}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &199009263
 Camera:
   m_ObjectHideFlags: 0
@@ -712,7 +711,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 241894712}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &241894716
 Camera:
   m_ObjectHideFlags: 0
@@ -1144,6 +1143,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 95787620}
         m_MethodName: GoToNextPlanetButtonSelected
         m_Mode: 1
@@ -1321,6 +1331,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 95787616}
         m_MethodName: ShowPlanetListContainer
         m_Mode: 1
@@ -1404,8 +1425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00012207031}
-  m_SizeDelta: {x: -690, y: -1134.1655}
+  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_SizeDelta: {x: -690, y: -1138.2324}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &478519147
 MonoBehaviour:
@@ -1647,6 +1668,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 95787620}
         m_MethodName: FreeroamButtonSelected
         m_Mode: 1
@@ -2169,7 +2201,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 745326496}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &745326500
 Camera:
   m_ObjectHideFlags: 0
@@ -2265,7 +2297,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 795636044}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &795636048
 Camera:
   m_ObjectHideFlags: 0
@@ -2471,7 +2503,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 815114690}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &815114694
 Camera:
   m_ObjectHideFlags: 0
@@ -2819,6 +2851,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 147093116}
         m_MethodName: OnExitClicked
         m_Mode: 1
@@ -3405,6 +3448,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 95787620}
         m_MethodName: PlanetSpawnButtonSelected
         m_Mode: 1
@@ -3885,7 +3939,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1303566955}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1303566959
 Camera:
   m_ObjectHideFlags: 0
@@ -4206,7 +4260,7 @@ RectTransform:
   m_GameObject: {fileID: 1365165472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.625, y: 0.625, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 2143673227}
   m_RootOrder: 0
@@ -4222,20 +4276,20 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1365165472}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9497695beca71e349bbf8661a8c591ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1c33b911587963040a454ac058a4ab11, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4989,7 +5043,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1623600357}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1623600361
 Camera:
   m_ObjectHideFlags: 0
@@ -5105,7 +5159,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1637492067}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1637492067
@@ -5192,7 +5257,7 @@ AudioListener:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1650644451}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1650644455
 Camera:
   m_ObjectHideFlags: 0
@@ -5380,6 +5445,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 95787616}
         m_MethodName: HidePlanetListContainer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6288,6 +6364,48 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1964280451
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549215227186128, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 747f63fa6db3f814b812c5eec47ab4ba, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &2143673226
 GameObject:
   m_ObjectHideFlags: 0
@@ -6364,8 +6482,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1280007517}
-        m_MethodName: DestroyTargetPlanet
+      - m_Target: {fileID: 1314862605}
+        m_MethodName: OnButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 95787620}
+        m_MethodName: PlanetDeleteButtonSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

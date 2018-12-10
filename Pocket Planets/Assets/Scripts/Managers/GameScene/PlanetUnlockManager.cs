@@ -178,7 +178,7 @@ namespace Managers
 
             //Unlock Gas Planet
             if (child.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET ||
-                child.PlanetProperties.PlanetType == EnumPlanetType.RING_PLANET)
+                parent.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET)
             {
                 if (orbitData.OrbitCount >= TERRESTRIAL_PLANET_ORBIT_COUNT)
                 {

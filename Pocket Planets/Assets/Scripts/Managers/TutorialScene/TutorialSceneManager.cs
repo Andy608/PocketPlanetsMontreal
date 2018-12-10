@@ -106,6 +106,11 @@ namespace Managers
 
             if (presentationIndex == 0)
             {
+                if (EventManager.OnButtonPressed != null)
+                {
+                    EventManager.OnButtonPressed();
+                }
+
                 ++presentationIndex;
                 Present();
             }

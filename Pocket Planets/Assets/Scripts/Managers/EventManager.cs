@@ -134,6 +134,35 @@ namespace Managers
 
         public delegate void CameraFollowSelected();
         public static CameraFollowSelected OnCameraFollowSelected;
+
+        public delegate void ButtonPressed();
+        public static ButtonPressed OnButtonPressed;
+
+        public delegate void DeletePlanetButtonSelected();
+        public static DeletePlanetButtonSelected OnDeletePlanetButtonSelected;
         //////////////////////////////////////////////////////////////
+
+        //  Audio Events
+        //////////////////////////////////////////////////////////////
+        public delegate void PlayMusicRequested();
+        public static PlayMusicRequested OnPlayMusicRequested;
+
+        public delegate void StopMusicRequested();
+        public static StopMusicRequested OnStopMusicRequested;
+
+        public delegate void PlanetTapOccured();
+        public static PlanetTapOccured OnPlanetTapOccured;
+
+        public delegate void PlanetSwipeOccured();
+        public static PlanetSwipeOccured OnPlanetSwipeOccured;
+        //////////////////////////////////////////////////////////////
+
+        public void OnButtonClicked()
+        {
+            if (OnButtonPressed != null)
+            {
+                OnButtonPressed();
+            }
+        }
     }
 }

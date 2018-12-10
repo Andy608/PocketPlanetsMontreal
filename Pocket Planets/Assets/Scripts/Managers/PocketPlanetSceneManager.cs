@@ -18,10 +18,12 @@ namespace Managers
         private EnumScene targetScene;
 
         public EnumScene CurrentScene { get { return currentScene; } }
+        public EnumScene TargetScene { get { return targetScene; } }
 
         private void Awake()
         {
             currentScene = (EnumScene)SceneManager.GetActiveScene().buildIndex;
+            targetScene = currentScene;
             Debug.Log("CURRENT SCENE: " + currentScene);
         }
 

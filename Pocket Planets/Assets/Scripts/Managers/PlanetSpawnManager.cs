@@ -46,6 +46,11 @@ namespace Managers
 
             if (currentSpawningPlanet)
             {
+                if (EventManager.OnPlanetTapOccured != null)
+                {
+                    EventManager.OnPlanetTapOccured();
+                }
+
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);
 
                 Vector2 relativeVel = Vector2.zero;
@@ -79,6 +84,11 @@ namespace Managers
                 if (EventManager.OnPlanetSpawning != null)
                 {
                     EventManager.OnPlanetSpawning(currentSpawningPlanet);
+                }
+
+                if (EventManager.OnPlanetTapOccured != null)
+                {
+                    EventManager.OnPlanetTapOccured();
                 }
 
                 TrajectoryManager.Instance.Show();
@@ -141,6 +151,11 @@ namespace Managers
                 if (EventManager.OnPlanetAlive != null)
                 {
                     EventManager.OnPlanetAlive(currentSpawningPlanet);
+                }
+
+                if (EventManager.OnPlanetSwipeOccured != null)
+                {
+                    EventManager.OnPlanetSwipeOccured();
                 }
 
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.ALIVE);

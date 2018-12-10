@@ -28,9 +28,7 @@ namespace Managers
             EventManager.OnPlanetAbsorbed += HandlePlanetAbsorbed;
             EventManager.OnPlanetUpgraded += HandlePlanetAbsorbed;
 
-            EventManager.OnGoToNextPlanetSelected += CenterCamera;
-            EventManager.OnCameraAnchoredSelected += CameraAchoredSelected;
-            EventManager.OnCameraFreeroamSelected += CameraFreeroamSelected;
+            EventManager.OnGoToNextPlanetSelected += GoToNextPlanet;
         }
 
         private void OnDisable()
@@ -43,26 +41,23 @@ namespace Managers
             EventManager.OnPlanetAbsorbed -= HandlePlanetAbsorbed;
             EventManager.OnPlanetUpgraded -= HandlePlanetAbsorbed;
 
-            EventManager.OnGoToNextPlanetSelected -= CenterCamera;
-            EventManager.OnCameraAnchoredSelected -= CameraAchoredSelected;
-            EventManager.OnCameraFreeroamSelected -= CameraFreeroamSelected;
+            EventManager.OnGoToNextPlanetSelected -= GoToNextPlanet;
         }
 
-        public void DestroyTargetPlanet()
+        public void DestroyPlanet(Planet planet)
         {
-            if (targetPlanet)
+            if (planet)
             {
                 if (EventManager.OnPlanetDestroyed != null)
                 {
-                    EventManager.OnPlanetDestroyed(targetPlanet);
+                    EventManager.OnPlanetDestroyed(planet);
                 }
 
-                Destroy(targetPlanet.gameObject);
-                targetPlanet = null;
+                Destroy(planet.gameObject);
             }
         }
 
-        private void CenterCamera()
+        private void GoToNextPlanet()
         {
             List<Planet> planets = WorldPlanetTrackingManager.Instance.PlanetsInWorld;
             if (targetPlanet)
@@ -116,22 +111,13 @@ namespace Managers
                 DisplayManager.TouchPositionToWorldVector3(touch, ref touchPosition);
                 targetPlanet = WorldPlanetTrackingManager.Instance.GetPlanetAtPosition(touchPosition);
 
-                Debug.Log("TARGET PLANET: " + targetPlanet);
-
-                //if (targetPlanet)
-                //{
-                //    if (EventManager.OnCameraFollowSelected != null)
-                //    {
-                //        EventManager.OnCameraFollowSelected();
-                //    }
-                //}
             }
-            //else if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FOLLOW)
-            //{
-            //    //Get planet at touch position.
-            //    DisplayManager.TouchPositionToWorldVector3(touch, ref touchPosition);
-            //    targetPlanet = WorldPlanetTrackingManager.Instance.GetPlanetAtPosition(touchPosition);
-            //}
+            else if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
+            {
+                //Get planet at touch position.
+                DisplayManager.TouchPositionToWorldVector3(touch, ref touchPosition);
+                DestroyPlanet(WorldPlanetTrackingManager.Instance.GetPlanetAtPosition(touchPosition));
+            }
         }
 
         private void FixedUpdate()
@@ -146,7 +132,8 @@ namespace Managers
 
         private void HandleDragBegan(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
+                CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
                 DisplayManager.TouchPositionToWorldVector3(touch, ref startPosition);
             }
@@ -154,7 +141,8 @@ namespace Managers
 
         private void HandleDragHeld(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
+                CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
                 DragCamera(touch);
             }
@@ -162,7 +150,8 @@ namespace Managers
 
         private void HandleDragEnded(Touch touch)
         {
-            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
+            if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
+                CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
                 DragCamera(touch);
             }
@@ -174,8 +163,6 @@ namespace Managers
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
 
-            //PanHorizontal(startPosition - dragPosition);
-            //PanVertical(startPosition - dragPosition);
             PanCamera(startPosition - dragPosition);
             targetPlanet = null;
         }

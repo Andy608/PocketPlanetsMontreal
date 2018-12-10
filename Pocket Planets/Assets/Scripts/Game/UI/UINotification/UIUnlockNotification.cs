@@ -32,6 +32,11 @@ public class UIUnlockNotification : MonoBehaviour
 
     public void OnCloseButtonPressed()
     {
+        if (Managers.EventManager.OnButtonPressed != null)
+        {
+            Managers.EventManager.OnButtonPressed();
+        }
+
         if (Managers.EventManager.OnCloseUnlockNotification != null)
         {
             Managers.EventManager.OnCloseUnlockNotification();
