@@ -76,7 +76,7 @@ namespace Managers
         {
             if (!unlockedPlanetPrefabs.Contains(planetPrefab))
             {
-                Debug.Log("Unlocking planet type: " + planetPrefab.PlanetProperties.PlanetName);
+                //Debug.Log("Unlocking planet type: " + planetPrefab.PlanetProperties.PlanetName);
                 unlockedPlanetPrefabs.Add(planetPrefab);
 
                 if (EventManager.OnNewPlanetUnlocked != null)
@@ -178,7 +178,9 @@ namespace Managers
 
             //Unlock Gas Planet
             if (child.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET ||
-                parent.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET)
+                parent.PlanetProperties.PlanetType == EnumPlanetType.TERRESTRIAL_PLANET ||
+                child.PlanetProperties.PlanetType == EnumPlanetType.RING_PLANET ||
+                parent.PlanetProperties.PlanetType == EnumPlanetType.RING_PLANET)
             {
                 if (orbitData.OrbitCount >= TERRESTRIAL_PLANET_ORBIT_COUNT)
                 {

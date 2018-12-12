@@ -6,13 +6,23 @@ using TMPro;
 public class FadeInText : MonoBehaviour
 {
     //The amount of seconds it takes to fade/unfade.
-    private float fadeTime = 1.0f;
-    private float waitBeforeFade = 1.0f;
+    [SerializeField] private float fadeTime = 1.0f;
+    [SerializeField] private float waitBeforeFade = 1.0f;
 
     [SerializeField] private TextMeshProUGUI text;
 
     private float waitCounter = 0.0f;
     private float fadeCounter = 0.0f;
+
+    [SerializeField] private bool startRightAway = false;
+
+    private void Start()
+    {
+        if (startRightAway)
+        {
+            FadeText(fadeTime, waitBeforeFade);
+        }
+    }
 
     public void FadeText(float fTime, float waitBefore)
     {

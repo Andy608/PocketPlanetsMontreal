@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnumSFXState
+{
+    ON,
+    OFF
+}
+
 namespace Managers
 {
-    enum EnumSFXState
-    {
-        ON,
-        OFF
-    }
-
     public class SFXManager : ManagerBase<SFXManager>
     {
         private List<AudioSource> sfxPool = new List<AudioSource>();
@@ -26,6 +26,27 @@ namespace Managers
 
         private EnumSFXState sfxState = EnumSFXState.OFF;
 
+        public EnumSFXState CurrentSFXState { get { return sfxState; } }
+
+        public bool SetSoundState(EnumSFXState state)
+        {
+            if (sfxState != state)
+            {
+                if (state == EnumSFXState.ON)
+                {
+                    StartListeningForSounds();
+                }
+                else
+                {
+                    StopListeningForSounds();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         private void Awake()
         {
             for (int i = 0; i < poolSize; ++i)
@@ -36,15 +57,30 @@ namespace Managers
 
         private void OnEnable()
         {
+            StartListeningForSounds();
+        }
+
+        private void OnDisable()
+        {
+            if (sfxState == EnumSFXState.ON)
+            {
+                StopListeningForSounds();
+            }
+        }
+
+        private void StartListeningForSounds()
+        {
+            sfxState = EnumSFXState.ON;
             EventManager.OnButtonPressed += PlayButtonSound;
             EventManager.OnPlanetTapOccured += PlayPlanetSpawnSound;
             EventManager.OnPlanetSwipeOccured += PlayPlanetDragReleaseSound;
             EventManager.OnPlanetDestroyed += PlayPlanetDeleteSound;
             EventManager.OnNewPlanetUnlocked += PlayPlanetUnlockSound;
         }
-
-        private void OnDisable()
+        
+        private void StopListeningForSounds()
         {
+            sfxState = EnumSFXState.OFF;
             EventManager.OnButtonPressed -= PlayButtonSound;
             EventManager.OnPlanetTapOccured -= PlayPlanetSpawnSound;
             EventManager.OnPlanetSwipeOccured -= PlayPlanetDragReleaseSound;
@@ -86,6 +122,14 @@ namespace Managers
         private void PlayButtonSound()
         {
             PlaySound(buttonPressSound);
+        }
+
+        public void ChangeVolume(float volume)
+        {
+            foreach (AudioSource source in sfxPool)
+            {
+                source.volume = volume;
+            }
         }
 
         private AudioSource GetAvailableAudioSource()

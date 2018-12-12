@@ -6,7 +6,9 @@ using TMPro;
 
 public class UIUnlockNotification : MonoBehaviour
 {
-    [SerializeField] private RawImage planetImage;
+    //[SerializeField] private RawImage planetImage;
+    [SerializeField] private GameObject parentImageContainer;
+    private GameObject planetImageContainer;
     [SerializeField] private TextMeshProUGUI planetName;
     [SerializeField] private TextMeshProUGUI planetCost;
     [SerializeField] private TextMeshProUGUI planetProfit;
@@ -18,13 +20,26 @@ public class UIUnlockNotification : MonoBehaviour
         set
         {
             planetProperties = value;
+
+            if (planetImageContainer)
+            {
+                Destroy(planetImageContainer);
+            }
+
+            if (parentImageContainer)
+            {
+                planetImageContainer = Instantiate(planetProperties.PlanetUIImageContainer, parentImageContainer.transform, false);
+            }
+
             UpdateUI();
         }
     }
 
     private void UpdateUI()
     {
-        planetImage.texture = planetProperties.PlanetUIRenderTexture;
+        //planetImage.texture = planetProperties.PlanetUIRenderTexture;
+        planetImageContainer = planetProperties.PlanetUIImageContainer;
+
         planetName.text = planetProperties.PlanetName;
         planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
         planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";

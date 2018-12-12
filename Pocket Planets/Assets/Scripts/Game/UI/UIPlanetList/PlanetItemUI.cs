@@ -9,7 +9,10 @@ public class PlanetItemUI : MonoBehaviour
     [SerializeField] private RectTransform unlockedPanel;
     [SerializeField] private RectTransform lockedPanel;
 
-    [SerializeField] private RawImage planetImage;
+    //[SerializeField] private RawImage planetImage;
+    [SerializeField] private GameObject parentImageContainer;
+    private GameObject planetImageContainer;
+
     [SerializeField] private TextMeshProUGUI planetTitle;
     [SerializeField] private TextMeshProUGUI planetCost;
     [SerializeField] private TextMeshProUGUI planetProfit;
@@ -28,6 +31,17 @@ public class PlanetItemUI : MonoBehaviour
         set
         {
             planetProperties = value;
+
+            if (planetImageContainer)
+            {
+                Destroy(planetImageContainer);
+            }
+
+            if (parentImageContainer)
+            {
+                planetImageContainer = Instantiate(planetProperties.PlanetUIImageContainer, parentImageContainer.transform, false);
+            }
+
             UpdateUI();
         }
     }
@@ -52,7 +66,8 @@ public class PlanetItemUI : MonoBehaviour
     public void UpdateUI()
     {
         planetTitle.text = planetProperties.PlanetName;
-        planetImage.texture = planetProperties.PlanetUIRenderTexture;
+        //planetImage.texture = planetProperties.PlanetUIRenderTexture;
+
         planetCost.text = "COST: " + planetProperties.DefaultCost.GetBalance();
         planetProfit.text = "PROFIT: " + planetProperties.DefaultProfitPerSecond.GetBalance() + " / SEC";
 

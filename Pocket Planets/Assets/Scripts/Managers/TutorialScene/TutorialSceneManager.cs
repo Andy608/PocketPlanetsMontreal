@@ -26,6 +26,7 @@ namespace Managers
         [Header("Next/Back Objects")]
         [SerializeField] private Button nextButton;
         [SerializeField] private Button backButton;
+        [SerializeField] private RectTransform touchBlocker;
 
         //Slide 0 Objects
         [Header("Slide 0 Objects")]
@@ -55,6 +56,11 @@ namespace Managers
         [SerializeField]
         private RectTransform slide5Container;
         [SerializeField] private TextMeshProUGUI freeroamCameraDescriptionLabel;
+
+        [Header("Slide 5a Objects")]
+        [SerializeField]
+        private RectTransform slide5aContainer;
+        [SerializeField] private TextMeshProUGUI zoomCameraDescriptionLabel;
 
         [Header("Slide 6 Objects")]
         [SerializeField]
@@ -102,8 +108,6 @@ namespace Managers
 
         private void GoToNextSlide(Touch touch)
         {
-            if (InputManager.IsPointerOverUIObject()) return;
-
             if (presentationIndex == 0)
             {
                 if (EventManager.OnButtonPressed != null)
@@ -111,8 +115,11 @@ namespace Managers
                     EventManager.OnButtonPressed();
                 }
 
-                ++presentationIndex;
-                Present();
+                if (tapToContinueLabelSlide0.alpha >= 0.1f)
+                {
+                    ++presentationIndex;
+                    Present();
+                }
             }
         }
 
@@ -152,12 +159,15 @@ namespace Managers
                     Slide5();
                     break;
                 case 6:
-                    Slide6();
+                    Slide5a();
                     break;
                 case 7:
-                    Slide7();
+                    Slide6();
                     break;
                 case 8:
+                    Slide7();
+                    break;
+                case 9:
                     Slide8();
                     break;
             }
@@ -183,6 +193,7 @@ namespace Managers
             slide0Container.gameObject.SetActive(false);
             welcomeLabel.gameObject.SetActive(false);
             tapToContinueLabelSlide0.gameObject.SetActive(false);
+            touchBlocker.gameObject.SetActive(false);
 
             //Slide 1
             slide1Container.gameObject.SetActive(false);
@@ -204,6 +215,10 @@ namespace Managers
             slide5Container.gameObject.SetActive(false);
             freeroamCameraDescriptionLabel.gameObject.SetActive(false);
 
+            //Slide 5a
+            slide5aContainer.gameObject.SetActive(false);
+            zoomCameraDescriptionLabel.gameObject.SetActive(false);
+
             //Slide 6
             slide6Container.gameObject.SetActive(false);
             planetTargetDescriptionLabel.gameObject.SetActive(false);
@@ -216,6 +231,10 @@ namespace Managers
             slide8Container.gameObject.SetActive(false);
             matterDescriptionLabel.gameObject.SetActive(false);
             endButton.gameObject.SetActive(false);
+            //Hack so planet doesn't spawn under next button 
+            //since we remove the next button and replace it with the exit button, 
+            //but the touch counts to spawn a planet in between the button swap.
+            nextButton.enabled = true;
         }
 
         private void Slide0()
@@ -223,6 +242,7 @@ namespace Managers
             SetAllObjectsFalse();
 
             slide0Container.gameObject.SetActive(true);
+            touchBlocker.gameObject.SetActive(true);
 
             welcomeLabel.gameObject.SetActive(true);
             welcomeLabel.GetComponent<FadeInText>().FadeText(2, 1);
@@ -240,6 +260,8 @@ namespace Managers
 
             backButton.gameObject.SetActive(true);
             backButton.GetComponent<FadeInObject>().FadeObject(1, 0.5f);
+
+            touchBlocker.gameObject.SetActive(true);
 
             slide1Container.gameObject.SetActive(true);
 
@@ -259,6 +281,8 @@ namespace Managers
 
             backButton.gameObject.SetActive(true);
             backButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            touchBlocker.gameObject.SetActive(true);
 
             slide2Container.gameObject.SetActive(true);
 
@@ -281,6 +305,8 @@ namespace Managers
 
             backButton.gameObject.SetActive(true);
             backButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            touchBlocker.gameObject.SetActive(true);
 
             slide3Container.gameObject.SetActive(true);
 
@@ -356,6 +382,37 @@ namespace Managers
 
             freeroamCameraDescriptionLabel.gameObject.SetActive(true);
             freeroamCameraDescriptionLabel.GetComponent<FadeInText>().FadeText(1, 1);
+        }
+
+        private void Slide5a()
+        {
+            SetAllObjectsFalse();
+
+            nextButton.gameObject.SetActive(true);
+            nextButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            backButton.gameObject.SetActive(true);
+            backButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            slide5aContainer.gameObject.SetActive(true);
+
+            exitButton.gameObject.SetActive(true);
+            exitButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            settingsButton.gameObject.SetActive(true);
+            settingsButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            itemUnlockButton.gameObject.SetActive(true);
+            itemUnlockButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            planetSpawnButton.gameObject.SetActive(true);
+            planetSpawnButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            freeroamButton.gameObject.SetActive(true);
+            freeroamButton.GetComponent<CanvasGroup>().alpha = 1.0f;
+
+            zoomCameraDescriptionLabel.gameObject.SetActive(true);
+            zoomCameraDescriptionLabel.GetComponent<FadeInText>().FadeText(1, 1);
         }
 
         private void Slide6()
@@ -434,6 +491,9 @@ namespace Managers
         private void Slide8()
         {
             SetAllObjectsFalse();
+
+            nextButton.gameObject.SetActive(true);
+            nextButton.enabled = false;
 
             endButton.gameObject.SetActive(true);
             endButton.GetComponent<CanvasGroup>().alpha = 1.0f;

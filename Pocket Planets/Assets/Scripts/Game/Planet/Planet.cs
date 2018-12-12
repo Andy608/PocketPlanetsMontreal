@@ -189,7 +189,7 @@ public class Planet : MonoBehaviour
 
             if (planetProperties.PlanetUpgrade != null && currentMass >= planetProperties.PlanetUpgrade.DefaultMass)
             {
-                Debug.Log("Planet Properties: " + planetProperties.PlanetUpgrade.PlanetType);
+                //Debug.Log("Planet Properties: " + planetProperties.PlanetUpgrade.PlanetType);
                 UpgradePlanet(planetProperties.PlanetUpgrade.PlanetType);
             }
         }

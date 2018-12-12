@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 114381612991482206}
   - component: {fileID: 114503727825918176}
   - component: {fileID: 114983183287276616}
+  - component: {fileID: 114709587379379084}
   m_Layer: 0
   m_Name: RingPlanetPrefab
   m_TagString: Untagged
@@ -305,6 +306,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f35c2afa5bf88484daeccede1d1935d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114709587379379084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745444494766648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fda83c26087bb4db8c80f9b34a9eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114845790287634342

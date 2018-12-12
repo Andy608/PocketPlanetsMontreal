@@ -28,11 +28,11 @@ public class FadeInObject : MonoBehaviour
         while (waitCounter < waitBeforeFade)
         {
             waitCounter += Time.deltaTime;
-            Debug.Log("Wait: " + waitCounter + " | " + waitBeforeFade);
+            //Debug.Log("Wait: " + waitCounter + " | " + waitBeforeFade);
             yield return null;
         }
 
-        Debug.Log("Start fade in");
+        //Debug.Log("Start fade in");
         StartCoroutine(FadeIn());
     }
 
@@ -40,7 +40,7 @@ public class FadeInObject : MonoBehaviour
     {
         while (fadeCounter < fadeTime)
         {
-            Debug.Log("Fade: " + fadeCounter);
+            //Debug.Log("Fade: " + fadeCounter);
             fadeCounter += Time.deltaTime;
             obj.alpha = fadeCounter / fadeTime;
             yield return null;

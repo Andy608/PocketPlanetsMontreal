@@ -15,7 +15,8 @@ MonoBehaviour:
   planetType: 7
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiRenderTexture: {fileID: 8400000, guid: 99ece0b7d8bdfc04d9f31c93c2f31d20, type: 2}
+  uiImageContainer: {fileID: 1733616773223136, guid: 8dc6051eb5ba9d84f8a4c452faef8968,
+    type: 2}
   defaultColor: {r: 0.9245283, g: 0.4518562, b: 0.33579564, a: 1}
   planetName: SUPERGIANT
   description: 
@@ -25,6 +26,6 @@ MonoBehaviour:
   defaultProfitLevel: 1
   defaultPrimaryProfit: 80
   defaultSecondaryProfit: 0
-  radiusScaleMultiplier: 400
-  defaultMass: 8000
+  radiusScaleMultiplier: 200
+  defaultMass: 10000
   planetUpgrade: {fileID: 11400000, guid: de8a02dd38506f947be12619da75ad41, type: 2}

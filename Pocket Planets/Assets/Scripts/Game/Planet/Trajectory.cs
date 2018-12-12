@@ -14,6 +14,9 @@ public class Trajectory : MonoBehaviour
 
     private float vertexSpacing = 1.0f;
     private float lineDistance = 0.0f;
+    private float xScale = 1.0f;
+
+    private float timeScale = 5.0f;
 
     private bool isAbsorbed = false;
 
@@ -46,6 +49,7 @@ public class Trajectory : MonoBehaviour
         //Debug.Log("SHOW");
         //Initialize the trajectory.
         trajectoryLineRenderer.gameObject.SetActive(true);
+
     }
 
     public void Hide()
@@ -79,6 +83,8 @@ public class Trajectory : MonoBehaviour
         vertices.Clear();
         lineDistance = 0.0f;
         trajectoryLineRenderer.positionCount = 0;
+        isAbsorbed = false;
+        //trajectoryLineRenderer.material.SetTextureScale("_MainTex", new Vector2(xScale, 1.0f));
     }
 
     //private void CreateTrajectory(List<Planet> planetList, Vector2 startingVelocity, float offsetTime)
@@ -153,7 +159,7 @@ public class Trajectory : MonoBehaviour
 
     public void CreateTrajectory(Vector2 initialVelocity, float offsetTime)
     {
-        isAbsorbed = false;
+        //isAbsorbed = false;
 
         if (gameObject.GetComponent<Planet>().PlanetProperties.IsAnchor)
         {
@@ -172,12 +178,12 @@ public class Trajectory : MonoBehaviour
         {
             if (isAbsorbed)
             {
-                return;
+                break;
             }
 
             //Debug.Log("Counter: " + counter + " | Offset Time: " + offsetTime);
 
-            Managers.PhysicsIntegrationManager.Instance.IntegrateTheoretical();
+            Managers.PhysicsIntegrationManager.Instance.IntegrateTheoretical(Time.fixedDeltaTime * timeScale);
             position = currentPlanet.PhysicsIntegrator.TheoreticalPosition;
 
             if ((originalPosition - position).sqrMagnitude > currentPlanet.Circumference * currentPlanet.Circumference)
@@ -188,18 +194,18 @@ public class Trajectory : MonoBehaviour
                 }
                 else if (Vector2.Distance(vertices.Last(), position) > vertexSpacing)
                 {
-                    lineDistance += (vertices.Last() - position).magnitude;
+                    lineDistance += Vector2.Distance(vertices.Last(), position);
                     AddVertex(position);
                     //Debug.Log("ADDING VERTEX");
                 }
             }
 
-            counter += Time.fixedDeltaTime;
+            counter += Time.fixedDeltaTime * timeScale;
         }
 
-        if (vertices.Count > 1)
+        if (vertices.Count > 0)
         {
-            float xScale = lineDistance / (WIDTH * Managers.DisplayManager.TARGET_SCREEN_DENSITY / 1.2f);
+            xScale = lineDistance / (WIDTH * Managers.DisplayManager.TARGET_SCREEN_DENSITY / (1.2f * timeScale) * offsetTime);
             trajectoryLineRenderer.material.SetTextureScale("_MainTex", new Vector2(xScale, 1.0f));
         }
     }

@@ -16,6 +16,8 @@ MonoBehaviour:
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
   uiRenderTexture: {fileID: 8400000, guid: fcc50303422c10b4381d3821dcd96bed, type: 2}
+  uiImageContainer: {fileID: 1641986924990020, guid: f6b6315ebe6e26641b0e9d7a8f47d2ef,
+    type: 2}
   defaultColor: {r: 0.37201852, g: 0.8301887, b: 0.53567433, a: 1}
   planetName: ROCKY PLANET
   description: 

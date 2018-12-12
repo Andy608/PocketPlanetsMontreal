@@ -82,13 +82,13 @@ public class PhysicsIntegrator : MonoBehaviour
         objectTransform.position = position;
     }
 
-    public void IntegrateTheoretical()
+    public void IntegrateTheoretical(float deltaTime)
     {
         prevTheoreticalAcceleration = theoreticalAcceleration;
         theoreticalAcceleration = Vector2.zero;
 
-        theoreticalVelocity = prevTheoreticalVelocity + prevTheoreticalAcceleration * Time.fixedDeltaTime;
-        theoreticalPosition = prevTheoreticalPosition + (relativeVelocity + theoreticalVelocity) * Time.fixedDeltaTime;
+        theoreticalVelocity = prevTheoreticalVelocity + prevTheoreticalAcceleration * deltaTime;
+        theoreticalPosition = prevTheoreticalPosition + (relativeVelocity + theoreticalVelocity) * deltaTime;
 
         prevTheoreticalVelocity = theoreticalVelocity;
         prevTheoreticalPosition = theoreticalPosition;

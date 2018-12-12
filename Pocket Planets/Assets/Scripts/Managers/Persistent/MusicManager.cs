@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnumMusicState
+{
+    ON,
+    OFF
+}
+
 namespace Managers
 {
-    enum EnumMusicState
-    {
-        ON,
-        OFF
-    }
-
     public class MusicManager : ManagerBase<MusicManager>
     {
         [SerializeField] private AudioSource audioSource;
@@ -20,6 +20,35 @@ namespace Managers
 
         private EnumMusicState musicState = EnumMusicState.OFF;
         private int currentSongIndex = -1;
+
+        public EnumMusicState CurrentMusicState { get { return musicState; } }
+
+        public bool SetMusicState(EnumMusicState state)
+        {
+            if (musicState != state)
+            {
+                musicState = state;
+
+                if (musicState == EnumMusicState.ON)
+                {
+                    if (EventManager.OnPlayMusicRequested != null)
+                    {
+                        EventManager.OnPlayMusicRequested();
+                    }
+                }
+                else
+                {
+                    if (EventManager.OnStopMusicRequested != null)
+                    {
+                        EventManager.OnStopMusicRequested();
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
 
         private void Awake()
         {
@@ -44,7 +73,6 @@ namespace Managers
         {
             if (audioSource.isPlaying)
             {
-                //audioSource.Stop();
                 StartCoroutine(TransitionBetweenSongs());
             }
         }
@@ -68,7 +96,6 @@ namespace Managers
                 audioSource.Play();
 
                 musicState = EnumMusicState.ON;
-                //Send event to change music buttons
             }
         }
 
@@ -82,10 +109,8 @@ namespace Managers
                 {
                     audioSource.clip = song;
                     audioSource.Play();
-                    Debug.Log("PLAY MUSIC");
 
                     musicState = EnumMusicState.ON;
-                    //Send event to change music buttons
                 }
             }
         }
@@ -98,7 +123,6 @@ namespace Managers
 
                 musicState = EnumMusicState.OFF;
                 currentSongIndex = -1;
-                //Send event to change music buttons
             }
         }
 
@@ -109,6 +133,11 @@ namespace Managers
             {
                 PlayMusic();
             }
+        }
+
+        public void ChangeVolume(float volume)
+        {
+            audioSource.volume = volume;
         }
 
         private AudioClip GetRandomSong()
@@ -138,8 +167,7 @@ namespace Managers
                 index = ((currentSongIndex + 1) % musicSelection.Length);
             }
 
-            Debug.Log("Current Song Index: " + index);
-            //currentSongIndex = index;
+            currentSongIndex = index;
             return musicSelection[index];
         }
     }

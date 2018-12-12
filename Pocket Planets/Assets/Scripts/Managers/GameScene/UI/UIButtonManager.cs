@@ -96,6 +96,14 @@ namespace Managers
             UpdateButtonPressed(destroyPlanetButton);
         }
 
+        public void SettingsButtonSelected()
+        {
+            if (EventManager.OnSettingsButtonSelected != null)
+            {
+                EventManager.OnSettingsButtonSelected();
+            }
+        }
+
         private void UpdateButtonPressed(Button buttonPressed)
         {
             if (selectedButton)

@@ -76,7 +76,6 @@ public class OrbitData
         {
             duration = 0.0f;
 
-            Debug.Log("ORBIT!");
             ++orbitCount;
 
             if (Managers.EventManager.OnOrbitOccurred != null)

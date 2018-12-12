@@ -15,8 +15,9 @@ MonoBehaviour:
   planetType: 6
   isAnchor: 0
   sprite: {fileID: 21300000, guid: cf7cd2bce77128145b38405265f22415, type: 3}
-  uiRenderTexture: {fileID: 8400000, guid: c4018bd92de4fad45bf204eb079b005b, type: 2}
-  defaultColor: {r: 1, g: 0.7828489, b: 0.4470588, a: 1}
+  uiImageContainer: {fileID: 1593842407527838, guid: 42220b1d390edb84bb8059b53ba0aa17,
+    type: 2}
+  defaultColor: {r: 1, g: 0.90669376, b: 0.523, a: 1}
   planetName: STAR
   description: 
   defaultCostLevel: 2
@@ -25,6 +26,6 @@ MonoBehaviour:
   defaultProfitLevel: 1
   defaultPrimaryProfit: 15
   defaultSecondaryProfit: 0
-  radiusScaleMultiplier: 100
-  defaultMass: 1000
+  radiusScaleMultiplier: 200
+  defaultMass: 2000
   planetUpgrade: {fileID: 11400000, guid: b6b28f53e91eba545b6c6664e976b6e4, type: 2}

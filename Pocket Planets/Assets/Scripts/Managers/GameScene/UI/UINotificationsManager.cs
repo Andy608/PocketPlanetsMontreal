@@ -11,6 +11,7 @@ namespace Managers
         [SerializeField] private RectTransform notificationsParent;
         [SerializeField] private UIUnlockNotification unlockNotificationPrefab;
         [SerializeField] private FloatAwayText notEnoughMoneyPrefab;
+        [SerializeField] private RectTransform touchBlocker;
 
         //Holds a queue of notifications that need to be displayed.
         //Displays them in order:
@@ -19,6 +20,9 @@ namespace Managers
         //The reason this isnt a list of planet properties and we arent just using one notification object
         //is because in the future we might have different notification types all subclassing a parent Notification
         //script. For now we only have one type but in the future this will be easier to handle multiple types.
+
+        //Ideally we would have a super class "Notification" that would have subclasses, but we don't have time
+        //for that... oh well!
         private Queue<UIUnlockNotification> pendingNotifications = new Queue<UIUnlockNotification>();
 
         private UIUnlockNotification currentShowingNotification = null;
@@ -28,6 +32,7 @@ namespace Managers
             EventManager.OnNewPlanetUnlocked += AddNewNotification;
             EventManager.OnCloseUnlockNotification += UpdateCurrentNotification;
             EventManager.OnPlanetSpawnDenied += SpawnBadFundsNotification;
+            touchBlocker.gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -64,6 +69,7 @@ namespace Managers
                 //Debug.Log("DELETE");
                 Destroy(currentShowingNotification.gameObject);
                 currentShowingNotification = null;
+                touchBlocker.gameObject.SetActive(false);
 
                 if (pendingNotifications.Count > 0)
                 {
@@ -74,7 +80,7 @@ namespace Managers
 
         private IEnumerator ShowNextNotificationWithPause()
         {
-            Debug.Log("SHOW NEXT");
+            //Debug.Log("SHOW NEXT");
             yield return new WaitForSeconds(0.2f);
             ShowNextNotification();
         }
@@ -83,9 +89,10 @@ namespace Managers
         {
             if (currentShowingNotification == null)
             {
-                Debug.Log("SHOW");
+                //Debug.Log("SHOW");
                 currentShowingNotification = pendingNotifications.Dequeue();
                 currentShowingNotification.gameObject.SetActive(true);
+                touchBlocker.gameObject.SetActive(true);
             }
         }
 

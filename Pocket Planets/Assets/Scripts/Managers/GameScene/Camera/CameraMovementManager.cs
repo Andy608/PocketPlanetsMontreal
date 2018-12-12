@@ -159,7 +159,7 @@ namespace Managers
 
         private void DragCamera(Touch touch)
         {
-            if (InputManager.IsPointerOverUIObject()) return;
+            if (InputManager.IsPointerOverUIObject() && PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME) return;
 
             DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
 
