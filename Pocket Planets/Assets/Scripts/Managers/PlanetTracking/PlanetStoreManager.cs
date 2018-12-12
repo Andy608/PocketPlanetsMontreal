@@ -39,7 +39,7 @@ namespace Managers
                 }
             }
 
-            Debug.Log("ERROR. NO PLANET WITH TYPE: " + planetType.ToString());
+            //Debug.Log("ERROR. NO PLANET WITH TYPE: " + planetType.ToString());
             return null;
         }
 
