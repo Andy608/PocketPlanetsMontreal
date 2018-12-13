@@ -89,5 +89,10 @@ public class PlanetItemUI : MonoBehaviour
         {
             Managers.UIPlanetListManager.Instance.SetSelectedUIElement(this);
         }
+
+        if (Managers.EventManager.OnButtonPressed != null)
+        {
+            Managers.EventManager.OnButtonPressed();
+        }
     }
 }
