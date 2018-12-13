@@ -146,7 +146,7 @@ namespace Managers
                             selectedPlanetItem = null;
 
                             //Show notification in the future.
-                            Debug.Log("Can't afford!");
+                            //Debug.Log("Can't afford!");
                         }
 
                         //Set to grayed out color
@@ -193,7 +193,7 @@ namespace Managers
             else
             {
                 //Show notification in the future.
-                Debug.Log("Can't afford!");
+                //Debug.Log("Can't afford!");
             }
         }
     }

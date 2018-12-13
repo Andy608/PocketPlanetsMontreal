@@ -106,7 +106,7 @@ namespace Managers
             }
         }
 
-        private void GoToNextSlide(Touch touch)
+        private void GoToNextSlide(Vector3 touchPos)
         {
             if (presentationIndex == 0)
             {

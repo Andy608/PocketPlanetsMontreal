@@ -24,9 +24,14 @@ namespace Managers
             EventManager.OnDragHeld += HandleDragHeld;
             EventManager.OnDragEnded += HandleDragEnded;
 
+            EventManager.OnMiddleMouseDragBegan += HandleMiddleMouseDragBegan;
+            EventManager.OnMiddleMouseDragHeld += HandleMiddleMouseDragHeld;
+            EventManager.OnMiddleMouseDragEnded += HandleMiddleMouseDragEnded;
+
             EventManager.OnTapOccurred += HandleTapOccurred;
             EventManager.OnPlanetAbsorbed += HandlePlanetAbsorbed;
             EventManager.OnPlanetUpgraded += HandlePlanetAbsorbed;
+
 
             EventManager.OnGoToNextPlanetSelected += GoToNextPlanet;
         }
@@ -36,6 +41,10 @@ namespace Managers
             EventManager.OnDragBegan -= HandleDragBegan;
             EventManager.OnDragHeld -= HandleDragHeld;
             EventManager.OnDragEnded -= HandleDragEnded;
+
+            EventManager.OnMiddleMouseDragBegan -= HandleMiddleMouseDragBegan;
+            EventManager.OnMiddleMouseDragHeld -= HandleMiddleMouseDragHeld;
+            EventManager.OnMiddleMouseDragEnded -= HandleMiddleMouseDragEnded;
 
             EventManager.OnTapOccurred -= HandleTapOccurred;
             EventManager.OnPlanetAbsorbed -= HandlePlanetAbsorbed;
@@ -101,21 +110,21 @@ namespace Managers
             }
         }
 
-        private void HandleTapOccurred(Touch touch)
+        private void HandleTapOccurred(Vector3 touchPos)
         {
             if (InputManager.IsPointerOverUIObject()) return;
 
             if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM)
             {
                 //Get planet at touch position.
-                DisplayManager.TouchPositionToWorldVector3(touch, ref touchPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref touchPosition);
                 targetPlanet = WorldPlanetTrackingManager.Instance.GetPlanetAtPosition(touchPosition);
 
             }
             else if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
                 //Get planet at touch position.
-                DisplayManager.TouchPositionToWorldVector3(touch, ref touchPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref touchPosition);
                 DestroyPlanet(WorldPlanetTrackingManager.Instance.GetPlanetAtPosition(touchPosition));
             }
         }
@@ -130,38 +139,53 @@ namespace Managers
             }
         }
 
-        private void HandleDragBegan(Touch touch)
+        private void HandleDragBegan(Vector3 touchPos)
         {
             if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
                 CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
-                DisplayManager.TouchPositionToWorldVector3(touch, ref startPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref startPosition);
             }
         }
 
-        private void HandleDragHeld(Touch touch)
+        private void HandleDragHeld(Vector3 touchPos)
         {
             if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
                 CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
-                DragCamera(touch);
+                DragCamera(touchPos);
             }
         }
 
-        private void HandleDragEnded(Touch touch)
+        private void HandleDragEnded(Vector3 touchPos)
         {
             if (CameraStateManager.Instance.CurrentCameraState == EnumCameraState.FREE_ROAM ||
                 CameraStateManager.Instance.CurrentCameraState == EnumCameraState.DELETE_MODE)
             {
-                DragCamera(touch);
+                DragCamera(touchPos);
             }
         }
 
-        private void DragCamera(Touch touch)
+        private void HandleMiddleMouseDragBegan(Vector3 touchPos)
+        {
+            DisplayManager.TouchPositionToWorldVector3(touchPos, ref startPosition);
+        }
+
+        private void HandleMiddleMouseDragHeld(Vector3 touchPos)
+        {
+            DragCamera(touchPos);
+        }
+
+        private void HandleMiddleMouseDragEnded(Vector3 touchPos)
+        {
+            DragCamera(touchPos);
+        }
+
+        private void DragCamera(Vector3 touchPos)
         {
             if (InputManager.IsPointerOverUIObject() && PocketPlanetSceneManager.Instance.CurrentScene == EnumScene.GAME) return;
 
-            DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+            DisplayManager.TouchPositionToWorldVector3(touchPos, ref dragPosition);
 
             PanCamera(startPosition - dragPosition);
             targetPlanet = null;

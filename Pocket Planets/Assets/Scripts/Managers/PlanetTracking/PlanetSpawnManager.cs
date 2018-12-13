@@ -34,7 +34,7 @@ namespace Managers
             EventManager.OnDragEnded -= SpawnDragEnded;
         }
 
-        private void SpawnTapOccurred(Touch touch)
+        private void SpawnTapOccurred(Vector3 touchPos)
         {
             if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
                 CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
@@ -42,7 +42,7 @@ namespace Managers
                 return;
             }
 
-            currentSpawningPlanet = SpawnPlanet(touch);
+            currentSpawningPlanet = SpawnPlanet(touchPos);
 
             if (currentSpawningPlanet)
             {
@@ -66,7 +66,7 @@ namespace Managers
             currentSpawningPlanet = null;
         }
 
-        private void SpawnDragBegan(Touch touch)
+        private void SpawnDragBegan(Vector3 touchPos)
         {
             if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
                 CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
@@ -74,11 +74,11 @@ namespace Managers
                 return;
             }
 
-            currentSpawningPlanet = SpawnPlanet(touch);
+            currentSpawningPlanet = SpawnPlanet(touchPos);
 
             if (currentSpawningPlanet)
             {
-                DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref dragPosition);
                 currentSpawningPlanet.SetPlanetState(EnumPlanetState.SPAWNING);
 
                 if (EventManager.OnPlanetSpawning != null)
@@ -95,7 +95,7 @@ namespace Managers
             }
         }
 
-        private void SpawnDragHeld(Touch touch)
+        private void SpawnDragHeld(Vector3 touchPos)
         {
             if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
                 CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
@@ -105,7 +105,7 @@ namespace Managers
 
             if (currentSpawningPlanet)
             {
-                DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref dragPosition);
                 //currentSpawningPlanet.PhysicsIntegrator.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraHeight);
 
                 Vector2 relativeVel = Vector2.zero;
@@ -120,7 +120,7 @@ namespace Managers
             }
         }
 
-        private void SpawnDragEnded(Touch touch)
+        private void SpawnDragEnded(Vector3 touchPos)
         {
             if (PocketPlanetSceneManager.Instance.CurrentScene != EnumScene.TITLE && 
                 CameraStateManager.Instance.CurrentCameraState != EnumCameraState.ANCHORED)
@@ -130,7 +130,7 @@ namespace Managers
 
             if (currentSpawningPlanet)
             {
-                DisplayManager.TouchPositionToWorldVector3(touch, ref dragPosition);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref dragPosition);
 
                 //Debug.Log("DRAG ENDED!!!!");
                 //currentSpawningPlanet.InitialVelocity = (currentSpawningPlanet.transform.position - dragPosition) * (DisplayManager.Instance.DefaultCameraSize / DisplayManager.Instance.CurrentCameraSize);
@@ -164,7 +164,7 @@ namespace Managers
             currentSpawningPlanet = null;
         }
 
-        private Planet SpawnPlanet(Touch touch)
+        private Planet SpawnPlanet(Vector3 touchPos)
         {
             if (InputManager.IsPointerOverUIObject()) return null;
 
@@ -172,13 +172,13 @@ namespace Managers
             {
                 if (EventManager.OnPlanetSpawnDenied != null)
                 {
-                    EventManager.OnPlanetSpawnDenied(touch);
+                    EventManager.OnPlanetSpawnDenied(touchPos);
                 }
 
                 return null;
             }
 
-            DisplayManager.TouchPositionToWorldVector3(touch, ref spawnPosition);
+            DisplayManager.TouchPositionToWorldVector3(touchPos, ref spawnPosition);
 
             //Debug.Log("SPAWNING: " + planetToSpawnPrefab);
 

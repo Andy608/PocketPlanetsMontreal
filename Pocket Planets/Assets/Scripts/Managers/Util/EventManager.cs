@@ -7,17 +7,29 @@ namespace Managers
     {
         //  Input Events
         //////////////////////////////////////////////////////////////
-        public delegate void TapOccurred(Touch t);
+        public delegate void TapOccurred(Vector3 t);
         public static TapOccurred OnTapOccurred;
 
-        public delegate void DragBegan(Touch t);
+        public delegate void ScrollOccurred(float direction);
+        public static ScrollOccurred OnScrollOccurred;
+
+        public delegate void DragBegan(Vector3 t);
         public static DragBegan OnDragBegan;
 
-        public delegate void DragHeld(Touch t);
+        public delegate void DragHeld(Vector3 t);
         public static DragHeld OnDragHeld;
 
-        public delegate void DragEnd(Touch t);
+        public delegate void DragEnd(Vector3 t);
         public static DragEnd OnDragEnded;
+
+        public delegate void MiddleMouseDragBegan(Vector3 t);
+        public static MiddleMouseDragBegan OnMiddleMouseDragBegan;
+
+        public delegate void MiddleMouseDragHeld(Vector3 t);
+        public static MiddleMouseDragHeld OnMiddleMouseDragHeld;
+
+        public delegate void MiddleMouseDragEnd(Vector3 t);
+        public static MiddleMouseDragEnd OnMiddleMouseDragEnded;
 
         public delegate void PinchBegan(Touch first, Touch second);
         public static PinchBegan OnPinchBegan;
@@ -81,7 +93,7 @@ namespace Managers
         public delegate void PlanetToSpawnChanged(EnumPlanetType planetType);
         public static PlanetToSpawnChanged OnPlanetToSpawnChanged;
 
-        public delegate void PlanetSpawnDenied(Touch touch);
+        public delegate void PlanetSpawnDenied(Vector3 touchPos);
         public static PlanetSpawnDenied OnPlanetSpawnDenied;
         //////////////////////////////////////////////////////////////
 

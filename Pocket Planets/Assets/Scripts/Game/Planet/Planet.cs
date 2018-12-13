@@ -55,7 +55,7 @@ public class Planet : MonoBehaviour
     public float Circumference { get { return circumference; } }
     public float Radius { get { return circumference / 2.0f; } }
     public float RadiusSquared { get { float r = Radius; return r * r; } }
-    public float CurrentMass { get { return currentMass; } }
+    public float CurrentMass { get { return currentMass; } set { currentMass = value; } }
 
     public float AsteroidCollisionCounter { get { return asteroidCollisionCounter; } }
 

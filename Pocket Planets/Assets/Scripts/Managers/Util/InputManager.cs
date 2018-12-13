@@ -11,6 +11,7 @@ namespace Managers
         private float sqrMaxTapMovement;
 
         private Vector2 dragMovement;
+        private Vector3 startMousePosition;
 
         private float dragMinTime = 0.1f;
         private float pinchMinTime = 0.1f;
@@ -20,6 +21,7 @@ namespace Managers
         private bool tapFailed = false;
         private bool dragRecognized = false;
         private bool pinchRecognized = false;
+        private bool middleMouseDrag = false;
 
         private void Start()
         {
@@ -28,9 +30,14 @@ namespace Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    GameStateManager.Instance.TogglePause();
+            //}
+
+            if (!IsPointerOverUIObject())
             {
-                GameStateManager.Instance.TogglePause();
+                CheckForMouseScroll();
             }
 
             if (Input.touchCount > 0)
@@ -42,11 +49,134 @@ namespace Managers
 
                 CheckForDrag();
             }
+            else if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0))
+            {
+                CheckForMouseDrag(0);
+            }
+            else if (Input.GetMouseButtonDown(2) || Input.GetMouseButton(2) || Input.GetMouseButtonUp(2))
+            {
+                CheckForMiddleMouseDrag();
+            }
             else
             {
                 dragRecognized = false;
                 pinchRecognized = false;
                 tapFailed = false;
+                middleMouseDrag = false;
+            }
+        }
+
+        private void CheckForMouseScroll()
+        {
+            //Update the bool variables too dragRecognized etc
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            {
+                if (EventManager.OnScrollOccurred != null)
+                {
+                    EventManager.OnScrollOccurred(Input.GetAxis("Mouse ScrollWheel"));
+                }
+
+                pinchRecognized = true;
+                dragRecognized = false;
+                tapFailed = true;
+            }
+        }
+
+        private void CheckForMouseDrag(int button)
+        {
+            if (pinchRecognized) return;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                dragMovement = Vector2.zero;
+                startTime = Time.time;
+                startMousePosition = Input.mousePosition;
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                dragMovement = (Input.mousePosition - startMousePosition);
+
+                if (!dragRecognized && Time.time - startTime > dragMinTime)
+                {
+                    dragRecognized = true;
+                    pinchRecognized = false;
+                    tapFailed = true;
+
+                    if (EventManager.OnDragBegan != null)
+                    {
+                        EventManager.OnDragBegan(Input.mousePosition);
+                    }
+                }
+                else if (dragRecognized)
+                {
+                    if (EventManager.OnDragHeld != null)
+                    {
+                        EventManager.OnDragHeld(Input.mousePosition);
+                    }
+                }
+                else if (dragMovement.sqrMagnitude > sqrMaxTapMovement)
+                {
+                    tapFailed = true;
+                }
+            }
+            else
+            {
+                if (dragRecognized)
+                {
+                    if (EventManager.OnDragEnded != null)
+                    {
+                        EventManager.OnDragEnded(Input.mousePosition);
+                    }
+                }
+                else
+                {
+                    CheckForMouseTap();
+                }
+            }
+        }
+
+        private void CheckForMiddleMouseDrag()
+        {
+            if (Input.GetMouseButtonDown(2))
+            {
+                dragMovement = Vector2.zero;
+                startTime = Time.time;
+                startMousePosition = Input.mousePosition;
+            }
+            else if (Input.GetMouseButton(2))
+            {
+                dragMovement = (Input.mousePosition - startMousePosition);
+
+                if (!middleMouseDrag && Time.time - startTime > dragMinTime)
+                {
+                    middleMouseDrag = true;
+
+                    if (EventManager.OnMiddleMouseDragBegan != null)
+                    {
+                        EventManager.OnMiddleMouseDragBegan(Input.mousePosition);
+                    }
+                }
+                else if (middleMouseDrag)
+                {
+                    if (EventManager.OnMiddleMouseDragHeld != null)
+                    {
+                        EventManager.OnMiddleMouseDragHeld(Input.mousePosition);
+                    }
+                }
+                //else if (dragMovement.sqrMagnitude > sqrMaxTapMovement)
+                //{
+                //    tapFailed = true;
+                //}
+            }
+            else
+            {
+                if (middleMouseDrag)
+                {
+                    if (EventManager.OnMiddleMouseDragEnded != null)
+                    {
+                        EventManager.OnMiddleMouseDragEnded(Input.mousePosition);
+                    }
+                }
             }
         }
 
@@ -128,7 +258,7 @@ namespace Managers
                     //Debug.Log("DRAG BEGAN");
                     if (EventManager.OnDragBegan != null)
                     {
-                        EventManager.OnDragBegan(touch);
+                        EventManager.OnDragBegan(touch.position);
                     }
                 }
                 else if (dragRecognized)
@@ -136,7 +266,7 @@ namespace Managers
                     //Debug.Log("DRAG HELD");
                     if (EventManager.OnDragHeld != null)
                     {
-                        EventManager.OnDragHeld(touch);
+                        EventManager.OnDragHeld(touch.position);
                     }
                 }
                 else if (dragMovement.sqrMagnitude > sqrMaxTapMovement)
@@ -151,7 +281,7 @@ namespace Managers
                     //Debug.Log("DRAG ENDED");
                     if (EventManager.OnDragEnded != null)
                     {
-                        EventManager.OnDragEnded(touch);
+                        EventManager.OnDragEnded(touch.position);
                     }
                 }
                 else
@@ -171,7 +301,21 @@ namespace Managers
             {
                 if (EventManager.OnTapOccurred != null)
                 {
-                    EventManager.OnTapOccurred(Input.touches[0]);
+                    EventManager.OnTapOccurred(Input.touches[0].position);
+                }
+            }
+        }
+
+        private void CheckForMouseTap()
+        {
+            if (dragRecognized) return;
+            if (pinchRecognized) return;
+
+            if (!tapFailed)
+            {
+                if (EventManager.OnTapOccurred != null)
+                {
+                    EventManager.OnTapOccurred(Input.mousePosition);
                 }
             }
         }

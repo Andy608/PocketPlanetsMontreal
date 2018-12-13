@@ -96,10 +96,10 @@ namespace Managers
             }
         }
 
-        private void SpawnBadFundsNotification(Touch touch)
+        private void SpawnBadFundsNotification(Vector3 touchPos)
         {
             FloatAwayText text = Instantiate(notEnoughMoneyPrefab, notificationsParent, false);
-            text.transform.position = touch.position;
+            text.transform.position = touchPos;
         }
     }
 }

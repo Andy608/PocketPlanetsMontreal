@@ -81,12 +81,12 @@ namespace Managers
             }
         }
 
-        private void UpdateStartingVelocity(Touch touch)
+        private void UpdateStartingVelocity(Vector3 touchPos)
         {
             if (currentPlanet)
             {
                 Vector3 worldTouchPos = Vector3.zero;
-                DisplayManager.TouchPositionToWorldVector3(touch, ref worldTouchPos);
+                DisplayManager.TouchPositionToWorldVector3(touchPos, ref worldTouchPos);
 
                 currentTrajectory.ClearTrajectory();
                 currentTrajectory.CreateTrajectory(PlanetSpawnManager.Instance.CurrentSpawningPlanet.PhysicsIntegrator.InitialVelocity, offsetTime);

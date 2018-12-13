@@ -12,11 +12,11 @@ namespace Managers
         public float MusicVolume { get { return musicVolume; } }
         public float SoundVolume { get { return soundVolume; } }
 
-        private void Awake()
-        {
-            ChangeMusicVolume(musicVolume);
-            ChangeSoundVolume(soundVolume);
-        }
+        //private void Start()
+        //{
+        //    ChangeMusicVolume(musicVolume);
+        //    ChangeSoundVolume(soundVolume);
+        //}
 
         private void OnEnable()
         {

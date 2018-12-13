@@ -14,6 +14,6 @@ public class RenderInFrontOfUI : MonoBehaviour
     private void Awake()
     {
         GetComponent<SpriteRenderer>().material.renderQueue = RENDER_ORDER;
-        Debug.Log("RENDER QUEUE: " + GetComponent<SpriteRenderer>().material.renderQueue);
+        //Debug.Log("RENDER QUEUE: " + GetComponent<SpriteRenderer>().material.renderQueue);
     }
 }

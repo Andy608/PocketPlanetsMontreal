@@ -19,6 +19,7 @@ namespace Managers
 
         [SerializeField] private Color selectedColor;
         private Button selectedButton = null;
+        private Button tempButtonForMouseDrag = null;
 
         private void Start()
         {
@@ -44,6 +45,29 @@ namespace Managers
             {
                 UpdateButtonPressed(destroyPlanetButton);
             }
+        }
+
+        private void OnEnable()
+        {
+            EventManager.OnMiddleMouseDragBegan += MiddleMouseDragBegan;
+            EventManager.OnMiddleMouseDragEnded += MiddleMouseDragEnded;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnMiddleMouseDragBegan -= MiddleMouseDragBegan;
+            EventManager.OnMiddleMouseDragEnded -= MiddleMouseDragEnded;
+        }
+
+        private void MiddleMouseDragBegan(Vector3 mousePosition)
+        {
+            tempButtonForMouseDrag = selectedButton;
+            UpdateButtonPressed(freeroamButton);
+        }
+
+        private void MiddleMouseDragEnded(Vector3 mousePosition)
+        {
+            UpdateButtonPressed(tempButtonForMouseDrag);
         }
 
         private void InitHighlightColors()

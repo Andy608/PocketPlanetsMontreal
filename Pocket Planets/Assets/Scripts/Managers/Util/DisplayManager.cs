@@ -7,6 +7,7 @@ namespace Managers
     public class DisplayManager : ManagerBase<DisplayManager>
     {
         public static int TARGET_SCREEN_DENSITY = 96;
+        private const float MOUSE_SENSITIVITY = 4.0f;
         private static float scale = 1.0f;
 
         //Designed for iPhone X resolution.
@@ -57,6 +58,7 @@ namespace Managers
         {
             if (touchToZoomEnabled)
             {
+                EventManager.OnScrollOccurred += MouseZoom;
                 EventManager.OnPinchBegan += ZoomBegan;
                 EventManager.OnPinchHeld += ZoomHeld;
                 EventManager.OnPinchEnded += ZoomEnded;
@@ -67,6 +69,7 @@ namespace Managers
         {
             if (touchToZoomEnabled)
             {
+                EventManager.OnScrollOccurred -= MouseZoom;
                 EventManager.OnPinchBegan -= ZoomBegan;
                 EventManager.OnPinchHeld -= ZoomHeld;
                 EventManager.OnPinchEnded -= ZoomEnded;
@@ -81,13 +84,21 @@ namespace Managers
             {
                 scale = Screen.height / nativeResolution.y;
                 defaultSize = currentSize = (zoomScale * (Screen.height / 2.0f) / scale);
-                maximumSize = defaultSize * 4.0f;
-                minimumSize = maximumSize / 4.0f;
+                maximumSize = defaultSize * 8.0f;
+                minimumSize = defaultSize / 4.0f;
             }
 
             zoomSpeed = TARGET_SCREEN_DENSITY;
 
             UpdateCameraSize(currentSize);
+        }
+
+        private void MouseZoom(float direction)
+        {
+            prevZoomDist = zoomDist;
+            zoomDist += direction * zoomSpeed * MOUSE_SENSITIVITY;
+
+            Zoom();
         }
 
         private void ZoomBegan(Touch first, Touch second)
@@ -132,9 +143,9 @@ namespace Managers
             //}
         }
 
-        public static void TouchPositionToWorldVector3(Touch touch, ref Vector3 position)
+        public static void TouchPositionToWorldVector3(Vector3 touchPos, ref Vector3 position)
         {
-            position = Camera.main.ScreenToWorldPoint(touch.position);
+            position = Camera.main.ScreenToWorldPoint(touchPos);
             position.z = 0;
         }
 
