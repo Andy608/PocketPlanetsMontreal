@@ -20,7 +20,7 @@ namespace Managers
 
         private void OnEnable()
         {
-            Planet planet = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, new Vector2(0, 80));
+            Planet planet = PlanetSpawnManager.Instance.SpawnPlanet(EnumPlanetType.BLACKHOLE, new Vector2(0, 120));
             planet.CurrentMass = 1000;
             isSettingsOpen = false;
             isCreditsOpen = false;

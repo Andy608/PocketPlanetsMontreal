@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &51
+--- !u!1 &50
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51}
+  m_GameObject: {fileID: 50}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.42314216, y: 0.42314216, z: 0}
@@ -38,7 +38,7 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51}
+  m_GameObject: {fileID: 50}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -87,7 +87,7 @@ TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51}
+  m_GameObject: {fileID: 50}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -185,9 +185,9 @@ GameObject:
   m_Component:
   - component: {fileID: 70}
   - component: {fileID: 103}
-  - component: {fileID: 110}
-  - component: {fileID: 112}
-  - component: {fileID: 111}
+  - component: {fileID: 107}
+  - component: {fileID: 109}
+  - component: {fileID: 108}
   - component: {fileID: 102}
   - component: {fileID: 104}
   m_Layer: 0
@@ -225,9 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff2c2a8db25c62489d2317c049b9c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetObject: {fileID: 51}
+  planetObject: {fileID: 50}
   planetProperties: {fileID: 11400000, guid: 15e68bb885ca9454fb2b4e34b007e6db, type: 2}
---- !u!114 &110
+--- !u!114 &107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce4a04a143eab141801cabe0f2ae159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trajectoryObject: {fileID: 55}
---- !u!114 &112
+  trajectoryObject: {fileID: 53}
+--- !u!114 &109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,8 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7608358805944164797bf93b32edd6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailObject: {fileID: 51}
---- !u!114 &111
+  trailObject: {fileID: 50}
+--- !u!114 &108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -293,7 +293,7 @@ MonoBehaviour:
   prevTheoreticalVelocity: {x: 0, y: 0}
   initialVelocity: {x: 0, y: 0}
   initialAcceleration: {x: 0, y: 0}
---- !u!1 &55
+--- !u!1 &53
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,7 +316,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55}
+  m_GameObject: {fileID: 53}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
@@ -330,7 +330,7 @@ LineRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55}
+  m_GameObject: {fileID: 53}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
