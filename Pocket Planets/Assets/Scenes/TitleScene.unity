@@ -305,7 +305,7 @@ MonoBehaviour:
   unknownPlanetPrefab: {fileID: 103, guid: 979b6c3015b0fdb49b625ce5a5d94334, type: 3}
   userPlanetPrefabs:
   - {fileID: 103, guid: 979b6c3015b0fdb49b625ce5a5d94334, type: 3}
-  - {fileID: 114, guid: 07bfab35814a7414ea889804a469c955, type: 3}
+  - {fileID: 81, guid: 07bfab35814a7414ea889804a469c955, type: 3}
 --- !u!114 &147093112
 MonoBehaviour:
   m_ObjectHideFlags: 0
